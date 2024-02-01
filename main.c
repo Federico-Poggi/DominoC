@@ -5,6 +5,6 @@ int main()
 {
     // Inizio lollo
 
-    // Fine
+    // Fine culo
     return 0;
 }
