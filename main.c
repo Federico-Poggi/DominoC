@@ -3,8 +3,8 @@
 
 int main()
 {
-    // Inizio lollo
+    // Inizio
 
-    // Fine culo
+    // Fine
     return 0;
 }
