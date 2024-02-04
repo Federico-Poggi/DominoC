@@ -1,1 +1,10 @@
 1 - Struttura di base 2 - Tavolo da gioco e tessere di base
+    Gabri e fede->Allora abbiamo creato le prime funzioni e una parte della
+    interfaccia del progamma.
+
+    Gabri-> allora ho fatto la funzione che salva e inzializza in un array
+    le 21 tessere base del gioco.
+    Ora dobbiamo solo creare l'array del tavolo da
+    gioco dell'utente che verra inizializzato prendendo un numero random da 0 a 20 
+    (indici array std) e inseriranno la tessa presente random in quell'indice e la 
+    inserirà nell' i-esimo posto del tavolo da gioco dell'user. 
