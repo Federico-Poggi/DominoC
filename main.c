@@ -1,13 +1,22 @@
 #include <stdio.h>
 #include <string.h>
 
-//-----------------------------FUNZIONI---------------------------//
+//----------------------FUNZIONI FIRME---------------------------//
 void style();
 int playMode();
 void error(char *message);
+void getTessere();
 //---------------------------------------------------------------//
+
+//TIPI VARIABILI STRUCT
+typedef struct {
+    num1;
+    num2;
+} tessera;
+
 int main()
 {
+    
     // INTRODUZIONE
     printf("BENVENUTO IN DOMINO\n");
     style();
@@ -27,9 +36,11 @@ int main()
     default:
         error("ERRORE\n");
     }
+
     return 0;
 };
 
+//FUNZIONI CREATE
 void style()
 {
     for (char k = 0; k <= 18; ++k)
@@ -66,9 +77,25 @@ int playMode()
     return mod;
 };
 
-void error(char *message)
+void error(const char *message)
 {
     printf("ERRORE: %s", message);
 };
 
+void getTessere()
+{   
+    /*tessera std[21];
+    tessara card;
+    for (int i = 0; i < 21; ++i) {
+        for (int a = 1; a <= 6; ++a){
+            std[0] = 
+        }
+
+    }*/
+
+} 
+
 // MODALITA' CLASSICA
+void mod1(){
+    tessera* std[] = getTessere();
+}
