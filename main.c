@@ -4,7 +4,7 @@
 int main()
 {
     // INTRODUZIONE
-    printf("Benvenuto in DOMINO \n ")
+    printf("Benvenuto in DOMINO \n ");
 
-        return 0;
+    return 0;
 }
