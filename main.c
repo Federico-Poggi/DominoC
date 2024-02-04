@@ -3,8 +3,8 @@
 
 int main()
 {
-    // Inizio lollo
+    // INTRODUZIONE
+    printf("Benvenuto in DOMINO \n ")
 
-    // Fine
-    return 0;
+        return 0;
 }
