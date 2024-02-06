@@ -136,21 +136,29 @@ void printTessere(tessera *a, int size)
 }
 
 // FUNZIONE PER DISTRIBUIRE LE TESSERE IN BASE AL NUMERO PASSATO DI TESSERE VOLUTE IN MANO DEL GIOCATORE TUTTO CASUALE!!!!
-void giveTessereToPlayer(tessera *tessere, int nTessere)
+tessera *giveTessereToPlayer(tessera *tessere, int nTessere)
 {
+    tessera *palyerCards = (tessera *)malloc(sizeof(tessera) * nTessere);
     srand(time(NULL));
     int randNumberForCycleTheCards;
     for (int i = 0; i < nTessere; ++i)
     {
         randNumberForCycleTheCards = rand() % 21;
-        printf("[%d|%d]", tessere[randNumberForCycleTheCards].num1, tessere[randNumberForCycleTheCards].num2);
-        puts(" ");
+        // printf("[%d|%d]", tessere[randNumberForCycleTheCards].num1, tessere[randNumberForCycleTheCards].num2);
+        palyerCards[i].num1 = tessere[randNumberForCycleTheCards].num1;
+        palyerCards[i].num2 = tessere[randNumberForCycleTheCards].num2;
     }
+    return palyerCards;
 }
 // MODALITA' CLASSICA
 void mod1(tessera *std, int numberOfTesser)
 {
     printf("Carte nella tua mano:");
     puts("\n");
-    giveTessereToPlayer(std, numberOfTesser);
+    tessera *playerCards = giveTessereToPlayer(std, numberOfTesser);
+    for (int i = 0; i < numberOfTesser; i++)
+    {
+        printf("[%d|%d] ", playerCards[i].num1, playerCards[i].num2);
+    }
+    puts("\n");
 }
