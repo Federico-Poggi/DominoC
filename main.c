@@ -35,7 +35,8 @@ int main()
     {
     case 1:
         printf("Modalità: %d\n", modalita);
-        // mod1(std, 10);
+        style();
+        mod1(std, 10);
         break;
     case 2:
         printf("Modalità: %d\n", modalita);
@@ -48,6 +49,7 @@ int main()
     }
 
     // FREE ALL MALLOC CREATED!!!!!!!!!!
+    // I Want To Be Break free
     free(std);
     return 0;
 };
@@ -148,5 +150,7 @@ void giveTessereToPlayer(tessera *tessere, int nTessere)
 // MODALITA' CLASSICA
 void mod1(tessera *std, int numberOfTesser)
 {
+    printf("Carte nella tua mano:");
+    puts("\n");
     giveTessereToPlayer(std, numberOfTesser);
 }
