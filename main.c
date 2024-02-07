@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+#include <stdbool.h>
 
 // TIPI VARIABILI STRUCT (TIENI QUI PERCHE ALTRIMENTI FUNZIONE N3 NON VA)
 typedef struct
@@ -23,36 +24,62 @@ int main()
 {
     // TENIAMO I PUNTATORI DELLA MEMEORIA ALLOCATA NEL MAIN
     tessera *std = stdTessere();
+    srand(time(NULL));
+    bool playAgain = true;
+    bool changeResp = true;
+    int risposta;
     // printTessere(std, 6);
 
     // INTRODUZIONE
     printf("BENVENUTO IN DOMINO\n");
-
-    style();
-    int modalita = playMode();
-    style();
-    switch (modalita)
+    while (playAgain)
     {
-    case 1:
-        printf("Modalità: %d\n", modalita);
+
         style();
-        mod1(std, 10);
-        break;
-    case 2:
-        printf("Modalità: %d\n", modalita);
-        break;
-    case 3:
-        printf("Modalità: %d\n", modalita);
-        break;
-    default:
-        error("ERRORE\n");
+        int modalita = playMode();
+        style();
+        switch (modalita)
+        {
+        case 1:
+            printf("Modalità: %d\n", modalita);
+            style();
+            mod1(std, 10);
+            break;
+        case 2:
+            printf("Modalità: %d\n", modalita);
+            break;
+        case 3:
+            printf("Modalità: %d\n", modalita);
+            break;
+        default:
+            error("ERRORE\n");
+        }
+        // Possibilità di giocare nuovamente
+        do
+        {
+            printf("Vuoi divertirti ancora: inserisci 0(no) o 1(si)");
+            puts(" ");
+            scanf("%d", &risposta);
+            switch (risposta)
+            {
+            case 1:
+                changeResp = false;
+                break;
+            case 0:
+                changeResp = false;
+                playAgain = false;
+                break;
+            default:
+                error("Inserisci solo 0 o 1\n");
+            }
+        } while (changeResp);
     }
 
     // FREE ALL MALLOC CREATED!!!!!!!!!!
     // I Want To Be Break free
     free(std);
     return 0;
-};
+}
 
 // FUNZIONI CREATE
 void style()
@@ -139,26 +166,27 @@ void printTessere(tessera *a, int size)
 tessera *giveTessereToPlayer(tessera *tessere, int nTessere)
 {
     tessera *palyerCards = (tessera *)malloc(sizeof(tessera) * nTessere);
-    srand(time(NULL));
+
     int randNumberForCycleTheCards;
     for (int i = 0; i < nTessere; ++i)
     {
         randNumberForCycleTheCards = rand() % 21;
-        // printf("[%d|%d]", tessere[randNumberForCycleTheCards].num1, tessere[randNumberForCycleTheCards].num2);
         palyerCards[i].num1 = tessere[randNumberForCycleTheCards].num1;
         palyerCards[i].num2 = tessere[randNumberForCycleTheCards].num2;
     }
+
     return palyerCards;
 }
 // MODALITA' CLASSICA
 void mod1(tessera *std, int numberOfTesser)
 {
-    printf("Carte nella tua mano:");
+    printf("Tessere nella mano del giocatore 1 :");
     puts("\n");
-    tessera *playerCards = giveTessereToPlayer(std, numberOfTesser);
-    for (int i = 0; i < numberOfTesser; i++)
-    {
-        printf("[%d|%d] ", playerCards[i].num1, playerCards[i].num2);
-    }
+
+    tessera *playerCards1 = giveTessereToPlayer(std, numberOfTesser);
+
+    printTessere(playerCards1, numberOfTesser);
     puts("\n");
+
+    free(playerCards1);
 }
