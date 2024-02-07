@@ -17,8 +17,9 @@ int playMode();
 void error(const char *message);
 tessera *stdTessere(); // FUNZIONE N3
 void printTessere(tessera *a, int size);
-tessera *giveTessereToPlayer(tessera *tessere, int nTessere);  
-void mod1();
+tessera *giveTessereToPlayer(tessera *tessere, int nTessere);
+void rotate(tessera *playerCards1, int i);
+void mod1(tessera *std, int numberOfcards);
 //---------------------------------------------------------------//
 
 int main()
@@ -28,8 +29,10 @@ int main()
     srand(time(NULL));
     bool playAgain = true;
     bool changeResp = true;
-    int risposta;
+    int risposta = 0;
     // printTessere(std, 6);
+    const int numberOfcards = 28;
+
 
     // INTRODUZIONE
     printf("BENVENUTO IN DOMINO\n");
@@ -44,7 +47,7 @@ int main()
         case 1:
             printf("Modalità: %d\n", modalita);
             style();
-            mod1(std, 10);
+            mod1(std, numberOfcards);
             break;
         case 2:
             printf("Modalità: %d\n", modalita);
@@ -178,15 +181,22 @@ tessera *giveTessereToPlayer(tessera *tessere, int nTessere)
 
     return palyerCards;
 }
+
+void rotate(tessera *playerCards1, int i){
+    int temp = playerCards1[i].num1;
+    playerCards1[i].num1 = playerCards1[i].num2;
+    playerCards1[i].num1 = temp;
+}
+
 // MODALITA' CLASSICA
-void mod1(tessera *std, int numberOfTesser)
-{
+void mod1(tessera *std, int numberOfcards)
+{   
     printf("Tessere nella mano del giocatore 1 :");
     puts("\n");
 
-    tessera *playerCards1 = giveTessereToPlayer(std, numberOfTesser);
+    tessera *playerCards1 = giveTessereToPlayer(std, numberOfcards); 
 
-    printTessere(playerCards1, numberOfTesser);
+    printTessere(playerCards1, numberOfcards);
     puts("\n");
 
     free(playerCards1);
