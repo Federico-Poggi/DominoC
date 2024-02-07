@@ -17,6 +17,7 @@ int playMode();
 void error(const char *message);
 tessera *stdTessere(); // FUNZIONE N3
 void printTessere(tessera *a, int size);
+tessera *giveTessereToPlayer(tessera *tessere, int nTessere);  
 void mod1();
 //---------------------------------------------------------------//
 
