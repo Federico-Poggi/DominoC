@@ -184,15 +184,17 @@ tessera *giveTessereToPlayer(tessera *tessere, int nTessere)
     return palyerCards;
 }
 
+// FUNZIONE PER RUOTARE UNA TESSERA
 void rotate(tessera *playerCards1, int i){
-    int temp = playerCards1[i].num1;
+    int temp = playerCards1[i].num1; //variabile temporanea salvata per lo swap
     playerCards1[i].num1 = playerCards1[i].num2;
-    playerCards1[i].num1 = temp;
+    playerCards1[i].num2 = temp;
 }
 
 // MODALITA' CLASSICA
 void mod1(tessera *std, int numberOfcards)
 {   
+    int rotateQ = 0;
     tessera *table = creaTable(numberOfcards);
     printf("Tessere nella tua mano :");
     puts("\n");
@@ -203,6 +205,23 @@ void mod1(tessera *std, int numberOfcards)
     puts("\n");
 
     int choice = chooseCard(playerCards1);
+    printf("[%d|%d] ", playerCards1[choice].num1, playerCards1[choice].num2);
+
+    puts("Vuoi ruotare la tessera selezionata?\n\n1-Si, ruotala\n2-No, lasciala così");
+    do
+    {
+        printf("Hai scelto l'opzione: ");
+        scanf("%d", &rotateQ);
+        if (rotateQ < 1 || rotateQ > 2)
+        {
+            puts("Comando non valido. Scegli tra le opzioni disponibili.\n");
+        }
+    } while (rotateQ < 1 || rotateQ > 2);
+
+    if (rotateQ == 1)
+    {
+        rotate(playerCards1, choice);
+    }
     printf("[%d|%d] ", playerCards1[choice].num1, playerCards1[choice].num2);
 
     puts("\n");
@@ -221,8 +240,8 @@ int chooseCard(tessera *playercards){
     int indice = 0;
     bool verifica = true;
     while(verifica){
-        printf("\n%s\n%s\n", "Qule tessera vuoi giocare?",
-                            "Scegliere un numero da 1 a 28");
+        printf("%s\n%s", "Qule tessera vuoi giocare?",
+                            "Scegliere un numero da 1 a 28: ");
         scanf("%d", &indice);
         if(indice <= 28 && indice >= 1)
             verifica = false;
