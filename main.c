@@ -17,7 +17,9 @@ int playMode();
 void error(const char *message);
 tessera *stdTessere(); // FUNZIONE N3
 void printTessere(tessera *a, int size);
-void mod1();
+tessera *creaTable(int numberOfTesser);
+int chooseCard(tessera *playercards);
+void mod1(tessera *std, int numberOfTesser);
 //---------------------------------------------------------------//
 
 int main()
@@ -44,6 +46,7 @@ int main()
             printf("Modalità: %d\n", modalita);
             style();
             mod1(std, 10);
+
             break;
         case 2:
             printf("Modalità: %d\n", modalita);
@@ -180,13 +183,40 @@ tessera *giveTessereToPlayer(tessera *tessere, int nTessere)
 // MODALITA' CLASSICA
 void mod1(tessera *std, int numberOfTesser)
 {
-    printf("Tessere nella mano del giocatore 1 :");
+    tessera *table = creaTable(numberOfTesser);
+    printf("Tessere nella tua mano :");
     puts("\n");
 
     tessera *playerCards1 = giveTessereToPlayer(std, numberOfTesser);
 
     printTessere(playerCards1, numberOfTesser);
-    puts("\n");
+    
 
-    free(playerCards1);
+    int choice = chooseCard(playerCards1);
+    printf("[%d|%d] ", playerCards1[choice].num1, playerCards1[choice].num2);
+
+    puts("\n");
+    free(table);
+}
+
+// TAVOLO DA GIOCO
+tessera *creaTable(int numberOfTesser)
+{
+    tessera *table = (tessera *)malloc(sizeof(tessera) * numberOfTesser);
+    return table;
+}
+
+//SCELTA TESSERA MANO GIOCATORE
+int chooseCard(tessera *playercards){
+    int indice = 0;
+    bool verifica = true;
+    while(verifica){
+        printf("\n%s\n%s\n", "Qule tessera vuoi giocare?",
+                            "Scegliere un numero da 1 a 28");
+        scanf("%d", &indice);
+        if(indice <= 28 && indice >= 1)
+            verifica = false;
+    }
+    indice -= 1;
+    return indice;
 }
