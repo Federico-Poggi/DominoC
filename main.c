@@ -33,7 +33,7 @@ int main()
     bool changeResp = true;
     int risposta = 0;
     // printTessere(std, 6);
-    const int numberOfcards = 28;
+    int numberOfcards = 28;
 
 
     // INTRODUZIONE
@@ -87,6 +87,28 @@ int main()
     return 0;
 }
 
+// TAVOLO DA GIOCO
+tessera *creaTable(int numberOfTesser)
+{
+    tessera *table = (tessera *)malloc(sizeof(tessera) * numberOfTesser);
+    return table;
+}
+
+//SCELTA TESSERA MANO GIOCATORE
+int chooseCard(tessera *playercards){
+    int indice = 0;
+    bool verifica = true;
+    while(verifica){
+        printf("%s\n%s", "Qule tessera vuoi giocare?",
+                         "Scegliere un numero da 1 a 28: ");
+        scanf("%d", &indice);
+        if(indice <= 28 && indice >= 1)
+            verifica = false;
+    }
+    indice -= 1;
+    return indice;
+}
+
 // FUNZIONI CREATE
 void style()
 {
@@ -124,11 +146,13 @@ int playMode()
     return mod;
 };
 
+// STAMPA ERRORE
 void error(const char *message)
 {
     printf("ERRORE: %s", message);
 };
 
+//GENERA TESSERE STANDARD
 tessera *stdTessere()
 {
     const int lunghezza = 21;
@@ -159,6 +183,7 @@ tessera *stdTessere()
     return std;
 }
 
+//STAMPA TAVOLO E TESSERE
 void printTessere(tessera *a, int size)
 {
     for (int i = 0; i < size; ++i)
@@ -191,11 +216,32 @@ void rotate(tessera *playerCards1, int i){
     playerCards1[i].num2 = temp;
 }
 
+// PUSH HEAD TESSERA 
+void pushHead(tessera *table, tessera *playerCards1, int choice, int *pointer)
+{
+    table[*pointer] = playerCards1[choice];
+    *pointer += 1; // VARIFICA CHE QUANDO PUNTA ALL' ELEMENTO 29 NON SIA POSSIBILE INSERIRE O ESSERCI LATRO (OUT OF ARRAY)
+}
+
+// PUSH FOOTER TESSERA
+void pushFooter(tessera *table,int size, tessera *playerCards1, int choice, int *pointer)
+{
+    for(size_t i = size - 1; i > 0; i--){ 
+         table[i] = table[i - 1];
+    }
+    table[0] = playerCards1[choice];
+    *pointer+=1;
+}
+
 // MODALITA' CLASSICA
 void mod1(tessera *std, int numberOfcards)
 {   
+    //VARIABILI MODALITA' 1
+    int pointer = 0; // PUNTATORE ULTIMA TESSERA INSERITA ARRAY
     int rotateQ = 0;
+    int choice = 0;
     tessera *table = creaTable(numberOfcards);
+
     printf("Tessere nella tua mano :");
     puts("\n");
 
@@ -203,11 +249,11 @@ void mod1(tessera *std, int numberOfcards)
 
     printTessere(playerCards1, numberOfcards);
     puts("\n");
-
-    int choice = chooseCard(playerCards1);
+    
+    choice = chooseCard(playerCards1);
     printf("[%d|%d] ", playerCards1[choice].num1, playerCards1[choice].num2);
 
-    puts("Vuoi ruotare la tessera selezionata?\n\n1-Si, ruotala\n2-No, lasciala così");
+    puts("\nVuoi ruotare la tessera selezionata?\n\n1-Si, ruotala\n2-No, lasciala così");
     do
     {
         printf("Hai scelto l'opzione: ");
@@ -222,30 +268,42 @@ void mod1(tessera *std, int numberOfcards)
     {
         rotate(playerCards1, choice);
     }
+    printf("[%d|%d]\n\n", playerCards1[choice].num1, playerCards1[choice].num2);
+
+    pushHead(table, playerCards1, choice, &pointer);
+    printTessere(table, numberOfcards);
+    printf("\n%d\n", pointer);
+
+    /*
+    //seconda scleta
+    choice = chooseCard(playerCards1);
     printf("[%d|%d] ", playerCards1[choice].num1, playerCards1[choice].num2);
+
+    puts("\nVuoi ruotare la tessera selezionata?\n\n1-Si, ruotala\n2-No, lasciala così");
+    do
+    {
+        printf("Hai scelto l'opzione: ");
+        scanf("%d", &rotateQ);
+        if (rotateQ < 1 || rotateQ > 2)
+        {
+            puts("Comando non valido. Scegli tra le opzioni disponibili.\n");
+        }
+    } while (rotateQ < 1 || rotateQ > 2);
+
+    if (rotateQ == 1)
+    {
+        rotate(playerCards1, choice);
+    }
+    printf("[%d|%d]\n\n", playerCards1[choice].num1, playerCards1[choice].num2);
+    // FINE SECONDA SCELTA CANCELLA POI
+    */
+
+    pushFooter(table, numberOfcards, playerCards1, choice, &pointer);
+    printTessere(table, numberOfcards);
+    printf("\n%d\n", pointer);
+    
+
 
     puts("\n");
     free(table);
-}
-
-// TAVOLO DA GIOCO
-tessera *creaTable(int numberOfTesser)
-{
-    tessera *table = (tessera *)malloc(sizeof(tessera) * numberOfTesser);
-    return table;
-}
-
-//SCELTA TESSERA MANO GIOCATORE
-int chooseCard(tessera *playercards){
-    int indice = 0;
-    bool verifica = true;
-    while(verifica){
-        printf("%s\n%s", "Qule tessera vuoi giocare?",
-                            "Scegliere un numero da 1 a 28: ");
-        scanf("%d", &indice);
-        if(indice <= 28 && indice >= 1)
-            verifica = false;
-    }
-    indice -= 1;
-    return indice;
 }
