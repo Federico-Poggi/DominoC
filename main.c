@@ -21,7 +21,9 @@ tessera *giveTessereToPlayer(tessera *tessere, int nTessere);
 int chooseCard(tessera *playercards);
 void rotate(tessera *playerCards1, int i);
 void pushHead(tessera *table, tessera *playerCards1, int choice, int *pointer);
-void pushFooter(tessera *table,int size, tessera *playerCards1, int choice, int *pointer); 
+void pushFooter(tessera *table,int size, tessera *playerCards1, int choice, int *pointer);
+int insertCheck(tessera *table, tessera *playercards, int dimTable, int choice);
+tessera *newPlayercards(tessera *playercards, int size, int choice);
 int playMode();
 void mod1(tessera *std, int numberOfcards);
 //---------------------------------------------------------------//
@@ -145,6 +147,32 @@ void pushFooter(tessera *table,int size, tessera *playerCards1, int choice, int 
     }
     table[0] = playerCards1[choice];
     *pointer+=1;
+}
+
+// CONTROLLO COMPATIBILITA' TESSERE
+int insertCheck(tessera *table, tessera *playercards, int dimTable, int choice){
+    int left = table[0].num1; // Assegno l'estremo sinistro della tessera del domino a sinistra
+    int right = 0; // Variabile per il salvataggio
+    for(size_t i = 0; i < dimTable; i++){
+        if(table[i].num2 == 0){
+            right = table[i - 1].num2; 
+            break;
+        }
+    }
+    if((left == playercards[choice].num2) || (right == playercards[choice].num1)) return 1;
+    else return 0;
+}
+
+// RIDUZIONE ARRAY 
+tessera *newPlayercards(tessera *playercards, int size, int choice){
+    tessera *new = (tessera *)malloc(sizeof(tessera) * (size - 1));
+    for(size_t i = 0; i < size; i++){
+        if((playercards[i].num1 =! playercards[choice].num1) && (playercards[i].num2 =! playercards[choice].num2)){
+             new[i] = playercards[i];
+        }
+    }
+    free(playercards);
+    return new;
 }
 
 int main()
@@ -283,30 +311,6 @@ void mod1(tessera *std, int numberOfcards)
     pushHead(table, playerCards1, choice, &pointer);
     printTessere(table, numberOfcards);
     printf("\n%d\n", pointer);
-
-    /*
-    //seconda scleta
-    choice = chooseCard(playerCards1);
-    printf("[%d|%d] ", playerCards1[choice].num1, playerCards1[choice].num2);
-
-    puts("\nVuoi ruotare la tessera selezionata?\n\n1-Si, ruotala\n2-No, lasciala così");
-    do
-    {
-        printf("Hai scelto l'opzione: ");
-        scanf("%d", &rotateQ);
-        if (rotateQ < 1 || rotateQ > 2)
-        {
-            puts("Comando non valido. Scegli tra le opzioni disponibili.\n");
-        }
-    } while (rotateQ < 1 || rotateQ > 2);
-
-    if (rotateQ == 1)
-    {
-        rotate(playerCards1, choice);
-    }
-    printf("[%d|%d]\n\n", playerCards1[choice].num1, playerCards1[choice].num2);
-    // FINE SECONDA SCELTA CANCELLA POI
-    */
 
     pushFooter(table, numberOfcards, playerCards1, choice, &pointer);
     printTessere(table, numberOfcards);
