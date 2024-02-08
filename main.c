@@ -21,9 +21,12 @@ tessera *giveTessereToPlayer(tessera *tessere, int nTessere);
 int chooseCard(tessera *playercards);
 void rotate(tessera *playerCards1, int i);
 void pushHead(tessera *table, tessera *playerCards1, int choice, int *pointer);
-void pushFooter(tessera *table,int size, tessera *playerCards1, int choice, int *pointer);
+void pushFooter(tessera *table, int size, tessera *playerCards1, int choice, int *pointer);
 int playMode();
+bool checkIfGameCanContinue(tessera *currentGameTable, int sizeTable, tessera *playerCards1, int playerCardSize);
+
 void mod1(tessera *std, int numberOfcards);
+
 //---------------------------------------------------------------//
 
 // FUNZIONE PER GRAFICA E STILE
@@ -42,7 +45,7 @@ void error(const char *message)
     printf("ERRORE: %s", message);
 };
 
-//GENERA TESSERE STANDARD
+// GENERA TESSERE STANDARD
 tessera *stdTessere()
 {
     const int lunghezza = 21;
@@ -80,7 +83,7 @@ tessera *creaTable(int numberOfTesser)
     return table;
 }
 
-//STAMPA TAVOLO E TESSERE
+// STAMPA TAVOLO E TESSERE
 void printTessere(tessera *a, int size)
 {
     for (int i = 0; i < size; ++i)
@@ -106,16 +109,17 @@ tessera *giveTessereToPlayer(tessera *tessere, int nTessere)
     return palyerCards;
 }
 
-//SCELTA TESSERA MANO GIOCATORE
+// SCELTA TESSERA MANO GIOCATORE
 int chooseCard(tessera *playercards)
 {
     int indice = 0;
     bool verifica = true;
-    while(verifica){
+    while (verifica)
+    {
         printf("%s\n%s", "Quale tessera vuoi giocare?",
-                         "Scegliere un numero da 1 a 28: ");
+               "Scegliere un numero da 1 a 28: ");
         scanf("%d", &indice);
-        if(indice <= 28 && indice >= 1)
+        if (indice <= 28 && indice >= 1)
             verifica = false;
     }
     indice -= 1;
@@ -125,12 +129,12 @@ int chooseCard(tessera *playercards)
 // FUNZIONE PER RUOTARE UNA TESSERA
 void rotate(tessera *playerCards1, int i)
 {
-    int temp = playerCards1[i].num1; //variabile temporanea salvata per lo swap
+    int temp = playerCards1[i].num1; // variabile temporanea salvata per lo swap
     playerCards1[i].num1 = playerCards1[i].num2;
     playerCards1[i].num2 = temp;
 }
 
-// PUSH HEAD TESSERA 
+// PUSH HEAD TESSERA
 void pushHead(tessera *table, tessera *playerCards1, int choice, int *pointer)
 {
     table[*pointer] = playerCards1[choice];
@@ -138,13 +142,55 @@ void pushHead(tessera *table, tessera *playerCards1, int choice, int *pointer)
 }
 
 // PUSH FOOTER TESSERA
-void pushFooter(tessera *table,int size, tessera *playerCards1, int choice, int *pointer)
+void pushFooter(tessera *table, int size, tessera *playerCards1, int choice, int *pointer)
 {
-    for(size_t i = size - 1; i > 0; i--){ 
-         table[i] = table[i - 1];
+    for (size_t i = size - 1; i > 0; i--)
+    {
+        table[i] = table[i - 1];
     }
     table[0] = playerCards1[choice];
-    *pointer+=1;
+    *pointer += 1;
+}
+
+// Controllo proseguimento partita
+bool checkIfGameCanContinue(tessera *currentGameTable, int sizeTable, tessera *playerCards1, int playerCardSize)
+{
+    // Quantità elementi dentro al tavolo(Grandezza array)
+    // Controllo mosse disponibili
+    int leftmostLeftNumber = currentGameTable[0].num1;
+    int mostRightNumber;
+    if (playerCards1 == 0)
+    {
+        return false;
+    }
+    else
+    {
+        for (size_t i = 0; i < sizeTable; i++)
+        {
+            if (i = sizeTable - 1)
+            {
+                mostRightNumber = currentGameTable[i].num2;
+            }
+            for (size_t i = 0; i < playerCardSize; i++)
+            {
+                int num1 = playerCards1[i].num1;
+                int num2 = playerCards1[i].num2;
+                if (num1 == mostRightNumber || num2 == mostRightNumber)
+                {
+                    return true;
+                }
+                else if (num1 == leftmostLeftNumber || num2 == leftmostLeftNumber)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+    }
+    return false;
 }
 
 int main()
@@ -152,7 +198,7 @@ int main()
     // SEME NUMERI RANDOMICI
     srand(time(NULL));
 
-    //VARIABILI MAIN
+    // VARIABILI MAIN
     tessera *std = stdTessere();
     bool playAgain = true;
     bool changeResp = true;
@@ -185,7 +231,7 @@ int main()
         }
         // Possibilità di giocare nuovamente
         do
-        {   
+        {
             style();
             printf("\nVuoi giocare ancora?\n\n1: Si\n2: No\n\nHai scelto l'opzione: ");
             scanf("%d", &risposta);
@@ -201,7 +247,8 @@ int main()
                 playAgain = false;
                 break;
             default:
-                error("Comando non valido. Scegli tra le opzioni disponibili.\n\n");;
+                error("Comando non valido. Scegli tra le opzioni disponibili.\n\n");
+                ;
             }
         } while (changeResp);
     }
@@ -245,8 +292,8 @@ int playMode()
 
 // MODALITA' CLASSICA
 void mod1(tessera *std, int numberOfcards)
-{   
-    //VARIABILI MODALITA' 1
+{
+    // VARIABILI MODALITA' 1
     int pointer = 0; // PUNTATORE ULTIMA TESSERA INSERITA ARRAY
     int rotateQ = 0;
     int choice = 0;
@@ -255,11 +302,11 @@ void mod1(tessera *std, int numberOfcards)
     printf("Tessere nella tua mano :");
     puts("\n");
 
-    tessera *playerCards1 = giveTessereToPlayer(std, numberOfcards); 
+    tessera *playerCards1 = giveTessereToPlayer(std, numberOfcards);
 
     printTessere(playerCards1, numberOfcards);
     puts("\n");
-    
+
     choice = chooseCard(playerCards1);
     printf("[%d|%d] ", playerCards1[choice].num1, playerCards1[choice].num2);
 
@@ -311,7 +358,7 @@ void mod1(tessera *std, int numberOfcards)
     pushFooter(table, numberOfcards, playerCards1, choice, &pointer);
     printTessere(table, numberOfcards);
     printf("\n%d\n", pointer);
-    
+
     puts("\n");
 
     // FREE ALL MALLOC CREATED!!!
