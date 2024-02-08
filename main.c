@@ -112,7 +112,7 @@ int chooseCard(tessera *playercards)
     int indice = 0;
     bool verifica = true;
     while(verifica){
-        printf("%s\n%s", "Qule tessera vuoi giocare?",
+        printf("%s\n%s", "Quale tessera vuoi giocare?",
                          "Scegliere un numero da 1 a 28: ");
         scanf("%d", &indice);
         if(indice <= 28 && indice >= 1)
@@ -149,6 +149,7 @@ void pushFooter(tessera *table,int size, tessera *playerCards1, int choice, int 
 
 int main()
 {
+    // SEME NUMERI RANDOMICI
     srand(time(NULL));
 
     //VARIABILI MAIN
@@ -164,13 +165,13 @@ int main()
     style();
     while (playAgain)
     {
+        puts("");
         int modalita = playMode();
         style();
         switch (modalita)
         {
         case 1:
             printf("Modalità: %d\n", modalita);
-            style();
             mod1(std, numberOfcards);
             break;
         case 2:
@@ -180,32 +181,37 @@ int main()
             printf("Modalità: %d\n", modalita);
             break;
         default:
-            error("ERRORE\n");
+            error("Modalità non valida\n");
         }
         // Possibilità di giocare nuovamente
         do
-        {
-            printf("Vuoi divertirti ancora: inserisci 0(no) o 1(si)");
-            puts(" ");
+        {   
+            style();
+            printf("\nVuoi giocare ancora?\n\n1: Si\n2: No\n\nHai scelto l'opzione: ");
             scanf("%d", &risposta);
             switch (risposta)
             {
             case 1:
                 changeResp = false;
+                puts("");
+                style();
                 break;
-            case 0:
+            case 2:
                 changeResp = false;
                 playAgain = false;
                 break;
             default:
-                error("Inserisci solo 0 o 1\n");
+                error("Comando non valido. Scegli tra le opzioni disponibili.\n\n");;
             }
         } while (changeResp);
     }
+    puts("");
+    style();
 
-    // FREE ALL MALLOC CREATED!!!!!!!!!!
-    // I Want To Be Break free
+    // FREE ALL MALLOC CREATED!!!
+    // I WANT TO BREAK FREE!!!
     free(std);
+    // FINE GIOCO
     return 0;
 }
 
@@ -264,7 +270,7 @@ void mod1(tessera *std, int numberOfcards)
         scanf("%d", &rotateQ);
         if (rotateQ < 1 || rotateQ > 2)
         {
-            puts("Comando non valido. Scegli tra le opzioni disponibili.\n");
+            error("Comando non valido. Scegli tra le opzioni disponibili.\n");
         }
     } while (rotateQ < 1 || rotateQ > 2);
 
@@ -307,5 +313,8 @@ void mod1(tessera *std, int numberOfcards)
     printf("\n%d\n", pointer);
     
     puts("\n");
+
+    // FREE ALL MALLOC CREATED!!!
+    // I WANT TO BREAK FREE!!!
     free(table);
 }
