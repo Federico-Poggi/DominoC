@@ -15,13 +15,13 @@ typedef struct
 void style();
 void error(const char *message);
 tessera *stdTessere();
-tessera *creaTable(int numberOfTesser);
+tessera *creaTable(int numberOfcards);
 void printTessere(tessera *a, int size);
 tessera *giveTessereToPlayer(tessera *tessere, int nTessere);
 int chooseCard(tessera *playercards);
 void rotate(tessera *playerCards1, int i);
 void pushHead(tessera *table, tessera *playerCards1, int choice, int *pointer);
-void pushFooter(tessera *table,int size, tessera *playerCards1, int choice, int *pointer);
+void pushFooter(tessera *table,int size, tessera *playerCards1, int choice, int *pointer); 
 int playMode();
 void mod1(tessera *std, int numberOfcards);
 //---------------------------------------------------------------//
@@ -171,14 +171,14 @@ int main()
         switch (modalita)
         {
         case 1:
-            printf("Modalità: %d\n", modalita);
+            printf("\nModalità: %d\n", modalita);
             mod1(std, numberOfcards);
             break;
         case 2:
-            printf("Modalità: %d\n", modalita);
+            printf("\nModalità: %d\n", modalita);
             break;
         case 3:
-            printf("Modalità: %d\n", modalita);
+            printf("\nModalità: %d\n", modalita);
             break;
         default:
             error("Modalità non valida\n");
