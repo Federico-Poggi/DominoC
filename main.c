@@ -17,12 +17,14 @@ void error(const char *message);
 tessera *stdTessere();
 tessera *creaTable(int numberOfTesser);
 void printTessere(tessera *a, int size);
+void printTessereTable(tessera *a, int size);
 tessera *giveTessereToPlayer(tessera *tessere, int nTessere);
 int chooseCard(tessera *playercards);
 void rotate(tessera *playerCards1, int i);
 void pushHead(tessera *table, tessera *playerCards1, int choice, int *pointer);
 void pushFooter(tessera *table,int size, tessera *playerCards1, int choice, int *pointer);
 int insertCheck(tessera *table, tessera *playercards, int dimTable, int choice);
+int checkAfterRotate (tessera *table, tessera *playercards, int dimTable, int choice);
 tessera *newPlayercards(tessera *playercards, int size, int choice);
 int playMode();
 void mod1(tessera *std, int numberOfcards);
@@ -82,7 +84,21 @@ tessera *creaTable(int numberOfTesser)
     return table;
 }
 
-//STAMPA TAVOLO E TESSERE
+//STAMPA TAVOLO 
+void printTessereTable(tessera *a, int size)
+{
+    for (int i = 0; i < size; ++i)
+    {
+        if(a[i].num1 != 0) // La condizione fa in modo che la funzione stampi solo le tessere che hanno un valore diverso da 0
+        // E' sufficiente che solo uno tra num1  e num2 siano diversi da 0 dal momento che è impossibile avere tessere del gioco composte da un valore uguale a 0
+        {
+        printf("[%d|%d] ", a[i].num1, a[i].num2);
+        }
+    }
+    puts("");
+}
+
+//STAMPA TESSERE
 void printTessere(tessera *a, int size)
 {
     for (int i = 0; i < size; ++i)
@@ -117,8 +133,9 @@ int chooseCard(tessera *playercards)
         printf("%s\n%s", "Quale tessera vuoi giocare?",
                          "Scegliere un numero da 1 a 28: ");
         scanf("%d", &indice);
-        if(indice <= 28 && indice >= 1)
+        if(indice <= 28 && indice >= 1){}
             verifica = false;
+        
     }
     indice -= 1;
     return indice;
@@ -149,8 +166,11 @@ void pushFooter(tessera *table,int size, tessera *playerCards1, int choice, int 
     *pointer+=1;
 }
 
-// CONTROLLO COMPATIBILITA' TESSERE
-int insertCheck(tessera *table, tessera *playercards, int dimTable, int choice){
+
+
+// CONTROLLO COMPATIBILITA' TESSERE DOPO LA ROTAZIONE
+int checkAfterRotate (tessera *table, tessera *playercards, int dimTable, int choice)
+{
     int left = table[0].num1; // Assegno l'estremo sinistro della tessera del domino a sinistra
     int right = 0; // Variabile per il salvataggio
     for(size_t i = 0; i < dimTable; i++){
@@ -159,17 +179,37 @@ int insertCheck(tessera *table, tessera *playercards, int dimTable, int choice){
             break;
         }
     }
+    if(left == 0 && right == 0) return 1;
     if((left == playercards[choice].num2) || (right == playercards[choice].num1)) return 1;
-    else return 0;
+    else return -1;
+}
+
+// CONTROLLO COMPATIBILITA' TESSERE
+int insertCheck(tessera *table, tessera *playercards, int dimTable, int choice)
+{
+    int left = table[0].num1; // Assegno l'estremo sinistro della tessera del domino a sinistra
+    int right = 0; // Variabile per il salvataggio
+    for(size_t i = 0; i < dimTable; i++){
+        if(table[i].num2 == 0){
+            right = table[i - 1].num2; 
+            break;
+        }
+    }
+    printf("%d", left);
+    printf("%d", right);
+    if(left == 0 && right == 0) return 1;
+    if((left == playercards[choice].num1) || (left == playercards[choice].num2) || (right == playercards[choice].num1) || (playercards[choice].num2)) return 1;
+    else return -1;
 }
 
 // RIDUZIONE ARRAY 
 tessera *newPlayercards(tessera *playercards, int size, int choice){
     tessera *new = (tessera *)malloc(sizeof(tessera) * (size - 1));
-    for(size_t i = 0; i < size; i++){
-        if((playercards[i].num1 =! playercards[choice].num1) && (playercards[i].num2 =! playercards[choice].num2)){
+    tessera temp = playercards[size - 1];
+    playercards[size - 1] = playercards[choice];
+    playercards[choice] = temp;
+    for(size_t i = 0; i < size - 1; i++){
              new[i] = playercards[i];
-        }
     }
     free(playercards);
     return new;
@@ -275,74 +315,108 @@ int playMode()
 void mod1(tessera *std, int numberOfcards)
 {   
     //VARIABILI MODALITA' 1
+    bool stateOfgame = true; // VARIABILE CONTROLLO STATO DI GIOCO (VERO: GIOCO CONTINUA; FALSO: GAME OVER)
+    //tessera *HeadPtr;
+    //tessera *Footptr; 
     int pointer = 0; // PUNTATORE ULTIMA TESSERA INSERITA ARRAY
-    int rotateQ = 0;
-    int choice = 0;
-    tessera *table = creaTable(numberOfcards);
+    int rotateQ = 0; // VARIABILE ROTAZIONE TESSERA
+    int choice = 0; // INDICE TESSERA SELEZIONATA
+    int compatibilyCheck = 0; // VARIABILE CONTROLLO COMPATIBILITA' INSERIMENTO TESSERE, COMPATIBILIA' TRA MANO E TAVOLO
+    int compatibilyCheckAfteRotate = 0; // VARIABILE COMPATIBILITA' TESSERE DOPO LA ROTAZIONE
 
-    printf("Tessere nella tua mano :");
-    puts("\n");
+    tessera *table = creaTable(numberOfcards); // CREAZIONE TAVOLO DA GIOCO
 
-    tessera *playerCards1 = giveTessereToPlayer(std, numberOfcards); 
-
-    printTessere(playerCards1, numberOfcards);
-    puts("\n");
     
-    choice = chooseCard(playerCards1);
-    printf("[%d|%d] ", playerCards1[choice].num1, playerCards1[choice].num2);
+    printf("Tessere nella tua mano :"); // INTESTAZIONE
+    puts("\n");
 
-    puts("\nVuoi ruotare la tessera selezionata?\n\n1-Si, ruotala\n2-No, lasciala così");
+    tessera *playerCards1 = giveTessereToPlayer(std, numberOfcards); // DISTRIBUIZIONE TESSERE MANO GIOCATORE
+    
     do
     {
-        printf("Hai scelto l'opzione: ");
-        scanf("%d", &rotateQ);
-        if (rotateQ < 1 || rotateQ > 2)
+        do
         {
-            error("Comando non valido. Scegli tra le opzioni disponibili.\n");
-        }
-    } while (rotateQ < 1 || rotateQ > 2);
 
-    if (rotateQ == 1)
-    {
-        rotate(playerCards1, choice);
-    }
-    printf("[%d|%d]\n\n", playerCards1[choice].num1, playerCards1[choice].num2);
-
-    pushHead(table, playerCards1, choice, &pointer);
-    printTessere(table, numberOfcards);
-    printf("\n%d\n", pointer);
-
-    /*
-    //seconda scleta
-    choice = chooseCard(playerCards1);
-    printf("[%d|%d] ", playerCards1[choice].num1, playerCards1[choice].num2);
-
-    puts("\nVuoi ruotare la tessera selezionata?\n\n1-Si, ruotala\n2-No, lasciala così");
-    do
-    {
-        printf("Hai scelto l'opzione: ");
-        scanf("%d", &rotateQ);
-        if (rotateQ < 1 || rotateQ > 2)
-        {
-            puts("Comando non valido. Scegli tra le opzioni disponibili.\n");
-        }
-    } while (rotateQ < 1 || rotateQ > 2);
-
-    if (rotateQ == 1)
-    {
-        rotate(playerCards1, choice);
-    }
-    printf("[%d|%d]\n\n", playerCards1[choice].num1, playerCards1[choice].num2);
-    // FINE SECONDA SCELTA CANCELLA POI
-    */
-
-    pushFooter(table, numberOfcards, playerCards1, choice, &pointer);
-    printTessere(table, numberOfcards);
-    printf("\n%d\n", pointer);
+        printTessere(playerCards1, numberOfcards); // STAMPA TESSERE MANO GIOCATORE
+        puts("\n");
     
+        choice = chooseCard(playerCards1); // ASSEGNA A CHOICE L'INDICE DELLA TESSERA SELEZIONATA
+        printf("[%d|%d] ", playerCards1[choice].num1, playerCards1[choice].num2);
+        
+        puts(" ");
+        compatibilyCheck = insertCheck(table, playerCards1, numberOfcards, choice);
+        printf("%d", compatibilyCheck);
+        puts(" ");
+        
+        if(compatibilyCheck == -1)
+        {
+        error("Non è possibile inserire la tessera selezionata! Scegli un'altra tessera"); 
+        puts(" ");  
+        } 
+        
+        }while(compatibilyCheck == -1); // CONTROLLO COMPATIBILITA' 1 
+
+        do
+        {
+            puts("\nVuoi ruotare la tessera selezionata?\n\n1-Si, ruotala\n2-No, lasciala così");
+                do
+                {
+                    printf("Hai scelto l'opzione: ");
+                    scanf("%d", &rotateQ);
+                    if (rotateQ < 1 || rotateQ > 2)
+                    {
+                        error("Comando non valido. Scegli tra le opzioni disponibili.\n");
+                    }
+                } while (rotateQ < 1 || rotateQ > 2);
+
+            if (rotateQ == 1)
+            {
+                rotate(playerCards1, choice);
+            }
+            printf("[%d|%d]\n\n", playerCards1[choice].num1, playerCards1[choice].num2);
+
+            puts(" ");
+            compatibilyCheckAfteRotate = checkAfterRotate(table, playerCards1, numberOfcards, choice);
+            printf("%d", compatibilyCheckAfteRotate);
+            puts(" ");
+
+            if(compatibilyCheckAfteRotate == -1){
+                error("Devi ruotare la tessera selezionata nel verso corretto!"); // Errore rotazione tessera
+            }
+        }while(compatibilyCheckAfteRotate == -1); //CONTROLLO COMPATIBILITA' 2
+
+        int pushSide = 0; // Variabile per memorizzare la scelta della posizione di inserimento della tessera nel tavolo da gioco
+        printf("%s\n%s\n", "Per inserire la tessera in coda, inserire 1;", 
+                            "Per inserire la tessera in testa, inserire 2;");
+        scanf("%d", &pushSide);
+
+        
+        // Controllo corretti inserimento tessera, quindi controllo tra num1
+        if(pushSide == 1) // Posizionamento in coda
+        {
+        pushHead(table, playerCards1, choice, &pointer);
+        printTessereTable(table, numberOfcards);
+        printf("\n%d\n", pointer);
+        }
+        
+        if(pushSide == 2){ // Posizionamento in testa
+        pushFooter(table, numberOfcards, playerCards1, choice, &pointer);
+        printTessereTable(table, numberOfcards);
+        printf("\n%d\n", pointer);
+        }
+        
+        //RIDIMENSIONAMENTO ARRAY
+        playerCards1 = newPlayercards(playerCards1, numberOfcards, choice);
+        numberOfcards --;
+    //printTessere(table, numberOfcards);
+
     puts("\n");
+    }while(stateOfgame == true);
 
     // FREE ALL MALLOC CREATED!!!
     // I WANT TO BREAK FREE!!!
+
     free(table);
+    free(playerCards1);
 }
+
