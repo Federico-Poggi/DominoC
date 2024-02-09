@@ -407,7 +407,7 @@ void mod1(tessera *std, int numberOfcards)
         
         //RIDIMENSIONAMENTO ARRAY
         playerCards1 = newPlayercards(playerCards1, numberOfcards, choice);
-        numberOfcards --;
+        numberOfcards --; 
     //printTessere(table, numberOfcards);
 
     puts("\n");
