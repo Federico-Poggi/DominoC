@@ -31,7 +31,7 @@ void mod1(tessera *std, int numberOfcards);
 // FUNZIONE PER GRAFICA E STILE
 void style()
 {
-    for (char k = 0; k <= 119; ++k)
+    for (char k = 0; k <= 90; ++k)
     {
         printf("-");
     }
@@ -150,7 +150,8 @@ void pushFooter(tessera *table,int size, tessera *playerCards1, int choice, int 
 }
 
 // CONTROLLO COMPATIBILITA' TESSERE
-int insertCheck(tessera *table, tessera *playercards, int dimTable, int choice){
+int insertCheck(tessera *table, tessera *playercards, int dimTable, int choice)
+{
     int left = table[0].num1; // Assegno l'estremo sinistro della tessera del domino a sinistra
     int right = 0; // Variabile per il salvataggio
     for(size_t i = 0; i < dimTable; i++){
@@ -164,15 +165,16 @@ int insertCheck(tessera *table, tessera *playercards, int dimTable, int choice){
 }
 
 // RIDUZIONE ARRAY 
-tessera *newPlayercards(tessera *playercards, int size, int choice){
-    tessera *new = (tessera *)malloc(sizeof(tessera) * (size - 1));
+tessera *newPlayercards(tessera *playercards, int size, int choice)
+{
+    tessera *new = (tessera *)malloc(sizeof(tessera) * (size - 1)); // RIDUCI FUORI DALLA FUNZIONE LA DIMENSIONE DELLA MANO
     for(size_t i = 0; i < size; i++){
         if((playercards[i].num1 =! playercards[choice].num1) && (playercards[i].num2 =! playercards[choice].num2)){
              new[i] = playercards[i];
         }
     }
     free(playercards);
-    return new;
+return new;
 }
 
 int main()
