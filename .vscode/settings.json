@@ -60,6 +60,10 @@
     "*.js": "javascript",
     "*.c": "c",
     "*.sass": "scss",
-    "string.h": "c"
-  }
+    "string.h": "c",
+    "cstdlib": "c",
+    "stdio.h": "c",
+    "time.h": "c"
+  },
+  "C_Cpp.errorSquiggles": "enabled"
 }
