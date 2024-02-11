@@ -23,8 +23,8 @@ int chooseCard(tessera *playercards);
 void rotate(tessera *playerCards1, int i);
 void pushHead(tessera *table, tessera *playerCards1, int choice, int *pointer);
 void pushFooter(tessera *table,int size, tessera *playerCards1, int choice, int *pointer);
-int insertCheck(tessera *table, tessera *playercards, int dimTable, int choice);
-int checkAfterRotate (tessera *table, tessera *playercards, int dimTable, int choice);
+int insertCheck(tessera *table, tessera *playercards, int pointer, int choice);
+int checkAfterRotate (tessera *table, tessera *playercards, int pointer, int choice);
 tessera *newPlayercards(tessera *playercards, int size, int choice);
 int playMode();
 void mod1(tessera *std, int numberOfcards);
@@ -166,51 +166,71 @@ void pushFooter(tessera *table,int size, tessera *playerCards1, int choice, int 
     *pointer+=1;
 }
 
+// CONTROLLO COMPATIBILITA' PRIMA DELL'INSERIMENTO
 
-
-// CONTROLLO COMPATIBILITA' TESSERE DOPO LA ROTAZIONE
-int checkAfterRotate (tessera *table, tessera *playercards, int dimTable, int choice)
+int lastInsterCheck (tessera *table, tessera *playercards, int pointer, int choice)
 {
     int left = table[0].num1; // Assegno l'estremo sinistro della tessera del domino a sinistra
-    int right = 0; // Variabile per il salvataggio
-    for(size_t i = 0; i < dimTable; i++){
+    int right = table[pointer - 1].num2; // Variabile per il salvataggio
+    if(left == 0 && right == 0) return 1;
+    if(right == playercards[choice].num1) return 1;
+    if(left == playercards[choice].num2) return 2;
+    else return -1; 
+}
+
+// CONTROLLO COMPATIBILITA' TESSERE DOPO LA ROTAZIONE
+int checkAfterRotate (tessera *table, tessera *playercards, int pointer, int choice)
+{
+    int left = table[0].num1; // Assegno l'estremo sinistro della tessera del domino a sinistra
+    int right = table[pointer - 1].num2; // Variabile per il salvataggio
+    /*for(size_t i = 0; i < dimTable; i++){ // Qualora si volesse usare questo metodo bisogna inserire la dimensione del tavlo
         if(table[i].num2 == 0){
             right = table[i - 1].num2; 
             break;
         }
-    }
+    }*/
     if(left == 0 && right == 0) return 1;
     if((left == playercards[choice].num2) || (right == playercards[choice].num1)) return 1;
     else return -1;
 }
 
 // CONTROLLO COMPATIBILITA' TESSERE
-int insertCheck(tessera *table, tessera *playercards, int dimTable, int choice)
+int insertCheck(tessera *table, tessera *playercards, int pointer, int choice)
 {
     int left = table[0].num1; // Assegno l'estremo sinistro della tessera del domino a sinistra
-    int right = 0; // Variabile per il salvataggio
-    for(size_t i = 0; i < dimTable; i++){
+    int right = table[pointer - 1].num2; // Variabile per il salvataggio (Passaggio variabile pointer per valore e non per riferimento per non modificare il valore del puntatore)
+    /*for(size_t i = 0; i < dimTable; i++) // Primo metodo con scorrimento dell'array
         if(table[i].num2 == 0){
             right = table[i - 1].num2; 
             break;
         }
-    }
+    }*/
+
     printf("%d", left);
     printf("%d", right);
     if(left == 0 && right == 0) return 1;
-    if((left == playercards[choice].num1) || (left == playercards[choice].num2) || (right == playercards[choice].num1) || (playercards[choice].num2)) return 1;
+    if((left == playercards[choice].num1) || (left == playercards[choice].num2) || (right == playercards[choice].num1) || right == (playercards[choice].num2)) return 1;
     else return -1;
 }
 
 // RIDUZIONE ARRAY 
 tessera *newPlayercards(tessera *playercards, int size, int choice){
-    tessera *new = (tessera *)malloc(sizeof(tessera) * (size - 1));
-    tessera temp = playercards[size - 1];
-    playercards[size - 1] = playercards[choice];
-    playercards[choice] = temp;
-    for(size_t i = 0; i < size - 1; i++){
-             new[i] = playercards[i];
+    tessera *new = (tessera *)malloc(sizeof(tessera) * (size - 1)); //Controllo NULL!!
+    if (new == NULL)
+    {
+        // GESTIONE ERRORE ALLOCAZAIONE
+        error("Errore di allocazione di memoria");
+        // GESTIONE ERRORE ALLOCAZIONE
+        exit(EXIT_FAILURE);
+    } //errore allocazione memoria 
+
+    int j = 0;
+    for (int i = 0; i < size; i++) {
+        if (i != choice) {
+            new[j++] = playercards[i];
+        }
     }
+   
     free(playercards);
     return new;
 }
@@ -315,15 +335,13 @@ int playMode()
 void mod1(tessera *std, int numberOfcards)
 {   
     //VARIABILI MODALITA' 1
-    bool stateOfgame = true; // VARIABILE CONTROLLO STATO DI GIOCO (VERO: GIOCO CONTINUA; FALSO: GAME OVER)
-    //tessera *HeadPtr;
-    //tessera *Footptr; 
+    bool stateOfgame = true; // VARIABILE CONTROLLO STATO DI GIOCO (VERO: GIOCO CONTINUA; FALSO: GAME OVER) 
     int pointer = 0; // PUNTATORE ULTIMA TESSERA INSERITA ARRAY
     int rotateQ = 0; // VARIABILE ROTAZIONE TESSERA
     int choice = 0; // INDICE TESSERA SELEZIONATA
     int compatibilyCheck = 0; // VARIABILE CONTROLLO COMPATIBILITA' INSERIMENTO TESSERE, COMPATIBILIA' TRA MANO E TAVOLO
     int compatibilyCheckAfteRotate = 0; // VARIABILE COMPATIBILITA' TESSERE DOPO LA ROTAZIONE
-
+    int lastCompatibilyCheck = 0; // VARIABLIE ULTIMO CONTROLLO PRIMA DELL'INSERIMENTO
     tessera *table = creaTable(numberOfcards); // CREAZIONE TAVOLO DA GIOCO
 
     
@@ -344,8 +362,10 @@ void mod1(tessera *std, int numberOfcards)
         printf("[%d|%d] ", playerCards1[choice].num1, playerCards1[choice].num2);
         
         puts(" ");
-        compatibilyCheck = insertCheck(table, playerCards1, numberOfcards, choice);
+        compatibilyCheck = insertCheck(table, playerCards1, pointer, choice);
         printf("%d", compatibilyCheck);
+        puts(" ");
+        printf("IL PUNTATORE %d", pointer);
         puts(" ");
         
         if(compatibilyCheck == -1)
@@ -385,26 +405,41 @@ void mod1(tessera *std, int numberOfcards)
             }
         }while(compatibilyCheckAfteRotate == -1); //CONTROLLO COMPATIBILITA' 2
 
-        int pushSide = 0; // Variabile per memorizzare la scelta della posizione di inserimento della tessera nel tavolo da gioco
-        printf("%s\n%s\n", "Per inserire la tessera in coda, inserire 1;", 
+        do{
+            int pushSide = 0; // Variabile per memorizzare la scelta della posizione di inserimento della tessera nel tavolo da gioco
+            printf("%s\n%s\n", "Per inserire la tessera in coda, inserire 1;", 
                             "Per inserire la tessera in testa, inserire 2;");
-        scanf("%d", &pushSide);
+            scanf("%d", &pushSide);
 
         
-        // Controllo corretti inserimento tessera, quindi controllo tra num1
-        if(pushSide == 1) // Posizionamento in coda
-        {
-        pushHead(table, playerCards1, choice, &pointer);
-        printTessereTable(table, numberOfcards);
-        printf("\n%d\n", pointer);
-        }
+            lastCompatibilyCheck = lastInsterCheck(table, playerCards1, pointer, choice);
+            // Controllo corretti inserimento tessera, quindi controllo tra num1
+            if(pushSide == 1) // Posizionamento in coda
+            {
+                if(lastCompatibilyCheck == 1)
+                {
+                    pushHead(table, playerCards1, choice, &pointer);
+                    printTessereTable(table, numberOfcards);
+                    printf("\n%d\n", pointer);
+                }else
+                {
+                    error("Svegliati!!");
+                }
+            }
         
-        if(pushSide == 2){ // Posizionamento in testa
-        pushFooter(table, numberOfcards, playerCards1, choice, &pointer);
-        printTessereTable(table, numberOfcards);
-        printf("\n%d\n", pointer);
-        }
-        
+            if(pushSide == 2){ // Posizionamento in testa
+                if(lastCompatibilyCheck == 2)
+                {
+                    pushFooter(table, numberOfcards, playerCards1, choice, &pointer);
+                    printTessereTable(table, numberOfcards);
+                    printf("\n%d\n", pointer);
+                } else 
+                {
+                    error("Svegliati!!");
+                }
+            }
+        }while(lastCompatibilyCheck == -1);
+
         //RIDIMENSIONAMENTO ARRAY
         playerCards1 = newPlayercards(playerCards1, numberOfcards, choice);
         numberOfcards --; 
