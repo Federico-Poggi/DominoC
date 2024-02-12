@@ -26,6 +26,7 @@ int insertCheck(tessera *table, tessera *playercards, int dimTable, int choice);
 tessera *newPlayercards(tessera *playercards, int size, int choice);
 int playMode();
 void mod1(tessera *std, int numberOfcards);
+void mossa1(tessera *table, tessera *playerCards1, int *indexTable, int *numberOfcards);
 //---------------------------------------------------------------//
 
 // FUNZIONE PER GRAFICA E STILE
@@ -87,6 +88,7 @@ void printTessere(tessera *a, int size)
 {
     for (int i = 0; i < size; ++i)
     {
+        if (i == (size/2)) puts("");
         printf("[%d|%d] ", a[i].num1, a[i].num2);
     }
     puts("");
@@ -108,7 +110,7 @@ tessera *giveTessereToPlayer(tessera *tessere, int nTessere)
     return palyerCards;
 }
 
-//SCELTA TESSERA MANO GIOCATORE
+//SCELTA TESSERA MANO GIOCATORE (NO AI)
 int chooseCard(tessera *playercards)
 {
     int indice = 0;
@@ -117,8 +119,12 @@ int chooseCard(tessera *playercards)
         printf("%s\n%s", "Quale tessera vuoi giocare?",
                          "Scegliere un numero da 1 a 28: ");
         scanf("%d", &indice);
-        if(indice <= 28 && indice >= 1)
-            verifica = false;
+        if(indice <= 28 && indice >= 1) verifica = false;
+        else 
+        {
+            puts("");
+            error("Comando non valido. Scegli tra le opzioni disponibili.\n\n");
+        }
     }
     indice -= 1;
     return indice;
@@ -165,27 +171,37 @@ int insertCheck(tessera *table, tessera *playercards, int dimTable, int choice)
 }
 
 // RIDUZIONE ARRAY 
-tessera *newPlayercards(tessera *playercards, int size, int choice)
+tessera *newPlayercards(tessera *tuamadre, int size, int choice)
 {
     tessera *new = (tessera *)malloc(sizeof(tessera) * (size - 1)); // RIDUCI FUORI DALLA FUNZIONE LA DIMENSIONE DELLA MANO
-    for(size_t i = 0; i < size; i++){
-        if((playercards[i].num1 =! playercards[choice].num1) && (playercards[i].num2 =! playercards[choice].num2)){
-             new[i] = playercards[i];
+    if (new == NULL)
+    {
+        // GESTIONE ERRORE ALLOCAZAIONE
+        error("Errore di allocazione di memoria");
+        // GESTIONE ERRORE ALLOCAZIONE
+        exit(EXIT_FAILURE);
+    } //errore allocazione memoria
+    int j = 0;
+    for (int i = 0; i < size; i++) {
+        if (i != choice) {
+            new[j++] = tuamadre[i];
         }
+    free(tuamadre);
     }
-    free(playercards);
 return new;
 }
 
+// FUNZIONE MADRE GIOCO 
 int main()
 {
     // SEME NUMERI RANDOMICI
     srand(time(NULL));
 
-    //VARIABILI MAIN
-    tessera *std = stdTessere();
+    //VARIABILI ITERAZIONE MAIN
     bool playAgain = true;
     bool changeResp = true;
+    // VARIABILI GIOCO MAIN
+    tessera *std = stdTessere();
     int risposta = 0;
     int numberOfcards = 28;
 
@@ -245,7 +261,7 @@ int main()
     return 0;
 }
 
-// MODALITA' DI GIOCO
+// MODALITA' DI GIOCO MENU'
 int playMode()
 {
     int mod = 0;
@@ -273,54 +289,62 @@ int playMode()
     return mod;
 };
 
-// MODALITA' CLASSICA
+// MODALITA' CLASSICA 1
 void mod1(tessera *std, int numberOfcards)
 {   
-    //VARIABILI MODALITA' 1
-    int pointer = 0; // PUNTATORE ULTIMA TESSERA INSERITA ARRAY
-    int rotateQ = 0;
-    int choice = 0;
-    tessera *table = creaTable(numberOfcards);
+    // VARIABILI GENERALI MDOALITA' 1
+    int indexTable = 0;
+    tessera *table = creaTable(numberOfcards); // ARRAY TAVOLO
+    tessera *playerCards1 = giveTessereToPlayer(std, numberOfcards);
 
-    printf("Tessere nella tua mano :");
-    puts("\n");
+    //INTRODUZIONE GIOCO (COMPARE SOLO ALLA PRIMA PARTITA)
+    printf("\nAl giocatore verranno assegnate %d tessere.\nL'obiettivo è quello di disporre le tessere sul tavolo scondo la regola:\nI numeri dei lati adiacenti tra due tessere devono essere identici.\n\n", numberOfcards);
+    style();
 
-    tessera *playerCards1 = giveTessereToPlayer(std, numberOfcards); 
-
-    printTessere(playerCards1, numberOfcards);
-    puts("\n");
-    
-    choice = chooseCard(playerCards1);
-    printf("[%d|%d] ", playerCards1[choice].num1, playerCards1[choice].num2);
-
-    puts("\nVuoi ruotare la tessera selezionata?\n\n1-Si, ruotala\n2-No, lasciala così");
-    do
-    {
-        printf("Hai scelto l'opzione: ");
-        scanf("%d", &rotateQ);
-        if (rotateQ < 1 || rotateQ > 2)
-        {
-            error("Comando non valido. Scegli tra le opzioni disponibili.\n");
-        }
-    } while (rotateQ < 1 || rotateQ > 2);
-
-    if (rotateQ == 1)
-    {
-        rotate(playerCards1, choice);
-    }
-    printf("[%d|%d]\n\n", playerCards1[choice].num1, playerCards1[choice].num2);
-
-    pushHead(table, playerCards1, choice, &pointer);
-    printTessere(table, numberOfcards);
-    printf("\n%d\n", pointer);
-
-    pushFooter(table, numberOfcards, playerCards1, choice, &pointer);
-    printTessere(table, numberOfcards);
-    printf("\n%d\n", pointer);
-    
-    puts("\n");
+    // MOSSA 1 SOLO RICHIESTA ROTAZIONE, INSERIMENTO PUSHHEAD, NO CONTROLLI
+    mossa1(table, playerCards1, &indexTable, &numberOfcards);
 
     // FREE ALL MALLOC CREATED!!!
     // I WANT TO BREAK FREE!!!
     free(table);
+    free(playerCards1);
+}
+
+// MOSSA 1 MODALITA' CLASSICA
+void mossa1(tessera *table, tessera *playerCards1, int *indexTable, int *numberOfcards)
+{
+    // VARIABILI SCELTE PLAYER
+    int choice = 0;
+    int rotateQuestion = 0;
+
+    // MOSSA 1
+    // STAMPA TESSERE MANO GIOCATORE
+    puts("");
+    printTessere(playerCards1, *numberOfcards);
+    puts("");
+    // RICHIESTA TESSERA DA SCEGLIERE
+    choice = chooseCard(playerCards1);
+    printf("\n[%d|%d]", playerCards1[choice].num1, playerCards1[choice].num2);
+    puts("\n");
+    // RICHIESTA ROTAZIONE
+    puts("\nVuoi ruotare la tessera selezionata?\n\n1-Si, ruotala\n2-No, lasciala così");
+    do
+    {
+        printf("Hai scelto l'opzione: ");
+        scanf("%d", &rotateQuestion);
+        if (rotateQuestion < 1 || rotateQuestion > 2) error("Comando non valido. Scegli tra le opzioni disponibili.\n");
+    } while (rotateQuestion < 1 || rotateQuestion > 2);
+    if (rotateQuestion == 1) rotate(playerCards1, choice);
+    printf("\n[%d|%d]\n\n", playerCards1[choice].num1, playerCards1[choice].num2);
+    puts("Ora che hai deciso la tessera e ruotata opportunamente, non ci resta che inserirla nel tavolo\n");
+    pushHead(table, playerCards1, choice, indexTable);
+    printTessere(table, *numberOfcards);
+    puts("\n");
+
+    /*
+    playerCards1 = newPlayercards(playerCards1, numberOfcards, 9);
+    printTessere(playerCards1, numberOfcards - 1);
+    printf("\n\n%d", indexTable);
+    */
+    
 }
