@@ -197,7 +197,7 @@ tessera *newPlayercards(tessera *playerCards1, int size, int choice)
 
     // CONTROLLI INDIRIZZI MEMEORIA
     printf("playerCards1 inziale: %p\n", playerCards1);
-    printf("vecchioArray = playerCards1 e inziale: %p = %p\n", vecchioArray, playerCards1);
+    printf("vecchioArray = playerCards1 e inziale: %p\n", vecchioArray);
     printf("new: %p\n\n", new);
 
     // FREE MALLOC INDIRIZZO VECCHIO 0x7f017e8973e0
