@@ -252,7 +252,7 @@ int main()
         // Possibilità di giocare nuovamente
         do
         {   
-            style();
+            //style();
             printf("\nVuoi giocare ancora?\n\n1: Si\n2: No\n\nHai scelto l'opzione: ");
             scanf("%d", &risposta);
             switch (risposta)
@@ -292,7 +292,6 @@ int playMode()
     printf("Inserisci il numero della modalità desiderata [1, 2, 3]: ");
     do
     {
-
         scanf("%d", &mod);
         // ERRORE MODALITA';
         if (mod > 3 || mod < 0)
