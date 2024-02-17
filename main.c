@@ -26,7 +26,7 @@ int insertCheck(tessera *table, tessera *playercards, int dimTable, int choice);
 tessera *newPlayercards(tessera *playercards, int size, int choice);
 int playMode();
 void mod1(tessera *std, int numberOfcards);
-void mossa(tessera *table, tessera *playerCards1, int *indexTable, int *numberOfcards, int *choiceptr);
+void mossa(tessera *table, tessera *playerCards1, int *indexTable, int *numberOfcards, int *choiceptr, int mossa1, int tableSize);
 //void mossa1(tessera *table, tessera *playerCards1, int *indexTable, int *numberOfcards);
 //---------------------------------------------------------------//
 
@@ -149,7 +149,7 @@ void pushHead(tessera *table, tessera *playerCards1, int choice, int *pointer)
 }
 
 // PUSH FOOTER TESSERA
-void pushFooter(tessera *table,int size, tessera *playerCards1, int choice, int *pointer)
+void pushFooter(tessera *table, int size, tessera *playerCards1, int choice, int *pointer)
 {
     for(size_t i = size - 1; i > 0; i--){ 
          table[i] = table[i - 1];
@@ -315,26 +315,29 @@ void mod1(tessera *std, int numberOfcards)
     // VARIABILI GENERALI MDOALITA' 1
     int indexTable = 0;
     int choice = 0;
-    //mossa 1 = true;
+    int mossa1 = 1;
+    int tableSize = numberOfcards;
     tessera *table = creaTable(numberOfcards); // ARRAY TAVOLO
     tessera *playerCards1 = giveTessereToPlayer(std, numberOfcards);
     //printf(" indirizzo di partenza: %p\n\n", playerCards1);
-
 
     //INTRODUZIONE GIOCO (COMPARE SOLO ALLA PRIMA PARTITA)
     printf("\nAl giocatore verranno assegnate %d tessere.\nL'obiettivo è quello di disporre le tessere sul tavolo scondo la regola:\nI numeri dei lati adiacenti tra due tessere devono essere identici.\n\n", numberOfcards);
     style();
 
-    mossa(table, playerCards1, &indexTable, &numberOfcards, &choice);
-    //style();
-
-    // RIDUZIONE TESSERE GIOCATORE
-    // LE SVOLGIAMO QUI PER NON PERDERCI INDIRIZZZI DI MEMORIA PER LE FREE
-    playerCards1 = newPlayercards(playerCards1, numberOfcards, choice);
-    //printf("indirizzo finale: %p\n\n", playerCards1);
-    numberOfcards -= 1;
-
-
+    do
+    {
+        mossa(table, playerCards1, &indexTable, &numberOfcards, &choice, mossa1, tableSize);
+        playerCards1 = newPlayercards(playerCards1, numberOfcards, choice);
+        // LA SVOLGIAMO QUI PER NON PERDERCI INDIRIZZZI DI MEMORIA PER LE FREE
+        //printf("indirizzo finale: %p\n\n", playerCards1);
+        printTessere(table, tableSize);
+        puts("");
+        style();
+        mossa1 = 0;
+        numberOfcards -= 1;
+    }
+    while(numberOfcards); //per ora gioca finché hai carte
 
     // FREE ALL MALLOC CREATED!!!
     // I WANT TO BREAK FREE!!!
@@ -343,11 +346,12 @@ void mod1(tessera *std, int numberOfcards)
 }
 
 // MOSSA MODALITA' CLASSICA
-void mossa(tessera *table, tessera *playerCards1, int *indexTable, int *numberOfcards, int *choiceptr) //mossa 1
+void mossa(tessera *table, tessera *playerCards1, int *indexTable, int *numberOfcards, int *choiceptr, int mossa1, int tableSize) 
 {
     // VARIABILI SCELTE PLAYER 1
     bool playAgain = true;
     bool changeResp = true;
+    int pushQuestion = 0;
     int risposta = 0;
 
     while (playAgain)
@@ -355,6 +359,8 @@ void mossa(tessera *table, tessera *playerCards1, int *indexTable, int *numberOf
         // VARIABILI SCELTE PLAYER 2
         int rotateQuestion = 0;
         *choiceptr = 0;
+
+        //printf("%d", mossa1);
 
         // MOSSA 1
         // STAMPA TESSERE MANO GIOCATORE
@@ -381,7 +387,20 @@ void mossa(tessera *table, tessera *playerCards1, int *indexTable, int *numberOf
         if (rotateQuestion == 1) rotate(playerCards1, *choiceptr);
         printf("\n[%d|%d]\n", playerCards1[*choiceptr].num1, playerCards1[*choiceptr].num2);
 
-    do
+        if (mossa1 == 0) // SCELTA DOVE VUOI PUSHARE
+        {
+            // RICHIESTA PUSH
+            puts("\nDove vuoi inserire la tessera selezionata?\n\n1-A destra\n2-A sinistra");
+            do
+            {
+            printf("\nHai scelto l'opzione: ");
+            scanf("%d", &pushQuestion);
+            if (pushQuestion < 1 || pushQuestion > 2) error("Comando non valido. Scegli tra le opzioni disponibili.\n");
+            } 
+            while (pushQuestion < 1 || pushQuestion > 2);
+        }
+
+        do
         {   
             printf("\nConfermi le scelte fatte?\n\n1: Si\n2: No\n\nHai scelto l'opzione: ");
             scanf("%d", &risposta);
@@ -404,9 +423,17 @@ void mossa(tessera *table, tessera *playerCards1, int *indexTable, int *numberOf
         } while (changeResp);
     }
 
-    // INSERIMENRO PRIMA TESSERA se mossa 1 = true
-    puts("Ora che hai deciso la tessera e ruotata opportunamente, non ci resta che inserirla nel tavolo\n");
-    pushHead(table, playerCards1, *choiceptr, indexTable);
-    printTessere(table, *numberOfcards);
-    puts("");
+    if (mossa1 == 1)
+    {
+        pushHead(table, playerCards1, *choiceptr, indexTable);
+    }
+    if (pushQuestion == 1)
+    {
+        pushHead(table, playerCards1, *choiceptr, indexTable);
+    }
+    if (pushQuestion == 2)
+    {
+        pushFooter(table, tableSize, playerCards1, *choiceptr, indexTable);
+    }
+
 }
