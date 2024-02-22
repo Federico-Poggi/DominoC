@@ -22,7 +22,7 @@ int chooseCard(tessera *playercards, int *numberOfcards);
 void rotate(tessera *playerCards1, int i);
 void pushHead(tessera *table, tessera *playerCards1, int choice, int *pointer);
 void pushFooter(tessera *table, int size, tessera *playerCards1, int choice, int *pointer);
-int insertCheck(tessera *table, tessera *playercards, int dimTable, int choice);
+bool insertCheck(tessera *table, tessera *playercards, int *indexTable, int *choice);
 tessera *newPlayercards(tessera *playercards, int size, int choice);
 int playMode();
 void mod1(tessera *std, int numberOfcards);
@@ -98,7 +98,6 @@ void printTessere(tessera *a, int size)
     }
     puts("");
 }
-
 // FUNZIONE PER DISTRIBUIRE LE TESSERE IN BASE AL NUMERO PASSATO DI TESSERE VOLUTE IN MANO DEL GIOCATORE TUTTO CASUALE!!!!
 tessera *giveTessereToPlayer(tessera *tessere, int nTessere)
 {
@@ -165,22 +164,22 @@ void pushFooter(tessera *table, int size, tessera *playerCards1, int choice, int
 }
 
 // CONTROLLO COMPATIBILITA' TESSERE
-int insertCheck(tessera *table, tessera *playercards, int dimTable, int choice)
+bool insertCheck(tessera *table, tessera *playercards, int *indexTable, int *choice)
 {
-    int left = table[0].num1; // Assegno l'estremo sinistro della tessera del domino a sinistra
-    int right = 0;            // Variabile per il salvataggio
-    for (size_t i = 0; i < dimTable; i++)
-    {
-        if (table[i].num2 == 0)
-        {
-            right = table[i - 1].num2;
-            break;
-        }
-    }
-    if ((left == playercards[choice].num2) || (right == playercards[choice].num1))
-        return 1;
+    int left = table[0].num1;            // Assegno l'estremo sinistro della tessera del domino a sinistra
+    int right = table[*indexTable].num2; // Variabile per il salvataggio
+    // for (size_t i = 0; i < dimTable; i++)
+    // {
+    //     if (table[i].num2 == 0)
+    //     {
+    //         right = table[i - 1].num2;
+    //         break;
+    //     }
+    // }
+    if ((left == playercards[*choice].num2) || (left == playercards[*choice].num1) || (right == playercards[*choice].num1) || (right == playercards[*choice].num2))
+        return true;
     else
-        return 0;
+        return false;
 }
 
 // RIDUZIONE ARRAY
@@ -371,8 +370,6 @@ void mossa(tessera *table, tessera *playerCards1, int *indexTable, int *numberOf
         int rotateQuestion = 0;
         *choiceptr = 0;
 
-        // printf("%d", mossa1);
-
         // MOSSA 1
         // STAMPA TESSERE MANO GIOCATORE
         puts("");
@@ -383,6 +380,23 @@ void mossa(tessera *table, tessera *playerCards1, int *indexTable, int *numberOf
         *choiceptr = chooseCard(playerCards1, numberOfcards);
         printf("\n[%d|%d]", playerCards1[*choiceptr].num1, playerCards1[*choiceptr].num2);
         puts("\n");
+
+        // Questa ritorna True se è possibile inserire la tessara dentro al tavolo al contrario TORNA FALSE;
+
+        // Bisogna corregerla
+
+        if (insertCheck(table, playerCards1, indexTable, choiceptr))
+        {
+            printf("Puo essere inserita\n");
+            puts(" ");
+        }
+        else
+        {
+            printf("Non Può essere inserita\n");
+            puts(" ");
+        }
+
+        // CONTROLLE SE LA TESSERA PUO ESSERE INSERITA ATTRAVERSO IL CONTROLLO DEI DUE NUMERI DELLA TESSERA SCELTA
 
         // RICHIESTA ROTAZIONE
         puts("\nVuoi ruotare la tessera selezionata?\n\n1-Si, ruotala\n2-No, lasciala così");
