@@ -18,7 +18,7 @@ tessera *stdTessere();
 tessera *creaTable(int numberOfcards);
 void printTessere(tessera *a, int size);
 tessera *giveTessereToPlayer(tessera *tessere, int nTessere);
-int chooseCard(tessera *playercards);
+int chooseCard(tessera *playercards, int *numberOfcards);
 void rotate(tessera *playerCards1, int i);
 void pushHead(tessera *table, tessera *playerCards1, int choice, int *pointer);
 void pushFooter(tessera *table, int size, tessera *playerCards1, int choice, int *pointer);
@@ -116,17 +116,17 @@ tessera *giveTessereToPlayer(tessera *tessere, int nTessere)
 }
 
 // SCELTA TESSERA MANO GIOCATORE (NO AI)
-int chooseCard(tessera *playercards)
+int chooseCard(tessera *playercards, int *numberOfcards)
 {
     int indice = 0;
     bool verifica = true;
     // Da aggiungere una variabile che tiene il conto delle carte in mano del giocatore; quindi a ogni ciclo corretto diminuire questo numero e quindi stampare "Scegliere una tessera da 1 a n-1"
     while (verifica)
     {
-        printf("%s\n%s", "Quale tessera vuoi giocare?",
-               "Scegliere un numero da 1 a 28: ");
+        printf("Quale tessera vuoi giocare?\nScegliere un numero da 1 a %d: ",
+               *numberOfcards);
         scanf("%d", &indice);
-        if (indice <= 28 && indice >= 1)
+        if (indice <= *numberOfcards && indice >= 1)
             verifica = false;
         else
         {
@@ -380,7 +380,7 @@ void mossa(tessera *table, tessera *playerCards1, int *indexTable, int *numberOf
         puts("");
 
         // RICHIESTA TESSERA DA SCEGLIERE
-        *choiceptr = chooseCard(playerCards1);
+        *choiceptr = chooseCard(playerCards1, numberOfcards);
         printf("\n[%d|%d]", playerCards1[*choiceptr].num1, playerCards1[*choiceptr].num2);
         puts("\n");
 
