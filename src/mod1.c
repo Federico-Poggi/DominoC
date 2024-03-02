@@ -32,7 +32,7 @@ void mod1(tessera *std, int numberOfcards)
         puts("");
         style();
         mossa1 = 0;
-        // numberOfcards -= 1;
+        numberOfcards -= 1;
     } while (numberOfcards); // per ora gioca finché hai carte
 
     // FREE ALL MALLOC CREATED!!!
@@ -136,7 +136,6 @@ void mossa(tessera *table, tessera *playerCards1, int *indexTable, int *numberOf
             case 1:
                 changeResp = false;
                 playAgain = false;
-                *numberOfcards -= 1;
                 puts("");
                 break;
             case 2:
