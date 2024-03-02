@@ -7,6 +7,20 @@
 
 #include "domino.h"
 #include "check.h"
+/**
+ * @brief Controlla se è possibile inserire una tessera sulla tavola di gioco.
+ *
+ * Questa funzione controlla se la tessera scelta dal giocatore può essere inserita sulla tavola di gioco.
+ * Per farlo, confronta i valori delle estremità sinistra e destra della tavola con i valori delle estremità
+ * della tessera scelta.
+ *
+ * @param table Array rappresentante la tavola di gioco.
+ * @param playercards Array delle tessere del giocatore.
+ * @param indexTable Puntatore all'indice dell'ultima tessera inserita sulla tavola di gioco.
+ * @param choice Puntatore all'indice della tessera scelta dal giocatore.
+ * @return true Se la tessera può essere inserita sulla tavola di gioco.
+ * @return false Se la tessera non può essere inserita sulla tavola di gioco.
+ */
 
 bool insertCheck(tessera *table, tessera *playercards, int *indexTable, int *choice)
 {

@@ -7,6 +7,12 @@
 #include "domino.h"
 void mod1(tessera *std, int numberOfcards);
 
+/**
+ * @brief Funzione principale del gioco.
+ *
+ * @return int
+ */
+
 // FUNZIONE MADRE GIOCO
 int main()
 {
@@ -86,7 +92,13 @@ int main()
     // FINE GIOCO
     return 0;
 }
-
+/**
+ * @brief \b Modalità \b di \b gioco
+ *
+ * @li \b 1- \b Modalita \b interattiva
+ * @li \b 2- \b Modalità \b AI
+ * @return \b Int modalità scelta
+ */
 // MODALITA' DI GIOCO MENU'
 int playMode()
 {
