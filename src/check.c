@@ -71,3 +71,21 @@ bool checkInsertable(tessera *table, tessera *playercards, int *indexTable, int 
     }
     return insertable;
 }
+
+bool canGoNext(tessera *table, tessera *playCards, int *indexTable, int numberOfCards)
+{
+    int mostLeft = table[0].num1;
+    int mostRight = table[*indexTable - 1].num2;
+
+    for (unsigned int j = 0; j < numberOfCards; j++)
+    {
+        if ((mostLeft == playCards[j].num2) || (mostLeft == playCards[j].num1) || (mostRight == playCards[j].num1) || (mostRight == playCards[j].num2))
+        {
+            // E' possibile proseguire il gioco
+            printf("\033[1;32m Si puo proseguire: inserire una tessera valida \n \033[0m\n");
+            return true;
+        }
+    }
+    printf("\033[1;31m Mosse possibili terminate \n \033[0m\n");
+    return false;
+}

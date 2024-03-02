@@ -13,4 +13,6 @@ bool insertCheck(tessera *table, tessera *playercards, int *indexTable, int *cho
 
 bool checkInsertable(tessera *table, tessera *playercards, int *indexTable, int *choice, int dxOrSx, int mossa1);
 
+bool canGoNext(tessera *table, tessera *playCards, int *indexTable, int numberOfCards);
+
 #endif // !CHECK_H

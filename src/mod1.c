@@ -14,6 +14,7 @@ void mod1(tessera *std, int numberOfcards)
     int choice = 0;
     int mossa1 = 1;
     int tableSize = numberOfcards;
+    bool canFollow = true;
     tessera *table = creaTable(numberOfcards); // ARRAY TAVOLO
     tessera *playerCards1 = giveTessereToPlayer(std, numberOfcards);
     // printf(" indirizzo di partenza: %p\n\n", playerCards1);
@@ -27,12 +28,17 @@ void mod1(tessera *std, int numberOfcards)
         mossa(table, playerCards1, &indexTable, &numberOfcards, &choice, mossa1, tableSize);
         playerCards1 = newPlayercards(playerCards1, numberOfcards, choice);
         // LA SVOLGIAMO QUI PER NON PERDERCI INDIRIZZZI DI MEMORIA PER LE FREE
-        // printf("indirizzo finale: %p\n\n", playerCards1);
         printTessere(table, tableSize);
         puts("");
         style();
         mossa1 = 0;
         numberOfcards -= 1;
+        canFollow = canGoNext(table, playerCards1, &indexTable, numberOfcards);
+        if (!canFollow)
+        {
+            break;
+        }
+
     } while (numberOfcards); // per ora gioca finché hai carte
 
     // FREE ALL MALLOC CREATED!!!
@@ -44,8 +50,6 @@ void mod1(tessera *std, int numberOfcards)
 // MOSSA MODALITA' CLASSICA
 void mossa(tessera *table, tessera *playerCards1, int *indexTable, int *numberOfcards, int *choiceptr, int mossa1, int tableSize)
 {
-    size_t tableSizeT = sizeof(table) / sizeof(table[0]);
-    printf("La lunghezza dell'array è %ld", tableSizeT);
 
     // VARIABILI SCELTE PLAYER 1
     bool playAgain = true;

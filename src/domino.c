@@ -12,7 +12,7 @@ void style()
 {
     for (char k = 0; k <= 90; ++k)
     {
-        printf("-");
+        printf("\033[1;35m-\033[0m");
     }
     puts(" ");
 };
@@ -20,7 +20,7 @@ void style()
 // STAMPA ERRORE
 void error(const char *message)
 {
-    printf("ERRORE: %s", message);
+    printf("\033[1;31mERRORE: %s\033[0m", message);
 };
 
 // GENERA TESSERE STANDARD
