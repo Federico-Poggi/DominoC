@@ -23,7 +23,16 @@ int main()
 
     // INTRODUZIONE
     style();
-    printf("\nBENVENUTO IN DOMINO\n\n");
+    // printf("\033[1;31m\033[0m ");        // rosso
+    // printf("\033[1;31mVerde\033[0m ");   // verde
+    // printf("\033[1;33mGiallo\033[0m ");  // giallo
+    // printf("\033[1;34mBlu\033[0m ");     // blue
+    // printf("\033[1;35mViola\033[0m ");   // viola
+    // printf("\033[1;36mAzzurro\033[0m "); // azzurro
+    // printf("\033[1;37mBianco\033[0m\n"); // Bianco
+
+    printf("\n\033[1;31mB\033[1;32mE\033[1;33mN\033[1;34mV\033[1;35mE\033[1;36mN\033[1;37mU\033[0m\033[1;31mT\033[1;32mO\033[1;33m \033[1;34mI\033[1;35mN\033[1;36m \033[1;37mD\033[1;31mO\033[1;32mM\033[1;33mI\033[1;34mN\033[1;35mO\033[0m\n\n");
+
     style();
     while (playAgain)
     {
@@ -94,7 +103,6 @@ int playMode()
         if (mod > 3 || mod < 0)
         {
             puts(" ");
-            // printf("Modalità inserita non valida!\n");
             error("Modalità inserita non valida! \n");
             printf("Inserisci una modalità valida [1, 2, 3]: ");
         };
