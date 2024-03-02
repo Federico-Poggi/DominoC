@@ -10,6 +10,7 @@
 void mod1(tessera *std, int numberOfcards)
 {
     // VARIABILI GENERALI MDOALITA' 1
+    int playerPoints = 0;
     int indexTable = 0;
     int choice = 0;
     int mossa1 = 1;
@@ -23,6 +24,7 @@ void mod1(tessera *std, int numberOfcards)
     printf("\nAl giocatore verranno assegnate %d tessere.\nL'obiettivo è quello di disporre le tessere sul tavolo scondo la regola:\nI numeri dei lati adiacenti tra due tessere devono essere identici.\n\n", numberOfcards);
     style();
 
+    //int k = 3; variabile controllo iterazione caso verifica 
     do
     {
         mossa(table, playerCards1, &indexTable, &numberOfcards, &choice, mossa1, tableSize);
@@ -40,6 +42,10 @@ void mod1(tessera *std, int numberOfcards)
         }
 
     } while (numberOfcards); // per ora gioca finché hai carte
+
+    playerPoints = endPoints (table, tableSize);
+
+    printf("\n\033[1;35mComplimenti!\033[0m Hai totalizzato: \033[1;32m%d punti\033[0m", playerPoints);
 
     // FREE ALL MALLOC CREATED!!!
     // I WANT TO BREAK FREE!!!

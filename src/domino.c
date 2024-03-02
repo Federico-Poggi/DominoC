@@ -178,3 +178,16 @@ tessera *newPlayercards(tessera *playerCards1, int size, int choice)
     // printf("librerata vecchia mallocc. %d\n", vecchioArray[1].num2);
     return new; // NUOVO INDIRIZZO CONTENTE NUOVA MALLOC 0x5598feb00d50
 }
+
+// PUNTEGGI FINALI
+int endPoints (tessera *table, int sizeTab) {
+    int sumPoint = 0;
+    for (int k = 0; k < sizeTab; k++) {
+        if (table[k].num1 == 0){
+            continue;
+        }
+        sumPoint += table[k].num1 + table[k].num2;
+        //printf("sum = %d", sumPoint);
+    }
+    return sumPoint;
+}

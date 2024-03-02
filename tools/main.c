@@ -24,7 +24,7 @@ int main()
     // INTRODUZIONE
     style();
     // printf("\033[1;31m\033[0m ");        // rosso
-    // printf("\033[1;31mVerde\033[0m ");   // verde
+    // printf("\033[1;32mVerde\033[0m ");   // verde
     // printf("\033[1;33mGiallo\033[0m ");  // giallo
     // printf("\033[1;34mBlu\033[0m ");     // blue
     // printf("\033[1;35mViola\033[0m ");   // viola
