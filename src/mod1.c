@@ -4,8 +4,8 @@
 #include <time.h>
 #include <stdbool.h>
 
-#include "../include/domino.h"
-#include "../include/check.h"
+#include "domino.h"
+#include "check.h"
 
 void mod1(tessera *std, int numberOfcards)
 {
@@ -44,6 +44,8 @@ void mod1(tessera *std, int numberOfcards)
 // MOSSA MODALITA' CLASSICA
 void mossa(tessera *table, tessera *playerCards1, int *indexTable, int *numberOfcards, int *choiceptr, int mossa1, int tableSize)
 {
+    size_t tableSizeT = sizeof(table) / sizeof(table[0]);
+    printf("La lunghezza dell'array è %ld", tableSizeT);
     // VARIABILI SCELTE PLAYER 1
     bool playAgain = true;
     bool changeResp = true;
