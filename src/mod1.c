@@ -30,6 +30,7 @@ void mod1(tessera *std, int numberOfcards)
         mossa(table, playerCards1, &indexTable, &numberOfcards, &choice, mossa1, tableSize);
         playerCards1 = newPlayercards(playerCards1, numberOfcards, choice);
         // LA SVOLGIAMO QUI PER NON PERDERCI INDIRIZZZI DI MEMORIA PER LE FREE
+        printf("\033[1;32mIl tavolo al momento presenta le tessere:\n\n\033[0m");  
         printTessere(table, tableSize);
         puts("");
         style();
@@ -73,14 +74,15 @@ void mossa(tessera *table, tessera *playerCards1, int *indexTable, int *numberOf
 
         // MOSSA 1
         // STAMPA TESSERE MANO GIOCATORE
-        puts("");
+        //puts("");
+        printf("\033[1;32m\nLe tessere a tua disposizione sono:\n\n\033[0m");
         printTessere(playerCards1, *numberOfcards);
         puts("");
 
         // RICHIESTA TESSERA DA SCEGLIERE
         *choiceptr = chooseCard(playerCards1, numberOfcards);
-        printf("\n[%d|%d]", playerCards1[*choiceptr].num1, playerCards1[*choiceptr].num2);
-        puts("\n");
+        //printf("\n[%d|%d]", playerCards1[*choiceptr].num1, playerCards1[*choiceptr].num2);
+        puts("");
 
         // Questa ritorna True se è possibile inserire la tessara dentro al tavolo al contrario TORNA FALSE;
         checkValue = insertCheck(table, playerCards1, indexTable, choiceptr);
@@ -99,14 +101,17 @@ void mossa(tessera *table, tessera *playerCards1, int *indexTable, int *numberOf
             {
                 printf("\nHai scelto l'opzione: ");
                 scanf("%d", &rotateQuestion);
-                if (rotateQuestion < 1 || rotateQuestion > 2)
+                if (rotateQuestion < 1 || rotateQuestion > 2) {
+                    puts("");
                     error("Comando non valido. Scegli tra le opzioni disponibili.\n");
+                }
             } while (rotateQuestion < 1 || rotateQuestion > 2);
 
-            if (rotateQuestion == 1)
+            if (rotateQuestion == 1) {
                 rotate(playerCards1, *choiceptr);
-            printf("\n[%d|%d]\n", playerCards1[*choiceptr].num1, playerCards1[*choiceptr].num2);
-
+            }
+            printf("\033[1;32m\nLa tessera dopo la rotazione è: [%d|%d]\n\033[0m", playerCards1[*choiceptr].num1, playerCards1[*choiceptr].num2);
+            
             if (mossa1 == 0) // SCELTA DOVE VUOI PUSHARE
             {
                 // RICHIESTA PUSH
@@ -123,12 +128,12 @@ void mossa(tessera *table, tessera *playerCards1, int *indexTable, int *numberOf
             bool check = checkInsertable(table, playerCards1, indexTable, choiceptr, pushQuestion, mossa1);
             if (check)
             {
-                printf("\033[1;32mI valori sono uguali può essere inserita\n \033[0m\n");
+                printf("\033[1;32m\nI valori sono uguali, può essere inserita\n\033[0m");
                 isIsertable = check;
             }
-            else if (isIsertable == false && rotateQuestion == 1)
+            else if (isIsertable == false) //&& rotateQuestion == 1
             {
-                printf("\033[1;31mI valori non sono uguali può essere inserita\n \033[0m\n");
+                printf("\033[1;31mI valori non sono uguali, non può essere inserita\n\033[0m");
                 // Se è stata ruotata resettarla allo stato precedente
                 rotate(playerCards1, *choiceptr);
                 // printf("Tessera [%d|%d]", playerCards1[*choiceptr].num1, playerCards1[*choiceptr].num2);
