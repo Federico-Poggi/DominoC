@@ -3,9 +3,10 @@
 #include <stdlib.h>
 #include <time.h>
 #include <stdbool.h>
-#include "check.h"
 #include "domino.h"
-void mod1(tessera *std, int numberOfcards);
+#include "check.h"
+
+void mod1(tessera* std, int numberOfcards);
 
 /**
  * @brief Funzione principale del gioco.
@@ -13,7 +14,7 @@ void mod1(tessera *std, int numberOfcards);
  * @return int
  */
 
-// FUNZIONE MADRE GIOCO
+ // FUNZIONE MADRE GIOCO
 int main()
 {
     // SEME NUMERI RANDOMICI
@@ -23,7 +24,7 @@ int main()
     bool playAgain = true;
     bool changeResp = true;
     // VARIABILI GIOCO MAIN
-    tessera *std = stdTessere();
+    tessera* std = stdTessere();
     int risposta = 0;
     int numberOfcards = 28;
 
@@ -99,7 +100,7 @@ int main()
  * @li \b 2- \b Modalità \b AI
  * @return \b Int modalità scelta
  */
-// MODALITA' DI GIOCO MENU'
+ // MODALITA' DI GIOCO MENU'
 int playMode()
 {
     int mod = 0;

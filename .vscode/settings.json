@@ -5,7 +5,8 @@
     "*.c": "c",
     "*.sass": "scss",
     "string.h": "c",
-    "check.h": "c"
+    "check.h": "c",
+    "time.h": "c"
   },
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "g++",
@@ -44,7 +45,10 @@
   "C_Cpp_Runner.warningsAsError": false,
   "C_Cpp_Runner.compilerArgs": [],
   "C_Cpp_Runner.linkerArgs": [],
-  "C_Cpp_Runner.includePaths": [],
+  "C_Cpp_Runner.includePaths": [
+    "${workspaceFolder}/**",
+    "${workspaceFolder}/include"
+  ],
   "C_Cpp_Runner.includeSearch": [
     "*",
     "**/*"
