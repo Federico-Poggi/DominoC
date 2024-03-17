@@ -87,7 +87,7 @@ tessera *giveTessereToPlayer(tessera *tessere, int nTessere)
         palyerCards[i].num1 = tessere[randNumberForCycleTheCards].num1;
         palyerCards[i].num2 = tessere[randNumberForCycleTheCards].num2;
     }
-
+    
     return palyerCards;
 }
 // SCELTA TESSERA MANO GIOCATORE (NO AI)

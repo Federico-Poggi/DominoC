@@ -53,7 +53,12 @@ int main()
             mod1(std, numberOfcards);
             break;
         case 2:
+            int tableSize;
             printf("\nModalità: %d\n", modalita);
+            printf("Inserisci il numero di tessere da creare \n");
+            scanf("%d", &tableSize);
+            printf("Il numero di tessere è %d \n", tableSize);
+            modAI(std, tableSize);
             break;
         case 3:
             printf("\nModalità: %d\n", modalita);

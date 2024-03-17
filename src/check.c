@@ -22,7 +22,7 @@
  * @return false Se la tessera non può essere inserita sulla tavola di gioco.
  */
 
-bool insertCheck(tessera *table, tessera *playercards, int *indexTable, int *choice)
+bool insertCheck(tessera* table, tessera* playercards, int* indexTable, int* choice)
 {
 
     int left = table[0].num1;                // Assegno l'estremo sinistro della  tessera del domino a sinistra
@@ -48,7 +48,7 @@ bool insertCheck(tessera *table, tessera *playercards, int *indexTable, int *cho
     };
 }
 
-bool checkInsertable(tessera *table, tessera *playercards, int *indexTable, int *choice, int dxOrSx, int mossa1)
+bool checkInsertable(tessera* table, tessera* playercards, int* indexTable, int* choice, int dxOrSx, int mossa1)
 {
     // Estremo più a destra
     int left = table[0].num1;
@@ -86,7 +86,7 @@ bool checkInsertable(tessera *table, tessera *playercards, int *indexTable, int 
     return insertable;
 }
 
-bool canGoNext(tessera *table, tessera *playCards, int *indexTable, int numberOfCards)
+bool canGoNext(tessera* table, tessera* playCards, int* indexTable, int numberOfCards)
 {
     int mostLeft = table[0].num1;
     int mostRight = table[*indexTable - 1].num2;
@@ -103,3 +103,55 @@ bool canGoNext(tessera *table, tessera *playCards, int *indexTable, int numberOf
     printf("\033[1;31m Mosse possibili terminate \n \033[0m\n");
     return false;
 }
+
+int findMostFrequent(tessera* table, int tableSize) {
+    int most_frequent = 0;
+    int frequenza = 0;
+
+    for (size_t i = 0; i < tableSize; i++)
+    {
+        tessera current_value = table[i];
+
+        int repetition_num1 = 0;
+        int repetition_num2 = 0;
+
+        int tessera_num1 = current_value.num1;
+        int tessera_num2 = current_value.num2;
+
+        for (size_t k = i; k < tableSize; k++)
+        {
+            tessera thisTessera = table[k];
+            int numberOfThis_1 = thisTessera.num1;
+            int numberOfThis_2 = thisTessera.num2;
+
+            if ((numberOfThis_1 == tessera_num1) || (numberOfThis_1 == tessera_num2)) {
+                repetition_num1++;
+                printf("*\n");
+            }
+
+            if (((numberOfThis_2 == tessera_num1) || (numberOfThis_2 == tessera_num2)))
+            {
+                repetition_num2++;
+                printf("X\n");
+            }
+        }
+
+        if (repetition_num1 > repetition_num2) {
+            if (repetition_num1 > frequenza) {
+                frequenza = repetition_num1;
+                most_frequent = current_value.num1;
+            }
+        }
+        else {
+            if (repetition_num2 > frequenza) {
+                frequenza = repetition_num2;
+                most_frequent = current_value.num2;
+            }
+        }
+
+
+    }
+    printf("Ferquenza  %d e numero_tessera %d", frequenza, most_frequent);
+    return most_frequent;
+}
+

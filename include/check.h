@@ -9,10 +9,12 @@
 #ifndef CHECK_H
 #define CHECK_H
 
-bool insertCheck(tessera *table, tessera *playercards, int *indexTable, int *choice);
+bool insertCheck(tessera* table, tessera* playercards, int* indexTable, int* choice);
 
-bool checkInsertable(tessera *table, tessera *playercards, int *indexTable, int *choice, int dxOrSx, int mossa1);
+bool checkInsertable(tessera* table, tessera* playercards, int* indexTable, int* choice, int dxOrSx, int mossa1);
 
-bool canGoNext(tessera *table, tessera *playCards, int *indexTable, int numberOfCards);
+bool canGoNext(tessera* table, tessera* playCards, int* indexTable, int numberOfCards);
+
+int findMostFrequent(tessera* table, int tableSize);
 
 #endif // !CHECK_H
