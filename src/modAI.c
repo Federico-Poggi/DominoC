@@ -26,11 +26,12 @@ int findDim (tessera *AiCards, int tableSize) {
     return count;
 }
 
+/*
 cardObj *createArray (tessera *AiCards, int tableSize) {
     int sizeObj = findDim (AiCards, tableSize);
     cardObj *output = (cardObj *)malloc(sizeof(cardObj) * sizeObj);
 
-    /*
+
 
     roba simile a prima du find dim ma con l'array obj
 
@@ -40,13 +41,39 @@ cardObj *createArray (tessera *AiCards, int tableSize) {
             
         }
     } 
-    */
+    
 
 
 
 
     return output;
 }
+*/
+
+void swap (tessera *AiCards1, tessera *AiCards2) {
+    int temp1 = AiCards1->num1;
+    AiCards1->num1 = AiCards2->num1;
+    AiCards2->num1 = temp1;
+
+    int temp2 = AiCards1->num2;
+    AiCards1->num2 = AiCards2->num2;
+    AiCards2->num2 = temp2;
+}
+
+void sortCards(tessera *AiCards, int tableSize) {
+    // Sort num1
+    for (int i = 0; i < tableSize - 1; i++) {
+        for (int j = 0; j < tableSize - 1; j++) {
+            if (AiCards[j].num1 > AiCards[j+1].num1) {
+                swap(&AiCards[j], &AiCards[j+1]);
+            }
+        }
+    }
+
+   
+}
+
+
 
 void modAI(tessera *alltessere, int tableSize) {
 
@@ -55,11 +82,19 @@ void modAI(tessera *alltessere, int tableSize) {
     tessera *AiCards = giveTessereToPlayer(alltessere, tableSize);
     printTessere(AiCards, tableSize);
 
+    puts("\n");
+
+    sortCards (AiCards, tableSize);
+    printTessere(AiCards, tableSize);
+
     //int sizeObj = findDim (AiCards, tableSize); 
-    cardObj *arrayObj = createArray (AiCards, tableSize);
+    //cardObj *arrayObj = createArray (AiCards, tableSize);
+
+
+    
 
     free(table);
     free(AiCards);
-    free(arrayObj);
+    //free(arrayObj);
 }
 
