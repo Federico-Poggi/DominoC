@@ -20,29 +20,14 @@ int findDim(tessera* AiCards, int tableSize) {
     return count;
 }
 
-/*
 cardObj *createArray (tessera *AiCards, int tableSize) {
     int sizeObj = findDim (AiCards, tableSize);
     cardObj *output = (cardObj *)malloc(sizeof(cardObj) * sizeObj);
 
-
-
-    roba simile a prima du find dim ma con l'array obj
-
-    output[0].card
-    for (int i = 1; i < tableSize; i++) {
-        for (int j = 0; j < tableSize; j++)  {
-
-        }
-    }
-
-
-
-
+    //roba simile a prima du find dim ma con l'array obj
 
     return output;
 }
-*/
 
 void swap(tessera* AiCards1, tessera* AiCards2) {
     tessera temp1 = *AiCards1;
