@@ -7,8 +7,9 @@
 #include "domino.h"
 #include "check.h"
 
-void mod1(tessera *std, int numberOfcards)
+void mod1(tessera* std, int numberOfcards)
 {
+
     // VARIABILI GENERALI MDOALITA' 1
     int playerPoints = 0;
     int indexTable = 0;
@@ -16,8 +17,8 @@ void mod1(tessera *std, int numberOfcards)
     int mossa1 = 1;
     int tableSize = numberOfcards;
     bool canFollow = true;
-    tessera *table = creaTable(numberOfcards); // ARRAY TAVOLO
-    tessera *playerCards1 = giveTessereToPlayer(std, numberOfcards);
+    tessera* table = creaTable(numberOfcards); // ARRAY TAVOLO
+    tessera* playerCards1 = giveTessereToPlayer(std, numberOfcards);
     // printf(" indirizzo di partenza: %p\n\n", playerCards1);
 
     // INTRODUZIONE GIOCO (COMPARE SOLO ALLA PRIMA PARTITA)
@@ -43,7 +44,7 @@ void mod1(tessera *std, int numberOfcards)
 
     } while (numberOfcards); // per ora gioca finché hai carte
 
-    playerPoints = endPoints (table, tableSize);
+    playerPoints = endPoints(table, tableSize);
 
     printf("\n\033[1;35mComplimenti!\033[0m Hai totalizzato: \033[1;32m%d punti\033[0m", playerPoints);
 
@@ -54,7 +55,7 @@ void mod1(tessera *std, int numberOfcards)
 }
 
 // MOSSA MODALITA' CLASSICA
-void mossa(tessera *table, tessera *playerCards1, int *indexTable, int *numberOfcards, int *choiceptr, int mossa1, int tableSize)
+void mossa(tessera* table, tessera* playerCards1, int* indexTable, int* numberOfcards, int* choiceptr, int mossa1, int tableSize)
 {
 
     // VARIABILI SCELTE PLAYER 1
