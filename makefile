@@ -1,4 +1,4 @@
-OPTIONS=-O3 -DNDEBUG -Wall -Wextra
+OPTIONS=-O3 -DNDEBUG -Wall -Wextra -w
 # 
 all:build/dominoC
 # 

@@ -201,8 +201,6 @@ void sumFreq(freq* freqTot1, freq* freqTot2) {
     }
 }
 
-
-
 void printFreq(freq* freqTot) {
     for (size_t i = 0; i < 6; i++)
     {

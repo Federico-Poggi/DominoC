@@ -86,8 +86,9 @@ void modAI(tessera* alltessere, int tableSize) {
 
     puts("\n");
 
-    sortCards(AiCards, tableSize);
     findMostFrequent(AiCards, tableSize);
+
+    sortCards(AiCards, tableSize);
     // printTessere(AiCards, tableSize);
 
     freq* ptrFreq = getFreq();
