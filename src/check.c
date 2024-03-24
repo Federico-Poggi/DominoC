@@ -23,6 +23,11 @@
  */
 
 
+freq totalFreq[];
+
+freq* getFreq() {
+    return totalFreq;
+}
 
 bool insertCheck(tessera* table, tessera* playercards, int* indexTable, int* choice)
 {
@@ -196,6 +201,8 @@ void sumFreq(freq* freqTot1, freq* freqTot2) {
     }
 }
 
+
+
 void printFreq(freq* freqTot) {
     for (size_t i = 0; i < 6; i++)
     {
@@ -208,7 +215,6 @@ int findMostFrequent(tessera* table, int tableSize) {
     tessera* tempTable = malloc(tableSize * sizeof(tessera));
     int mostFreq;
     if (tempTable == NULL) {
-
         exit(EXIT_FAILURE);
     }
 
@@ -219,11 +225,11 @@ int findMostFrequent(tessera* table, int tableSize) {
 
     sortMerge(tempTable, leftIndex, rightIndex);
 
-    // for (size_t i = 0; i < tableSize; i++)
-    // {
-    //     printf("[%d|%d]", tempTable[i].num1, tempTable[i].num2);
-    // }
-    // puts(" ");
+    for (size_t i = 0; i < tableSize; i++)
+    {
+        printf("[%d|%d]", tempTable[i].num1, tempTable[i].num2);
+    }
+    puts(" ");
 
     //*Array con frequenze;
     //** Frequenze num1
@@ -293,6 +299,12 @@ int findMostFrequent(tessera* table, int tableSize) {
             mostFreq = ptr[i].num;
         }
     }
+
+    for (size_t i = 0; i < 6; i++)
+    {
+        totalFreq[i] = freq_tot[i];
+    }
+
 
     printf("Il numero più frequente è: %d", mostFreq);
 

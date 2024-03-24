@@ -14,6 +14,7 @@ typedef struct {
     int frequency;
 } freq;
 
+freq* getFreq();
 
 bool insertCheck(tessera* table, tessera* playercards, int* indexTable, int* choice);
 
