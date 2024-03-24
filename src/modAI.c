@@ -7,12 +7,6 @@
 #include "domino.h"
 #include "check.h"
 
-typedef struct
-{
-    tessera card;
-    int freq;
-} cardObj; // ogetto carta che contiene tessera e sua frequenza
-
 int findDim(tessera* AiCards, int tableSize) {
     int count = 1; // prima tessera non ha doppioni
     for (int i = 1; i < tableSize; i++) {
