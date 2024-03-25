@@ -1,7 +1,7 @@
-OPTIONS=-O3 -DNDEBUG -Wall -Wextra
+OPTIONS=-O3 -DNDEBUG -Wall -Wextra -w
 all:build/dominoC
 
-debug:OPTION=-O0 -DNDEBUG -Wall -Wextra
+debug:OPTION=-O0 -DNDEBUG -Wall -Wextra -w
 debug:build/dominoC
 
 build/dominoC: build/check.o build/domino.o build/mod1.o tools/main.c
