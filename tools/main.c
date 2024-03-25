@@ -49,7 +49,7 @@ int main()
         switch (modalita)
         {
         case 1:
-            printf("\nModalità: %d\n", modalita);
+            printf("\n\033[1;34mModalità: %d\033[0m\n", modalita);
             mod1(std, numberOfcards);
             break;
         case 2:
@@ -109,9 +109,9 @@ int main()
 int playMode()
 {
     int mod = 0;
-    printf("Inserisci la modalita di gioco:");
+    printf("Inserisci la modalita di gioco:"); 
     puts("\n");
-    printf("1: Modalità classica interattiva\n2: Modalità AI\n3:");
+    printf("\033[1;34m1: Modalità classica interattiva\033[0m\n2: Modalità AI\n3:"); 
     puts("\n");
     printf("Inserisci il numero della modalità desiderata [1, 2, 3]: ");
     do
