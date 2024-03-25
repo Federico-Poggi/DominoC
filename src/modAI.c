@@ -35,32 +35,11 @@ void sortCards(tessera* AiCards, int Size) {
 }
 
 int findDim(tessera* AiCards, int tableSize) {
-    int count = 1;
-    for (int i = 1; i < tableSize; i++) {
-        if ((AiCards[i].num1 != AiCards[i - 1].num1) && (AiCards[i].num2 != AiCards[i - 1].num2)) {
-            count++;
-        }
-        printf("\n%d\n", count);
-    }
-    return count;
+    
 }
 
 cardObj *createArray (tessera *AiCards, int tableSize, int size) {
-    printf("%d\n", size);
-    cardObj *output = (cardObj *)malloc(sizeof(cardObj) * size);
-    int a = 0;
-    output[a].freq += 1;
-    for (int j = 1; j < tableSize; j++) {
-        if ((AiCards[j].num1 == AiCards[j - 1].num1) && (AiCards[j].num2 == AiCards[j - 1].num2)) {
-            output[a].freq += 1;
-        }
-        else {
-            output[a].card = AiCards[j];
-            a++;
-            output[a].freq += 1;
-        }
-    }
-    return output;
+    
 }
 
 void modAI(tessera* alltessere, int tableSize) {
