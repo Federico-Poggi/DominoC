@@ -7,48 +7,58 @@
 #include "domino.h"
 #include "check.h"
 
-typedef struct
-{
-    tessera card;
-    int freq;
-} cardObj; // ogetto carta che contiene tessera e sua frequenza
+
 
 int findDim(tessera* AiCards, int tableSize) {
-    int count = 1; // prima tessera non ha doppioni
-    for (int i = 1; i < tableSize; i++) {
+    int count = 0; // Inizializziamo il conteggio a 0
+    int i = 0;
+    while (i < tableSize)
+    {
+        int j = i + 1;
         count++;
-        for (int j = i - 1; j >= 0; j--) {
-            if ((AiCards[i].num1 == AiCards[j].num1) && (AiCards[i].num2 == AiCards[j].num2)) {
-                count--;
-            }
+        while (j < tableSize && AiCards[i].num1 == AiCards[j].num1 && AiCards[i].num2 == AiCards[j].num2) {
+            j++;
         }
+        i = j;
     }
     return count;
 }
 
-/*
-cardObj *createArray (tessera *AiCards, int tableSize) {
-    int sizeObj = findDim (AiCards, tableSize);
-    cardObj *output = (cardObj *)malloc(sizeof(cardObj) * sizeObj);
+cardObj* createArray(tessera* AiCards, int tableSize, int size) {
+    int sizeObj = findDim(AiCards, tableSize);
+    cardObj* output = (cardObj*)malloc(sizeof(cardObj) * sizeObj);
+    int c = 0;
+    int index = 0;
 
+    printf("La size: %d\n", size);
 
-
-    roba simile a prima du find dim ma con l'array obj
-
-    output[0].card
-    for (int i = 1; i < tableSize; i++) {
-        for (int j = 0; j < tableSize; j++)  {
-
+    while (c < size)
+    {
+        int frqQ = 0;
+        int i = index;
+        while (i < tableSize && AiCards[i].num1 == AiCards[i + 1].num1 && AiCards[i].num2 == AiCards[i + 1].num2)
+        {
+            frqQ++;
+            i++;
         }
+
+        output[c].card = AiCards[index];
+        output[c].freq = frqQ + 1;
+
+        index = i + 1;
+        c++;
     }
 
 
-
+    for (size_t i = 0; i < size; i++)
+    {
+        printf("[%d|%d]", output[i].card.num1, output[i].card.num2);
+        printf("--> %d\n", output[i].freq);
+    }
 
 
     return output;
 }
-*/
 
 void swap(tessera* AiCards1, tessera* AiCards2) {
     tessera temp1 = *AiCards1;
@@ -89,24 +99,26 @@ void modAI(tessera* alltessere, int tableSize) {
     findMostFrequent(AiCards, tableSize);
 
     sortCards(AiCards, tableSize);
-    // printTessere(AiCards, tableSize);
+    puts(" ");
+    printf("Il tavolo ordinato:\n");
+    printTessere(AiCards, tableSize);
 
     freq* ptrFreq = getFreq();
 
-    for (size_t i = 0; i < 6; i++)
-    {
-        printf("{%d|%d}", ptrFreq[i].num, ptrFreq[i].frequency);
-    }
+    // for (size_t i = 0; i < 6; i++)
+    // {
+    //     printf("{%d|%d}", ptrFreq[i].num, ptrFreq[i].frequency);
+    // }
 
 
-    //int sizeObj = findDim (AiCards, tableSize); 
-    //cardObj *arrayObj = createArray (AiCards, tableSize);
+    int sizeObj = findDim(AiCards, tableSize);
+    cardObj* arrayObj = createArray(AiCards, tableSize, sizeObj);
 
 
 
 
     free(table);
     free(AiCards);
-    //free(arrayObj);
+    free(arrayObj);
 }
 

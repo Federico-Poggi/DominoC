@@ -14,6 +14,12 @@ typedef struct {
     int frequency;
 } freq;
 
+typedef struct
+{
+    tessera card;
+    int freq;
+} cardObj; // ogetto carta che contiene tessera e sua frequenza
+
 freq* getFreq();
 
 bool insertCheck(tessera* table, tessera* playercards, int* indexTable, int* choice);

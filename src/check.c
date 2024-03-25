@@ -223,11 +223,11 @@ int findMostFrequent(tessera* table, int tableSize) {
 
     sortMerge(tempTable, leftIndex, rightIndex);
 
-    for (size_t i = 0; i < tableSize; i++)
-    {
-        printf("[%d|%d]", tempTable[i].num1, tempTable[i].num2);
-    }
-    puts(" ");
+    // for (size_t i = 0; i < tableSize; i++)
+    // {
+    //     printf("[%d|%d]", tempTable[i].num1, tempTable[i].num2);
+    // }
+    // puts(" ");
 
     //*Array con frequenze;
     //** Frequenze num1
