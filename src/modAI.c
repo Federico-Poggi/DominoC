@@ -7,28 +7,6 @@
 #include "domino.h"
 #include "check.h"
 
-int findDim(tessera* AiCards, int tableSize) {
-    int count = 1; // prima tessera non ha doppioni
-    for (int i = 1; i < tableSize; i++) {
-        count++;
-        for (int j = i - 1; j >= 0; j--) {
-            if ((AiCards[i].num1 == AiCards[j].num1) && (AiCards[i].num2 == AiCards[j].num2)) {
-                count--;
-            }
-        }
-    }
-    return count;
-}
-
-cardObj *createArray (tessera *AiCards, int tableSize) {
-    int sizeObj = findDim (AiCards, tableSize);
-    cardObj *output = (cardObj *)malloc(sizeof(cardObj) * sizeObj);
-
-    //roba simile a prima du find dim ma con l'array obj
-
-    return output;
-}
-
 void swap(tessera* AiCards1, tessera* AiCards2) {
     tessera temp1 = *AiCards1;
     *AiCards1 = *AiCards2;
@@ -56,35 +34,65 @@ void sortCards(tessera* AiCards, int Size) {
     }
 }
 
+int findDim(tessera* AiCards, int tableSize) {
+    int count = 1;
+    for (int i = 1; i < tableSize; i++) {
+        if ((AiCards[i].num1 != AiCards[i - 1].num1) && (AiCards[i].num2 != AiCards[i - 1].num2)) {
+            count++;
+        }
+        printf("\n%d\n", count);
+    }
+    return count;
+}
+
+cardObj *createArray (tessera *AiCards, int tableSize, int size) {
+    printf("%d\n", size);
+    cardObj *output = (cardObj *)malloc(sizeof(cardObj) * size);
+    int a = 0;
+    output[a].freq += 1;
+    for (int j = 1; j < tableSize; j++) {
+        if ((AiCards[j].num1 == AiCards[j - 1].num1) && (AiCards[j].num2 == AiCards[j - 1].num2)) {
+            output[a].freq += 1;
+        }
+        else {
+            output[a].card = AiCards[j];
+            a++;
+            output[a].freq += 1;
+        }
+    }
+    return output;
+}
+
 void modAI(tessera* alltessere, int tableSize) {
 
-    tessera* table = creaTable(tableSize);
+    // 1: setting IA
 
+    // Creazione tavolo e tessere
+    tessera* table = creaTable(tableSize);
     tessera* AiCards = giveTessereToPlayer(alltessere, tableSize);
     printTessere(AiCards, tableSize);
-
     puts("\n");
 
-    sortCards(AiCards, tableSize);
+    // Ordinmanto e Registro frequenze tessere
     findMostFrequent(AiCards, tableSize);
-    // printTessere(AiCards, tableSize);
-
     freq* ptrFreq = getFreq();
+    sortCards(AiCards, tableSize); 
+    printTessere(AiCards, tableSize);
+    int sizeObj = findDim (AiCards, tableSize);
+    cardObj *arrayObj = createArray (AiCards, tableSize, sizeObj);
 
-    for (size_t i = 0; i < 6; i++)
-    {
-        printf("{%d|%d}", ptrFreq[i].num, ptrFreq[i].frequency);
+    //printTessere(AiCards, tableSize);
+
+    for (int k = 0; k < sizeObj; k++) {
+        printf("[%d|%d] -> %d\n", arrayObj[k].card.num1, arrayObj[k].card.num2, arrayObj[k].freq);
     }
 
-
-    //int sizeObj = findDim (AiCards, tableSize); 
-    //cardObj *arrayObj = createArray (AiCards, tableSize);
-
-
-
-
+    // FREE ALL MALLOC CREATED!!!
+    // I WANT TO BREAK FREE!!!
     free(table);
     free(AiCards);
-    //free(arrayObj);
+    free(arrayObj);
+
+    // FINE
 }
 
