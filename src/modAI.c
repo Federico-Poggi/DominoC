@@ -76,34 +76,37 @@ void sortCards(tessera* AiCards, int Size) {
     }
 }
 
+
 void modAI(tessera* alltessere, int tableSize) {
 
-    tessera* table = creaTable(tableSize);
+    // 1: setting IA
 
+    // Creazione tavolo e tessere
+    tessera* table = creaTable(tableSize);
     tessera* AiCards = giveTessereToPlayer(alltessere, tableSize);
     printTessere(AiCards, tableSize);
-
     puts("\n");
 
+    // Ordinmanto e Registro frequenze tessere
     findMostFrequent(AiCards, tableSize);
-
-    sortCards(AiCards, tableSize);
-    puts(" ");
-    printf("Il tavolo ordinato:\n");
-    printTessere(AiCards, tableSize);
-
     freq* ptrFreq = getFreq();
-
+    sortCards(AiCards, tableSize);
+    printTessere(AiCards, tableSize);
     int sizeObj = findDim(AiCards, tableSize);
     cardObj* arrayObj = createArray(AiCards, tableSize, sizeObj);
 
-    // for (int k = 0; k < sizeObj; k++) {
-    //     printf("[%d|%d] -> %d\n", arrayObj[k].card.num1, arrayObj[k].card.num2, arrayObj[k].freq);
-    // }
+    //printTessere(AiCards, tableSize);
 
+    for (int k = 0; k < sizeObj; k++) {
+        printf("[%d|%d] -> %d\n", arrayObj[k].card.num1, arrayObj[k].card.num2, arrayObj[k].freq);
+    }
 
+    // FREE ALL MALLOC CREATED!!!
+    // I WANT TO BREAK FREE!!!
     free(table);
     free(AiCards);
     free(arrayObj);
+
+    // FINE
 }
 

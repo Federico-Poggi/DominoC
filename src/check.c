@@ -22,12 +22,7 @@
  * @return false Se la tessera non può essere inserita sulla tavola di gioco.
  */
 
-
-freq totalFreq[];
-
-freq* getFreq() {
-    return totalFreq;
-}
+ // Funzioni controllo Interattiva
 
 bool insertCheck(tessera* table, tessera* playercards, int* indexTable, int* choice)
 {
@@ -109,6 +104,15 @@ bool canGoNext(tessera* table, tessera* playCards, int* indexTable, int numberOf
     }
     printf("\033[1;31m Mosse possibili terminate \n \033[0m\n");
     return false;
+}
+
+
+// Funzioni controllo IA
+
+freq totalFreq[];
+
+freq* getFreq() {
+    return totalFreq;
 }
 
 // * Table contiene le tessere del tavolo
@@ -223,11 +227,7 @@ int findMostFrequent(tessera* table, int tableSize) {
 
     sortMerge(tempTable, leftIndex, rightIndex);
 
-    // for (size_t i = 0; i < tableSize; i++)
-    // {
-    //     printf("[%d|%d]", tempTable[i].num1, tempTable[i].num2);
-    // }
-    // puts(" ");
+
 
     //*Array con frequenze;
     //** Frequenze num1
@@ -304,7 +304,7 @@ int findMostFrequent(tessera* table, int tableSize) {
     }
 
 
-    printf("Il numero più frequente è: %d", mostFreq);
+    //printf("Il numero più frequente è: %d", mostFreq);
 
     free(tempTable);
     return mostFreq;

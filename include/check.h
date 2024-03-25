@@ -9,6 +9,12 @@
 #ifndef CHECK_H
 #define CHECK_H
 
+typedef struct
+{
+    tessera card;
+    int freq;
+} cardObj; // ogetto carta che contiene tessera e sua frequenza
+
 typedef struct {
     int num;
     int frequency;
