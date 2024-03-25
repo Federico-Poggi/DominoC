@@ -3,10 +3,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include <stdbool.h>
-
 #include "domino.h"
 #include "check.h"
-
 
 
 int findDim(tessera* AiCards, int tableSize) {
@@ -48,15 +46,6 @@ cardObj* createArray(tessera* AiCards, int tableSize, int size) {
         index = i + 1;
         c++;
     }
-
-
-    for (size_t i = 0; i < size; i++)
-    {
-        printf("[%d|%d]", output[i].card.num1, output[i].card.num2);
-        printf("--> %d\n", output[i].freq);
-    }
-
-
     return output;
 }
 
@@ -105,16 +94,12 @@ void modAI(tessera* alltessere, int tableSize) {
 
     freq* ptrFreq = getFreq();
 
-    // for (size_t i = 0; i < 6; i++)
-    // {
-    //     printf("{%d|%d}", ptrFreq[i].num, ptrFreq[i].frequency);
-    // }
-
-
     int sizeObj = findDim(AiCards, tableSize);
     cardObj* arrayObj = createArray(AiCards, tableSize, sizeObj);
 
-
+    // for (int k = 0; k < sizeObj; k++) {
+    //     printf("[%d|%d] -> %d\n", arrayObj[k].card.num1, arrayObj[k].card.num2, arrayObj[k].freq);
+    // }
 
 
     free(table);
