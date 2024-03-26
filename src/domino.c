@@ -7,6 +7,8 @@
 
 #include "domino.h"
 
+const MAX_VAL_TESSERA = 6;
+
 // FUNZIONE STILE GRAFICA
 void style()
 {
@@ -18,19 +20,20 @@ void style()
 };
 
 // STAMPA ERRORE
-void error(const char *message)
+void error(const char* message)
 {
     printf("\033[1;31mERRORE: %s\033[0m", message);
 };
 
+
 // GENERA TESSERE STANDARD
-tessera *stdTessere()
+tessera* stdTessere()
 {
     const int lunghezza = 21;
     const int maxValue = 6;
     // STD NOME UNIVOCO PER NON FARE CONFUSIONE
     // EQUIVALENTE CODICE ---> tessera std[21];
-    tessera *std = (tessera *)malloc(sizeof(tessera) * lunghezza);
+    tessera* std = (tessera*)malloc(sizeof(tessera) * lunghezza);
     if (std == NULL)
     {
         // GESTIONE ERRORE ALLOCAZAIONE
@@ -55,14 +58,14 @@ tessera *stdTessere()
 }
 
 // TAVOLO DA GIOCO
-tessera *creaTable(int numberOfTesser)
+tessera* creaTable(int numberOfTesser)
 {
-    tessera *table = (tessera *)malloc(sizeof(tessera) * numberOfTesser);
+    tessera* table = (tessera*)malloc(sizeof(tessera) * numberOfTesser);
     return table;
 }
 
 // STAMPA TAVOLO E TESSERE
-void printTessere(tessera *a, int size)
+void printTessere(tessera* a, int size)
 {
     for (int i = 0; i < size; ++i)
     {
@@ -76,9 +79,9 @@ void printTessere(tessera *a, int size)
     puts("");
 }
 // FUNZIONE PER DISTRIBUIRE LE TESSERE IN BASE AL NUMERO PASSATO DI TESSERE VOLUTE IN MANO DEL GIOCATORE TUTTO CASUALE!!!!
-tessera *giveTessereToPlayer(tessera *tessere, int nTessere)
+tessera* giveTessereToPlayer(tessera* tessere, int nTessere)
 {
-    tessera *palyerCards = (tessera *)malloc(sizeof(tessera) * nTessere);
+    tessera* palyerCards = (tessera*)malloc(sizeof(tessera) * nTessere);
 
     int randNumberForCycleTheCards;
     for (int i = 0; i < nTessere; ++i)
@@ -87,11 +90,11 @@ tessera *giveTessereToPlayer(tessera *tessere, int nTessere)
         palyerCards[i].num1 = tessere[randNumberForCycleTheCards].num1;
         palyerCards[i].num2 = tessere[randNumberForCycleTheCards].num2;
     }
-    
+
     return palyerCards;
 }
 // SCELTA TESSERA MANO GIOCATORE (NO AI)
-int chooseCard(tessera *playercards, int *numberOfcards)
+int chooseCard(tessera* playercards, int* numberOfcards)
 {
     int indice = 0;
     bool verifica = true;
@@ -99,7 +102,7 @@ int chooseCard(tessera *playercards, int *numberOfcards)
     while (verifica)
     {
         printf("Quale tessera vuoi giocare?\nScegliere un numero da 1 a %d: ",
-               *numberOfcards);
+            *numberOfcards);
         scanf("%d", &indice);
         if (indice <= *numberOfcards && indice >= 1)
             verifica = false;
@@ -114,7 +117,7 @@ int chooseCard(tessera *playercards, int *numberOfcards)
 }
 
 // FUNZIONE PER RUOTARE UNA TESSERA
-void rotate(tessera *playerCards1, int i)
+void rotate(tessera* playerCards1, int i)
 {
     int temp = playerCards1[i].num1; // variabile temporanea salvata per lo swap
     playerCards1[i].num1 = playerCards1[i].num2;
@@ -122,14 +125,14 @@ void rotate(tessera *playerCards1, int i)
 }
 
 // PUSH HEAD TESSERA
-void pushHead(tessera *table, tessera *playerCards1, int choice, int *pointer)
+void pushHead(tessera* table, tessera* playerCards1, int choice, int* pointer)
 {
     table[*pointer] = playerCards1[choice];
     *pointer += 1; // VARIFICA CHE QUANDO PUNTA ALL' ELEMENTO 29 NON SIA POSSIBILE INSERIRE O ESSERCI LATRO (OUT OF ARRAY)
 }
 
 // PUSH FOOTER TESSERA
-void pushFooter(tessera *table, int size, tessera *playerCards1, int choice, int *pointer)
+void pushFooter(tessera* table, int size, tessera* playerCards1, int choice, int* pointer)
 {
     for (size_t i = size - 1; i > 0; i--)
     {
@@ -140,10 +143,10 @@ void pushFooter(tessera *table, int size, tessera *playerCards1, int choice, int
 }
 
 // RIDUZIONE ARRAY
-tessera *newPlayercards(tessera *playerCards1, int size, int choice)
+tessera* newPlayercards(tessera* playerCards1, int size, int choice)
 {
     // CREAZIONE NUOVA MEMEORIA
-    tessera *new = (tessera *)malloc(sizeof(tessera) * (size - 1)); // RIDUCI FUORI DALLA FUNZIONE LA DIMENSIONE DELLA MANO
+    tessera* new = (tessera*)malloc(sizeof(tessera) * (size - 1)); // RIDUCI FUORI DALLA FUNZIONE LA DIMENSIONE DELLA MANO
     if (new == NULL)
     {
         // GESTIONE ERRORE ALLOCAZAIONE
@@ -163,7 +166,7 @@ tessera *newPlayercards(tessera *playerCards1, int size, int choice)
     }
 
     // SALVO INDIRIZZO VECCHIA MALLOC PER LIBERARLA
-    tessera *vecchioArray = playerCards1; // free contiene indirizzo vecchio array;
+    tessera* vecchioArray = playerCards1; // free contiene indirizzo vecchio array;
 
     /*
     // CONTROLLI INDIRIZZI MEMEORIA
@@ -180,10 +183,10 @@ tessera *newPlayercards(tessera *playerCards1, int size, int choice)
 }
 
 // PUNTEGGI FINALI
-int endPoints (tessera *table, int sizeTab) {
+int endPoints(tessera* table, int sizeTab) {
     int sumPoint = 0;
     for (int k = 0; k < sizeTab; k++) {
-        if (table[k].num1 == 0){
+        if (table[k].num1 == 0) {
             continue;
         }
         sumPoint += table[k].num1 + table[k].num2;

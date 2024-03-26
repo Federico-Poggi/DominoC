@@ -9,8 +9,6 @@
 #ifndef CHECK_H
 #define CHECK_H
 
-
-
 typedef struct {
     int num;
     int frequency;
@@ -35,5 +33,7 @@ int findMostFrequent(tessera* table, int tableSize);
 // * funzioni di servizio per ordinare l'array in maniera decrescente num1
 void merge(tessera tempTable[], int left, int right, int middle);
 void sortMerge(tessera tempTable[], int left, int right);
+//* Funzione che dato un numero ti ritorna la frequenza di quel numero;
+int unit_frequence(int num, freq* frequency);
 
 #endif // !CHECK_H

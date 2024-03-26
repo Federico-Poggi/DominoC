@@ -7,6 +7,7 @@
 #include "check.h"
 
 
+
 int findDim(tessera* AiCards, int tableSize) {
     int count = 0; // Inizializziamo il conteggio a 0
     int i = 0;
@@ -75,7 +76,18 @@ void sortCards(tessera* AiCards, int Size) {
         }
     }
 }
+//* Funzione per decrementare le frequenza man mano che si inseriscono le carte
+void decrement(int num) {
+    freq* frequencies = getFreq();
+    for (size_t i = 0; i < MAX_VAL_TESSERA; i++)
+    {
+        if (frequencies[i].num == num)
+        {
+            frequencies[i].frequency--;
+        }
+    }
 
+}
 
 void modAI(tessera* alltessere, int tableSize) {
 
@@ -86,12 +98,21 @@ void modAI(tessera* alltessere, int tableSize) {
     tessera* AiCards = giveTessereToPlayer(alltessere, tableSize);
     printTessere(AiCards, tableSize);
     puts("\n");
-
-    // Ordinmanto e Registro frequenze tessere
-    findMostFrequent(AiCards, tableSize);
-    freq* ptrFreq = getFreq();
     sortCards(AiCards, tableSize);
+    // Ordinmanto e Registro frequenze tessere
+    int most = findMostFrequent(AiCards, tableSize);
+
+    printf("\n Il numero più frequente è : %d\n", most);
+
+    freq* ptrFreq = getFreq();
+
+    for (size_t i = 0; i < MAX_VAL_TESSERA; i++)
+    {
+        printf("\nN: %d,  F:%d\n", ptrFreq[i].num, ptrFreq[i].frequency);
+    }
+
     printTessere(AiCards, tableSize);
+
     int sizeObj = findDim(AiCards, tableSize);
     cardObj* arrayObj = createArray(AiCards, tableSize, sizeObj);
 
@@ -100,6 +121,21 @@ void modAI(tessera* alltessere, int tableSize) {
     for (int k = 0; k < sizeObj; k++) {
         printf("[%d|%d] -> %d\n", arrayObj[k].card.num1, arrayObj[k].card.num2, arrayObj[k].freq);
     }
+
+    decrement(6);
+
+    for (size_t i = 0; i < MAX_VAL_TESSERA; i++)
+    {
+        printf("\nN: %d,  F:%d\n", ptrFreq[i].num, ptrFreq[i].frequency);
+    }
+
+
+    freq* freqNum1 = getFreqNum1();
+    for (size_t i = 0; i < MAX_VAL_TESSERA; i++)
+    {
+        printf("Frequenze num1: N: %d F:%d \n", freqNum1[i].num, freqNum1[i].frequency);
+    }
+
 
     // FREE ALL MALLOC CREATED!!!
     // I WANT TO BREAK FREE!!!

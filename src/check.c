@@ -234,8 +234,6 @@ int findMostFrequent(tessera* table, int tableSize) {
 
     sortMerge(tempTable, leftIndex, rightIndex);
 
-
-
     //*Array con frequenze;
     //** Frequenze num1
     freq freq_tot[6] = {
@@ -311,9 +309,17 @@ int findMostFrequent(tessera* table, int tableSize) {
     }
 
 
-    //printf("Il numero più frequente è: %d", mostFreq);
 
     free(tempTable);
     return mostFreq;
 }
 
+int unit_frequence(int num, freq* frequency) {
+    for (size_t i = 0; i < 6; i++)
+    {
+        if (num == frequency[i].num) {
+            return frequency[i].frequency;
+        }
+    }
+    return 0;
+}

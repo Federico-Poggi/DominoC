@@ -1,13 +1,14 @@
 
 #ifndef DOMINO_H
 #define DOMINO_H
-
 typedef struct
 {
     int num1;
     int num2;
 } tessera;
 
+
+extern const int MAX_VAL_TESSERA;
 void style();
 void error(const char* message);
 tessera* stdTessere();
