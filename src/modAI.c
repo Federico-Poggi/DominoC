@@ -108,28 +108,74 @@ int obtainCard(cardObj* arrayObj, int sizeObj) {
             index1 = i;
         }
     }
-    printf("%d freq %d", max, index1);
+    // printf("%d freq %d", max, index1);
     return index1;
 }
 
-void pushHeadAI(tessera* table, cardObj* arrayObj, int indexCard, int* pointer)
-{
-    table[*pointer] = arrayObj[indexCard].card;
-    *pointer += 1; // VARIFICA CHE QUANDO PUNTA ALL' ELEMENTO 29 NON SIA POSSIBILE INSERIRE O ESSERCI LATRO (OUT OF ARRAY)
+//* Ritorna la tessera nell'arrayObj 
+tessera getTessera(cardObj* arrObj, int indexObj) {
+    return arrObj[indexObj].card;
 }
 
-void insertdx(cardObj* arrayObj, int indexCard, tessera* table, int* pointer) {
-    tessera card = arrayObj[indexCard].card;
-    for (int i = 1; i <= arrayObj[indexCard].freq; i++) {
-        if ((i % 2) == 0) {
-            tessera cardRotated = rotateAI(card);
-            printf("[%d|%d]", cardRotated.num1, cardRotated.num2);
-            pushHeadAI(table, arrayObj, indexCard, pointer);
-        }
-        else {
-            pushHeadAI(table, arrayObj, indexCard, pointer);
+void pushHeadAI(tessera* table, tessera t, int* pointer)
+{
+    table[*pointer] = t;
+    *pointer += 1;
+}
+
+//* Funzione per rimuove la tessera inserita
+void removeTessera(tessera toRemove, tessera* AiCards, int* AiCardsSize) {
+    bool found = false;
+    int indexToDelete = -1;
+    // printf("[%d|%d]", toRemove.num1, toRemove.num2);
+    for (size_t i = 0; i < *AiCardsSize; i++)
+    {
+        if ((AiCards[i].num1 == toRemove.num1) && (AiCards[i].num2 == toRemove.num2)) {
+            found = true;
+            indexToDelete = i;
+            break;
         }
     }
+    // printf("Index to delate: %d\n", indexToDelete);
+
+    if (!found) {
+        printf("\nTessera non trovata");
+        return;
+    }
+
+    for (size_t k = indexToDelete; k < *AiCardsSize; k++) {
+        AiCards[k] = AiCards[k + 1];
+    }
+
+    (*AiCardsSize)--;
+}
+
+//* Inserimento prima tessera al momento;
+void insert(tessera* AiCards, int tabSize, tessera mostFreq, tessera* table, int* ptrTable, int* AICardSize, int freqTessera) {
+    int count = 0;
+    for (size_t i = 0; i < tabSize; i++)
+    {
+        if (mostFreq.num1 == AiCards[i].num1 && mostFreq.num2 == AiCards[i].num2)
+        {
+            count++;
+            if (count % 2 == 0) {
+                tessera tes = rotateAI(AiCards[i]);
+                printf("Tessera ruotata: [%d|%d]", tes.num1, tes.num2);
+                pushHeadAI(table, tes, ptrTable);
+
+            }
+            else {
+                pushHeadAI(table, AiCards[i], ptrTable);
+            }
+        }
+
+
+    }
+    for (size_t i = 0; i < freqTessera; i++)
+    {
+        removeTessera(mostFreq, AiCards, AICardSize);
+    }
+
 }
 
 void modAI(tessera* alltessere, int tableSize) {
@@ -138,21 +184,26 @@ void modAI(tessera* alltessere, int tableSize) {
     // Creazione tavolo e tessere
     tessera* table = creaTable(tableSize);
     int indexTableAI = 0;
+
+    //* Carte in mano all'ia
     tessera* AiCards = giveTessereToPlayer(alltessere, tableSize);
+    int AicardSize = tableSize;
+    int* ptrAiCardSize = &AicardSize;
+
     printTessere(AiCards, tableSize);
     puts("\n");
     sortCards(AiCards, tableSize);
     // Ordinmanto e Registro frequenze tessere
     int most = findMostFrequent(AiCards, tableSize);
 
-    printf("\n Il numero più frequente è : %d\n", most);
+    // printf("\n Il numero più frequente è : %d\n", most);
 
     freq* ptrFreq = getFreq();
 
-    for (size_t i = 0; i < MAX_VAL_TESSERA; i++)
-    {
-        printf("\nN: %d,  F:%d\n", ptrFreq[i].num, ptrFreq[i].frequency);
-    }
+    // for (size_t i = 0; i < MAX_VAL_TESSERA; i++)
+    // {
+    //     printf("\nN: %d,  F:%d\n", ptrFreq[i].num, ptrFreq[i].frequency);
+    // }
 
     printTessere(AiCards, tableSize);
 
@@ -161,20 +212,31 @@ void modAI(tessera* alltessere, int tableSize) {
 
     //printTessere(AiCards, tableSize);
 
-    for (int k = 0; k < sizeObj; k++) {
-        printf("[%d|%d] -> %d\n", arrayObj[k].card.num1, arrayObj[k].card.num2, arrayObj[k].freq);
-    }
+    // for (int k = 0; k < sizeObj; k++) {
+    //     printf("[%d|%d] -> %d\n", arrayObj[k].card.num1, arrayObj[k].card.num2, arrayObj[k].freq);
+    // }
 
     // 2: partita IA
     //trova la tessera più frequente
 
     int indexCard = obtainCard(arrayObj, sizeObj);
-    insertdx(arrayObj, indexCard, table, &indexTableAI); //pushhead
+    int freqIndexCard = arrayObj[indexCard].freq;
+    tessera mostFreq = getTessera(arrayObj, indexCard);
+
+    insert(AiCards, tableSize, mostFreq, table, &indexTableAI, ptrAiCardSize, freqIndexCard);
+
+    // insertdx(arrayObj, indexCard, table, &indexTableAI, AiCards, tableSize); //pushhead
 
     puts("\n\n");
 
     printTessere(table, tableSize);
+    // for (size_t i = 0; i < freqIndexCard; i++)
+    // {
+    //     removeTessera(mostFreq, AiCards, ptrAiCardSize);
+    // }
 
+    printTessere(AiCards, tableSize);
+    printf("%d", *ptrAiCardSize);
     // FREE ALL MALLOC CREATED!!!
     // I WANT TO BREAK FREE!!!
     free(table);
@@ -183,4 +245,3 @@ void modAI(tessera* alltessere, int tableSize) {
 
     // FINE
 }
-
