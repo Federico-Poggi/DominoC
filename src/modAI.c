@@ -48,24 +48,37 @@ void modAI(tessera* alltessere, int tableSize) {
 
     int quantitaInserita = tableSize - AicardSize;
     increment(&currentTableSize, quantitaInserita);
-    printf("Grandezza attuale tavolo %d\n", currentTableSize);
-    //printf("Hai inserito %d carte", quantitaInserita);
+
     //> Decremento le frequenze delle tessere
     decrementCardFreq(arrayObj, sizeObj, mostFreq, quantitaInserita);
 
-    //>Mi Occupo dell ramo destro
-    int rightNum = table[quantitaInserita - 1].num2;
-    // printf("%d numero piu a destra", rightNum);
+    int i = 0;
+    //> Ovviamente da trovare un altra condizione di uscita
+    while (i < 6)
+    {
+        //>Mi Occupo dell ramo destro
+
+        int rightNum = table[currentTableSize - 1].num2;
+        int ind = getIndexCard(rightNum, arrayObj, &sizeObj);
+        printf("%d indice da cercare \n", ind);
+        tessera t = getTessera(arrayObj, ind);
+        printf("%d|%d tessera cercata\n ", t.num1, t.num2);
+        int fr = arrayObj[ind].freq;
+
+        insertAfterFirst(AiCards, tableSize, t, table, &indexTableAI, ptrAiCardSize, fr, &currentTableSize);
+
+        printf("%d\n", *ptrAiCardSize);
+
+        int newq = tableSize - AicardSize;
+        // increment(&currentTableSize, quantitaInserita);
+        // insertDX(&currentTableSize, AiCards, ptrAiCardSize, t, table);
+        decrementCardFreq(arrayObj, sizeObj, t, newq);
 
 
-    int ind = getIndexCard(rightNum, arrayObj, &sizeObj);
+        i++;
+    }
 
-    printf("%d|%d\n", arrayObj[ind].card.num1, arrayObj[ind].card.num2);
-    //for (size_t i = 0; i < sizeObj; i++)
-    //{
-    //    printf("%d|%d x %d\n", arrayObj[i].card.num1, arrayObj[i].card.num2, arrayObj[i].freq);
-    //}
-
+    printf("Table size: %d, AiCards: %d", currentTableSize, ptrAiCardSize);
 
     puts("\n\n");
 
@@ -73,6 +86,32 @@ void modAI(tessera* alltessere, int tableSize) {
 
     puts(" ");
     printTessere(AiCards, tableSize);
+
+    //> Da Occuparsi del ramo sinistro
+
+    // printf("Grandezza attuale tavolo %d\n", currentTableSize);
+    //printf("Hai inserito %d carte", quantitaInserita);
+
+
+
+    // printf("%d numero piu a destra", rightNum);
+
+
+
+
+    // printf("%d|%d\n", arrayObj[ind].card.num1, arrayObj[ind].card.num2);
+    //for (size_t i = 0; i < sizeObj; i++)
+    //{
+    //    printf("%d|%d x %d\n", arrayObj[i].card.num1, arrayObj[i].card.num2, arrayObj[i].freq);
+    //}
+
+
+    // puts("\n\n");
+
+    // printTessere(table, tableSize);
+
+    // puts(" ");
+    // printTessere(AiCards, tableSize);
 
     // bool canFollow = canGoNext(table, AiCards, &indexTableAI, ptrAiCardSize);
 

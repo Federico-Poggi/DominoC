@@ -65,6 +65,47 @@ void insert(tessera* AiCards, int tabSize, tessera mostFreq, tessera* table, int
 
 };
 
+void insertAfterFirst(tessera* AiCards, int tabSize, tessera t, tessera* table, int* ptrTable, int* AICardSize, int freqTessera, int* tableSizeCur) {
+    int count = 0;
+    for (size_t i = 0; i < tabSize; i++)
+    {
+        if (t.num1 == AiCards[i].num1 && t.num2 == AiCards[i].num2)
+        {
+            count++;
+            bool insertable = isInsertable(table, AiCards[i], ptrTable);
+            if (!insertable) {
+                tessera tes = rotateAI(AiCards[i]);
+                // printf("Tessera ruotata: [%d|%d]", tes.num1, tes.num2);
+                pushHeadAI(table, tes, ptrTable);
+                increment(tableSizeCur, 1);
+
+            }
+            else {
+                pushHeadAI(table, AiCards[i], ptrTable);
+                increment(tableSizeCur, 1);
+            }
+        }
+
+
+    }
+    for (size_t i = 0; i < freqTessera; i++)
+    {
+        removeTessera(t, AiCards, AICardSize);
+    }
+
+};
+
+void insertDX(int* currentTableSize, tessera* AiCards, int* currentAiCards, tessera t, tessera* table) {
+    for (size_t i = 0; i < *currentAiCards; i++)
+    {
+        if ((AiCards[i].num1 == t.num1) && (AiCards[i].num2 == t.num2)) {
+            table[*currentTableSize] = AiCards[i];
+            (*currentAiCards)++;
+        }
+    }
+
+}
+
 void removeTessera(tessera toRemove, tessera* AiCards, int* AiCardsSize) {
     bool found = false;
     int indexToDelete = -1;
@@ -188,8 +229,6 @@ int obtainCard(cardObj* arrayObj, int sizeObj) {
     return index1;
 };
 
-
-
 int getIndexCard(int num, cardObj* arr, int* sizeCardObj) {
     int index = 0;
     int freq = 0;
@@ -215,3 +254,18 @@ int getIndexCard(int num, cardObj* arr, int* sizeCardObj) {
     }
     return index;
 };
+
+bool isInsertable(tessera* table, tessera toInsert, int* indexTable) {
+    if (indexTable == 0 && table[0].num1 == toInsert.num2) {
+        return true;
+    }
+    else if (indexTable > 0)
+    {
+        if (table[*indexTable - 1].num2 == toInsert.num1) {
+            return true;
+        };
+    }
+
+
+    return false;
+}

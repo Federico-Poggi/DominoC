@@ -19,6 +19,10 @@ void decrementCardFreq(cardObj* arrObj, int arrObjDim, tessera insertedTessera, 
 //* Inserimento prima tessera al momento;
 void insert(tessera* AiCards, int tabSize, tessera mostFreq, tessera* table, int* ptrTable, int* AICardSize, int freqTessera);
 
+void insertDX(int* currentTableSize, tessera* AiCards, int* currentAiCards, tessera t, tessera* table);
+
+void insertAfterFirst(tessera* AiCards, int tabSize, tessera t, tessera* table, int* ptrTable, int* AICardSize, int freqTessera, int* tableSizeCurr);
+
 //* Funzione per rimuove la tessera inserita
 void removeTessera(tessera toRemove, tessera* AiCards, int* AiCardsSize);
 
@@ -49,4 +53,10 @@ void pushHeadAI(tessera* table, tessera t, int* pointer);
 //* Funzione che dato un numero mi fornisce le tessere piu frequenti con quel numero se freq uguali vado a controllare
  //* se pari o dispari avro lo stesso numero finale se dispari avro num diverso a meno che non siano due numeri uguali
 int getIndexCard(int num, cardObj* arr, int* sizeCardObj);
+
+
+//>CHECK AI <//
+
+bool isInsertable(tessera* table, tessera toInsert, int* indexTable);
+
 #endif // !AI_H
