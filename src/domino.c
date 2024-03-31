@@ -131,7 +131,7 @@ void pushHead(tessera* table, tessera* playerCards1, int choice, int* pointer)
     *pointer += 1; // VARIFICA CHE QUANDO PUNTA ALL' ELEMENTO 29 NON SIA POSSIBILE INSERIRE O ESSERCI LATRO (OUT OF ARRAY)
 }
 
-// PUSH FOOTER TESSERA
+// PUSH FOOTER TESSERA 
 void pushFooter(tessera* table, int size, tessera* playerCards1, int choice, int* pointer)
 {
     for (size_t i = size - 1; i > 0; i--)

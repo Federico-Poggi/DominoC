@@ -56,4 +56,6 @@ void modAI(tessera* std, int numberOfcards) {
 
 void aiGame (tessera* table, tessera* aiCards1, int* indexTable, int* numberOfcards, int tableSize) {
     //crea array ferquenze locale
+    int freq[*numberOfcards];
+    inizializza (aiCards1, freq, *numberOfcards);
 }
