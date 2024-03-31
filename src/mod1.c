@@ -51,6 +51,7 @@ void mod1(tessera* std, int numberOfcards)
 
     // FREE ALL MALLOC CREATED!!!
     // I WANT TO BREAK FREE!!!
+    mossa1 = 1;
     free(table);
     free(playerCards1);
 }

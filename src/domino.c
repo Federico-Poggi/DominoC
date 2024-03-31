@@ -61,6 +61,10 @@ tessera* stdTessere()
 tessera* creaTable(int numberOfTesser)
 {
     tessera* table = (tessera*)malloc(sizeof(tessera) * numberOfTesser);
+    for (int i = 0; i < numberOfTesser; i++) {
+        table[i].num1 = 0;
+        table[i].num2 = 0;
+    }
     return table;
 }
 

@@ -29,8 +29,9 @@ void sortCards(tessera* AiCards, int Size){
 }
 
 void inizializza (tessera* aiCards1, int freq[], int numberOfCards){
-    int count = 0;
+    int count;
     for (int i = 0; i < numberOfCards; ++i) {
+        count = 0;
         for (int j = 0; j < numberOfCards; ++j) {
             if ((aiCards1[i].num1 == aiCards1[j].num1) && (aiCards1[i].num2 == aiCards1[j].num2)) {
                 count++;
@@ -38,4 +39,22 @@ void inizializza (tessera* aiCards1, int freq[], int numberOfCards){
         }
         freq[i] = count;
     }
+}
+
+int findfirst(tessera* aiCards1, int freq[], int numberOfcards) {
+    int out = 0;
+    int max = freq[0];
+    for (int i = 1; i < numberOfcards; ++i) {
+        if (freq[i] > max) {
+            max = freq[i];
+            out = i;
+        }
+        if (freq[i] == max) {
+            if ((aiCards1[i].num1 + aiCards1[i].num2) > (aiCards1[out].num1 + aiCards1[out].num2)) {
+                out = i;
+            }
+        }
+    }
+    printf("\ncard -> [%d|%d] _ freq -> %d\n", aiCards1[out].num1, aiCards1[out].num2, freq[out]);
+    return out;
 }
