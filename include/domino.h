@@ -1,6 +1,7 @@
 
 #ifndef DOMINO_H
 #define DOMINO_H
+
 typedef struct
 {
     int num1;

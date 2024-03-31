@@ -8,129 +8,52 @@
 #include "ai.h"
 
 
-void modAI(tessera* alltessere, int tableSize) {
-    // 1: setting IA
-   // Creazione tavolo e tessere
-    tessera* table = creaTable(tableSize);
-    int indexTableAI = 0;
-    //> Tessere inserite nel tavolo
-    int currentTableSize = 0;
+void modAI(tessera* std, int numberOfcards) {
+    // VARIABILI GENERALI MDOALITA' 1
+    int playerPoints = 0;
+    int indexTable = 0;
+    //int choice = 0;
+    //int mossa1 = 1;
+    int tableSize = numberOfcards;
+    bool canFollow = true;
+    tessera* table = creaTable(numberOfcards); // ARRAY TAVOLO
+    tessera* aiCards1 = giveTessereToPlayer(std, numberOfcards);
+    sortCards(aiCards1, tableSize);
+    // printf(" indirizzo di partenza: %p\n\n", playerCards1);
 
-    //* Carte in mano all'ia
-    tessera* AiCards = giveTessereToPlayer(alltessere, tableSize);
-    int AicardSize = tableSize;
-    int* ptrAiCardSize = &AicardSize;
-    //Ciclo while per continuare finche la mano del giocatore non è vuota o non ci sono piu combinazioni
+    // INTRODUZIONE GIOCO (COMPARE SOLO ALLA PRIMA PARTITA)
+    printf("\nAl giocatore verranno assegnate %d tessere.\nL'obiettivo è quello di disporre le tessere sul tavolo scondo la regola:\nI numeri dei lati adiacenti tra due tessere devono essere identici.\n\n", numberOfcards);
+    style();
 
-    // printTessere(AiCards, tableSize);
-    // puts("\n");
-    sortCards(AiCards, tableSize);
-    // Ordinmanto e Registro frequenze tessere
-    int most = findMostFrequent(AiCards, tableSize);
+    //int k = 3; variabile controllo iterazione caso verifica 
+    do
+    {   
+        aiGame(table, aiCards1, &indexTable, &numberOfcards, tableSize);
+        // LA SVOLGIAMO QUI PER NON PERDERCI INDIRIZZZI DI MEMORIA PER LE FREE
+        printf("\033[1;32mIl tavolo al momento presenta le tessere:\n\n\033[0m");  
+        printTessere(aiCards1, tableSize);
+        puts("");
+        style();
+        //mossa1 = 0;
+        numberOfcards -= 1;
+        canFollow = canGoNext(table, aiCards1, &indexTable, numberOfcards);
+        if (!canFollow)
+        {
+            break;
+        }
 
-    //> Ottengo frequenze totali singoli numeri;
-    freq* ptrFreq = getFreq();
+    } while (numberOfcards); 
 
-    printTessere(AiCards, tableSize);
+    playerPoints = endPoints(table, tableSize);
 
-    int sizeObj = findDim(AiCards, tableSize);
-    cardObj* arrayObj = createArray(AiCards, tableSize, sizeObj);
+    printf("\n\033[1;35mComplimenti!\033[0m Hai totalizzato: \033[1;32m%d punti\033[0m", playerPoints);
 
-
-    // 2: partita IA
-    //trova la tessera più frequente
-
-    int indexCard = obtainCard(arrayObj, sizeObj);
-    int freqIndexCard = arrayObj[indexCard].freq;
-    tessera mostFreq = getTessera(arrayObj, indexCard);
-
-    insert(AiCards, tableSize, mostFreq, table, &indexTableAI, ptrAiCardSize, freqIndexCard);
-
-    int quantitaInserita = tableSize - AicardSize;
-    increment(&currentTableSize, quantitaInserita);
-
-    //> Decremento le frequenze delle tessere
-    decrementCardFreq(arrayObj, sizeObj, mostFreq, quantitaInserita);
-
-    int i = 0;
-    //> Ovviamente da trovare un altra condizione di uscita
-    while (i < 6)
-    {
-        //>Mi Occupo dell ramo destro
-
-        int rightNum = table[currentTableSize - 1].num2;
-        int ind = getIndexCard(rightNum, arrayObj, &sizeObj);
-        printf("%d indice da cercare \n", ind);
-        tessera t = getTessera(arrayObj, ind);
-        printf("%d|%d tessera cercata\n ", t.num1, t.num2);
-        int fr = arrayObj[ind].freq;
-
-        insertAfterFirst(AiCards, tableSize, t, table, &indexTableAI, ptrAiCardSize, fr, &currentTableSize);
-
-        printf("%d\n", *ptrAiCardSize);
-
-        int newq = tableSize - AicardSize;
-        // increment(&currentTableSize, quantitaInserita);
-        // insertDX(&currentTableSize, AiCards, ptrAiCardSize, t, table);
-        decrementCardFreq(arrayObj, sizeObj, t, newq);
-
-
-        i++;
-    }
-
-    printf("Table size: %d, AiCards: %d", currentTableSize, ptrAiCardSize);
-
-    puts("\n\n");
-
-    printTessere(table, tableSize);
-
-    puts(" ");
-    printTessere(AiCards, tableSize);
-
-    //> Da Occuparsi del ramo sinistro
-
-    // printf("Grandezza attuale tavolo %d\n", currentTableSize);
-    //printf("Hai inserito %d carte", quantitaInserita);
-
-
-
-    // printf("%d numero piu a destra", rightNum);
-
-
-
-
-    // printf("%d|%d\n", arrayObj[ind].card.num1, arrayObj[ind].card.num2);
-    //for (size_t i = 0; i < sizeObj; i++)
-    //{
-    //    printf("%d|%d x %d\n", arrayObj[i].card.num1, arrayObj[i].card.num2, arrayObj[i].freq);
-    //}
-
-
-    // puts("\n\n");
-
-    // printTessere(table, tableSize);
-
-    // puts(" ");
-    // printTessere(AiCards, tableSize);
-
-    // bool canFollow = canGoNext(table, AiCards, &indexTableAI, ptrAiCardSize);
-
-    // int mostFr = findMostFrequent(AiCards, AicardSize);
-    // int index = obtainCard(arrayObj, sizeObj);
-
-    // printf("%d|%d", arrayObj[index].card.num1, arrayObj[index].card.num2);
-
-    // printf("Il numero piu frequente è %d\n", mostFr);
-
-
-
-
-    // printf("%d", *ptrAiCardSize);
     // FREE ALL MALLOC CREATED!!!
     // I WANT TO BREAK FREE!!!
     free(table);
-    free(AiCards);
-    free(arrayObj);
+    free(aiCards1);
+}
 
-    // FINE
+void aiGame (tessera* table, tessera* aiCards1, int* indexTable, int* numberOfcards, int tableSize) {
+    //crea array ferquenze locale
 }
