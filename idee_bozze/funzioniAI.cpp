@@ -253,3 +253,8 @@ bool isInsertable(tessera* table, tessera toInsert, int* indexTable) {
         printf("\n32card -> [%d|%d] _ freq -> %d\n", aiCards1[i].num1, aiCards1[i].num2, freq[i]);
     }
     */
+
+
+    if (aiCards1[indexDX].num1 != table[(*indexTable) - 1].num2) {
+                rotate (aiCards1, indexDX);
+    }

@@ -109,10 +109,15 @@ void aiGame (tessera* table, tessera* aiCards1, int* indexTable, int* numberOfca
     int indexDX = findDX (aiCards1, freq, tableSize, dx);
     int num = freq[indexDX];
 
+    bool isRotated = false;
+    if (aiCards1[indexDX].num1 != table[(*indexTable) - 1].num2) {
+        isRotated = true;
+    }
+
     bool change = false;
     while (num) {
         if (change == false) {
-            if (aiCards1[indexDX].num1 != table[(*indexTable) - 1].num2) {
+            if (isRotated == true) {
                 rotate (aiCards1, indexDX);
             }
             pushHead(table, aiCards1, indexDX, indexTable);
@@ -120,6 +125,9 @@ void aiGame (tessera* table, tessera* aiCards1, int* indexTable, int* numberOfca
             change = true;
         }
         else {
+            if (isRotated == true) {
+                rotate (aiCards1, indexDX);
+            }
             rotate (aiCards1, indexDX);
             pushHead(table, aiCards1, indexDX, indexTable);
             *numberOfcards -= 1;
