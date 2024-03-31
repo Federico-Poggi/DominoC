@@ -15,4 +15,8 @@ void sortCards(tessera* AiCards, int Size);
 //* Array locale fequenze ai
 void inizializza (tessera* aiCards1, int freq[], int numberOfCards);
 
+int findfirst(tessera* aiCards1, int freq[], int numberOfcards);
+
+int findDX (tessera* aiCards1, int freq[], int tableSize, int dx);
+
 #endif // !AI_H

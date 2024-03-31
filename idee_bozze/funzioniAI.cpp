@@ -245,3 +245,11 @@ bool isInsertable(tessera* table, tessera toInsert, int* indexTable) {
 
     return false;
 }
+
+
+
+    /*
+    for (int i = 0; i < *numberOfcards; i++) {
+        printf("\n32card -> [%d|%d] _ freq -> %d\n", aiCards1[i].num1, aiCards1[i].num2, freq[i]);
+    }
+    */

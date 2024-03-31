@@ -58,3 +58,23 @@ int findfirst(tessera* aiCards1, int freq[], int numberOfcards) {
     printf("\ncard -> [%d|%d] _ freq -> %d\n", aiCards1[out].num1, aiCards1[out].num2, freq[out]);
     return out;
 }
+
+int findDX (tessera* aiCards1, int freq[], int tableSize, int dx) {
+    int out = 0;
+    int max = 1;
+    for (int i = 1; i < tableSize; ++i) {
+        if (aiCards1[i].num1 == dx || aiCards1[i].num2 == dx) {
+            if (freq[i] > max) {
+            max = freq[i];
+            out = i;
+        }
+        if (freq[i] == max) {
+            if ((aiCards1[i].num1 + aiCards1[i].num2) > (aiCards1[out].num1 + aiCards1[out].num2)) {
+                out = i;
+            }
+        }
+        }
+    }
+    printf("\ncard -> [%d|%d] _ freq -> %d\n", aiCards1[out].num1, aiCards1[out].num2, freq[out]);
+    return out;
+}
