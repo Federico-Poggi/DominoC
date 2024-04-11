@@ -29,14 +29,14 @@ void modAI(tessera* std, int numberOfcards) {
 
     //int k = 3; variabile controllo iterazione caso verifica 
     do
-    {   
+    {
         printTessere(aiCards1, numberOfcards);
         puts("\n");
         aiGame(table, aiCards1, &indexTable, &numberOfcards, tableSize, &mossa1Ai);
         //sesso--;
         mossa1Ai = 0;
         // LA SVOLGIAMO QUI PER NON PERDERCI INDIRIZZZI DI MEMORIA PER LE FREE
-        printf("\033[1;32mIl tavolo al momento presenta le tessere:\n\n\033[0m");  
+        printf("\033[1;32mIl tavolo al momento presenta le tessere:\n\n\033[0m");
         printTessere(table, tableSize);
         puts("");
         style();
@@ -46,7 +46,7 @@ void modAI(tessera* std, int numberOfcards) {
             break;
         }
 
-    } while (numberOfcards); 
+    } while (numberOfcards);
 
     playerPoints = endPoints(table, tableSize);
 
@@ -54,15 +54,15 @@ void modAI(tessera* std, int numberOfcards) {
 
     // FREE ALL MALLOC CREATED!!!
     // I WANT TO BREAK FREE!!!
-    mossa1Ai = 1; 
+    mossa1Ai = 1;
     free(table);
     free(aiCards1);
 }
 
-void aiGame (tessera* table, tessera* aiCards1, int* indexTable, int* numberOfcards, int tableSize, int* mossa1) {
+void aiGame(tessera* table, tessera* aiCards1, int* indexTable, int* numberOfcards, int tableSize, int* mossa1) {
     //crea array ferquenze locale
     int freq[tableSize];
-    inizializza (aiCards1, freq, tableSize);
+    inizializza(aiCards1, freq, tableSize);
 
 
     // MOSSA 1
@@ -85,7 +85,7 @@ void aiGame (tessera* table, tessera* aiCards1, int* indexTable, int* numberOfca
             bool change = false;
             while (num) {
                 if (change == false) {
-                    rotate (aiCards1, index);
+                    rotate(aiCards1, index);
                     pushHead(table, aiCards1, index, indexTable);
                     *numberOfcards -= 1;
                     change = true;
@@ -103,42 +103,42 @@ void aiGame (tessera* table, tessera* aiCards1, int* indexTable, int* numberOfca
             }
         }
     }
-    else {   
-    // MOSSE SUCESSIVE DX
-    int dx = table[(*indexTable) - 1].num2;
-    int indexDX = findDX (aiCards1, freq, tableSize, dx);
-    int num = freq[indexDX];
+    else {
+        // MOSSE SUCESSIVE DX
+        int dx = table[(*indexTable) - 1].num2;
+        int indexDX = findDX(aiCards1, freq, tableSize, dx);
+        int num = freq[indexDX];
 
-    bool isRotated = false;
-    if (aiCards1[indexDX].num1 != table[(*indexTable) - 1].num2) {
-        isRotated = true;
-    }
+        bool isRotated = false;
+        if (aiCards1[indexDX].num1 != table[(*indexTable) - 1].num2) {
+            isRotated = true;
+        }
 
-    bool change = false;
-    while (num) {
-        if (change == false) {
-            if (isRotated == true) {
-                rotate (aiCards1, indexDX);
+        bool change = false;
+        while (num) {
+            if (change == false) {
+                if (isRotated == true) {
+                    rotate(aiCards1, indexDX);
+                }
+                pushHead(table, aiCards1, indexDX, indexTable);
+                *numberOfcards -= 1;
+                change = true;
             }
-            pushHead(table, aiCards1, indexDX, indexTable);
-            *numberOfcards -= 1;
-            change = true;
-        }
-        else {
-            if (isRotated == true) {
-                rotate (aiCards1, indexDX);
+            else {
+                if (isRotated == true) {
+                    rotate(aiCards1, indexDX);
+                }
+                rotate(aiCards1, indexDX);
+                pushHead(table, aiCards1, indexDX, indexTable);
+                *numberOfcards -= 1;
+                change = false;
             }
-            rotate (aiCards1, indexDX);
-            pushHead(table, aiCards1, indexDX, indexTable);
-            *numberOfcards -= 1;
-            change = false;
+            aiCards1[indexDX].num1 = 0;
+            aiCards1[indexDX].num2 = 0;
+            freq[indexDX] = 0;
+            ++indexDX;
+            --num;
         }
-        aiCards1[indexDX].num1 = 0;
-        aiCards1[indexDX].num2 = 0;
-        freq[indexDX] = 0;
-        ++indexDX;
-        --num;
-    }
 
     }
 }
