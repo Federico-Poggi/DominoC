@@ -13,10 +13,12 @@ void swap(tessera* AiCards1, tessera* AiCards2);
 void sortCards(tessera* AiCards, int Size);
 
 //* Array locale fequenze ai
-void inizializza (tessera* aiCards1, int freq[], int numberOfCards);
+void inizializza(tessera* aiCards1, int freq[], int numberOfCards);
 
 int findfirst(tessera* aiCards1, int freq[], int numberOfcards);
 
-int findDX (tessera* aiCards1, int freq[], int tableSize, int dx);
+int findDX_SX(tessera* aiCards1, int freq[], int tableSize, int dx_sx);
+
+bool sohuldEnter(tessera* AiCards, int indexAi, int numTable);
 
 #endif // !AI_H

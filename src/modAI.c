@@ -109,9 +109,9 @@ void aiGame(tessera* table, tessera* aiCards1, int* indexTable, int* numberOfcar
     else {
         // MOSSE SUCESSIVE DX
         int dx = table[(*indexTable) - 1].num2;
-        int indexDX = findDX(aiCards1, freq, tableSize, dx);
+        int indexDX = findDX_SX(aiCards1, freq, tableSize, dx);
         bool couldEnter = sohuldEnter(aiCards1, indexDX, dx);
-        if (couldEnter) {
+        if (couldEnter == true) {
             printf("L'indice uscito è %d\n", indexDX);
             int num = freq[indexDX];
 
@@ -148,19 +148,55 @@ void aiGame(tessera* table, tessera* aiCards1, int* indexTable, int* numberOfcar
             }
         }
         else {
+            printDebug("Sono nel ramo sinistro");
+            int sx = table[0].num1;
+            int indexSX = findDX_SX(aiCards1, freq, tableSize, sx);
+            bool canEnter = sohuldEnter(aiCards1, indexSX, sx);
+            if (canEnter == false) {
+                bool ass = true;
+                if (ass == true) {
+                    printDebug("Devo fare la first match");
+                    exit(EXIT_FAILURE);
+                }
+            }
+            else {
+                printf("L'indice uscito è %d\n", indexSX);
+                int num = freq[indexSX];
 
-            // int sx = table[0]
-            // int indexDX = findDX(aiCards1, freq, tableSize, sx);
-            // mosse ramo sinistro
-            printDebug("Posso procedere al ramo sinistro");
-            bool ass = true;
-            if (ass == true) {
-                exit(EXIT_FAILURE);
+                bool isRotated = false;
+                if (aiCards1[indexSX].num2 != table[0].num1) {
+                    isRotated = true;
+                }
+
+                bool change = false;
+                while (num) {
+                    if (change == false) {
+                        if (isRotated == true) {
+                            rotate(aiCards1, indexSX);
+                        }
+                        pushFooter(table, tableSize, aiCards1, indexSX, indexTable);
+                        *numberOfcards -= 1;
+                        change = true;
+                    }
+                    else {
+                        if (isRotated == true) {
+                            rotate(aiCards1, indexSX);
+                        }
+                        rotate(aiCards1, indexSX);
+                        pushFooter(table, tableSize, aiCards1, indexSX, indexTable);
+                        *numberOfcards -= 1;
+                        change = false;
+                    }
+                    aiCards1[indexSX].num1 = 0;
+                    aiCards1[indexSX].num2 = 0;
+                    freq[indexSX] = 0;
+                    pop_back(aiCards1, indexSX, tableSize);
+                    //++indexDX;
+                    --num;
+                }
             }
 
         };
     }
-
-
 }
 
