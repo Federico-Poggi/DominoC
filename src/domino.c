@@ -198,3 +198,7 @@ int endPoints(tessera* table, int sizeTab) {
     }
     return sumPoint;
 }
+
+void printDebug(char* message) {
+    printf("DEBUG: %s\n", message);
+}

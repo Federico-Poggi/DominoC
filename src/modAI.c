@@ -77,7 +77,8 @@ void aiGame(tessera* table, tessera* aiCards1, int* indexTable, int* numberOfcar
                 aiCards1[index].num1 = 0;
                 aiCards1[index].num2 = 0;
                 freq[index] = 0;
-                ++index;
+                pop_back(aiCards1, index, tableSize);
+                //++index;
                 --num;
             }
         }
@@ -85,12 +86,12 @@ void aiGame(tessera* table, tessera* aiCards1, int* indexTable, int* numberOfcar
             bool change = false;
             while (num) {
                 if (change == false) {
-                    rotate(aiCards1, index);
                     pushHead(table, aiCards1, index, indexTable);
                     *numberOfcards -= 1;
                     change = true;
                 }
                 else {
+                    rotate(aiCards1, index);
                     pushHead(table, aiCards1, index, indexTable);
                     *numberOfcards -= 1;
                     change = false;
@@ -98,7 +99,8 @@ void aiGame(tessera* table, tessera* aiCards1, int* indexTable, int* numberOfcar
                 aiCards1[index].num1 = 0;
                 aiCards1[index].num2 = 0;
                 freq[index] = 0;
-                ++index;
+                pop_back(aiCards1, index, tableSize);
+                //++index;
                 --num;
             }
         }
@@ -107,6 +109,9 @@ void aiGame(tessera* table, tessera* aiCards1, int* indexTable, int* numberOfcar
         // MOSSE SUCESSIVE DX
         int dx = table[(*indexTable) - 1].num2;
         int indexDX = findDX(aiCards1, freq, tableSize, dx);
+        //ShouldEnter()
+        // if(shouldEnter==true) { se vero
+        printf("L'indice uscito è %d\n", indexDX);
         int num = freq[indexDX];
 
         bool isRotated = false;
@@ -136,9 +141,19 @@ void aiGame(tessera* table, tessera* aiCards1, int* indexTable, int* numberOfcar
             aiCards1[indexDX].num1 = 0;
             aiCards1[indexDX].num2 = 0;
             freq[indexDX] = 0;
-            ++indexDX;
+            pop_back(aiCards1, indexDX, tableSize);
+            //++indexDX;
             --num;
         }
+        //}
+        //else { se falso
+        // int sx = table[0]
+        // int indexDX = findDX(aiCards1, freq, tableSize, sx);
+        // mosse ramo sinistro
+        //}
 
     }
+
+
 }
+
