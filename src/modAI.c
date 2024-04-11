@@ -6,6 +6,7 @@
 #include "domino.h"
 #include "check.h"
 #include "ai.h"
+#include <assert.h>
 
 
 void modAI(tessera* std, int numberOfcards) {
@@ -109,49 +110,55 @@ void aiGame(tessera* table, tessera* aiCards1, int* indexTable, int* numberOfcar
         // MOSSE SUCESSIVE DX
         int dx = table[(*indexTable) - 1].num2;
         int indexDX = findDX(aiCards1, freq, tableSize, dx);
-        //ShouldEnter()
-        // if(shouldEnter==true) { se vero
-        printf("L'indice uscito è %d\n", indexDX);
-        int num = freq[indexDX];
+        bool couldEnter = sohuldEnter(aiCards1, indexDX, dx);
+        if (couldEnter) {
+            printf("L'indice uscito è %d\n", indexDX);
+            int num = freq[indexDX];
 
-        bool isRotated = false;
-        if (aiCards1[indexDX].num1 != table[(*indexTable) - 1].num2) {
-            isRotated = true;
-        }
-
-        bool change = false;
-        while (num) {
-            if (change == false) {
-                if (isRotated == true) {
-                    rotate(aiCards1, indexDX);
-                }
-                pushHead(table, aiCards1, indexDX, indexTable);
-                *numberOfcards -= 1;
-                change = true;
+            bool isRotated = false;
+            if (aiCards1[indexDX].num1 != table[(*indexTable) - 1].num2) {
+                isRotated = true;
             }
-            else {
-                if (isRotated == true) {
-                    rotate(aiCards1, indexDX);
-                }
-                rotate(aiCards1, indexDX);
-                pushHead(table, aiCards1, indexDX, indexTable);
-                *numberOfcards -= 1;
-                change = false;
-            }
-            aiCards1[indexDX].num1 = 0;
-            aiCards1[indexDX].num2 = 0;
-            freq[indexDX] = 0;
-            pop_back(aiCards1, indexDX, tableSize);
-            //++indexDX;
-            --num;
-        }
-        //}
-        //else { se falso
-        // int sx = table[0]
-        // int indexDX = findDX(aiCards1, freq, tableSize, sx);
-        // mosse ramo sinistro
-        //}
 
+            bool change = false;
+            while (num) {
+                if (change == false) {
+                    if (isRotated == true) {
+                        rotate(aiCards1, indexDX);
+                    }
+                    pushHead(table, aiCards1, indexDX, indexTable);
+                    *numberOfcards -= 1;
+                    change = true;
+                }
+                else {
+                    if (isRotated == true) {
+                        rotate(aiCards1, indexDX);
+                    }
+                    rotate(aiCards1, indexDX);
+                    pushHead(table, aiCards1, indexDX, indexTable);
+                    *numberOfcards -= 1;
+                    change = false;
+                }
+                aiCards1[indexDX].num1 = 0;
+                aiCards1[indexDX].num2 = 0;
+                freq[indexDX] = 0;
+                pop_back(aiCards1, indexDX, tableSize);
+                //++indexDX;
+                --num;
+            }
+        }
+        else {
+
+            // int sx = table[0]
+            // int indexDX = findDX(aiCards1, freq, tableSize, sx);
+            // mosse ramo sinistro
+            printDebug("Posso procedere al ramo sinistro");
+            bool ass = true;
+            if (ass == true) {
+                exit(EXIT_FAILURE);
+            }
+
+        };
     }
 
 

@@ -61,8 +61,8 @@ int findfirst(tessera* aiCards1, int freq[], int numberOfcards) {
 
 int findDX(tessera* aiCards1, int freq[], int tableSize, int dx) {
     int out = 0;
-    int max = freq[0];
-    for (int i = 1; i < tableSize; ++i) {
+    int max = 0;
+    for (int i = 0; i < tableSize; ++i) {
         if (aiCards1[i].num1 == dx || aiCards1[i].num2 == dx) {
             if (freq[i] > max) {
                 max = freq[i];
@@ -87,4 +87,8 @@ void pop_back(tessera* aiCards1, int index, int tablesize) {
         aiCards1[i] = aiCards1[i + 1];
     }
     aiCards1[tablesize - 1] = temp;
+};
+
+bool sohuldEnter(tessera* AiCards, int indexAi, int numTable) {
+    return(AiCards[indexAi].num1 == numTable || AiCards[indexAi].num2 == numTable);
 };
