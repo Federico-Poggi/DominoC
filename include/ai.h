@@ -6,7 +6,7 @@
 #ifndef AI_H
 #define AI_H
 
-//* Swap tessera
+
 void swap(tessera* AiCards1, tessera* AiCards2);
 
 //* Ordinamento mano AI
