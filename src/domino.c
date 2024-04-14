@@ -75,8 +75,9 @@ void printTessere(tessera* a, int size)
     {
         if ((a[i].num1 != 0) && (a[i].num2 != 0))
         {
-            if (i == (size / 2))
+            if (((i % 15) == 0) && (i != 0)) {
                 puts("");
+            }
             printf("[%d|%d] ", a[i].num1, a[i].num2);
         }
     }
@@ -197,8 +198,4 @@ int endPoints(tessera* table, int sizeTab) {
         //printf("sum = %d", sumPoint);
     }
     return sumPoint;
-}
-
-void printDebug(char* message) {
-    printf("DEBUG: %s\n", message);
 }
