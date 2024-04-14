@@ -11,6 +11,7 @@ void mod1(tessera* std, int numberOfcards)
 {
 
     // VARIABILI GENERALI MDOALITA' 1
+    bool playerMode = true;
     int playerPoints = 0;
     int indexTable = 0;
     int choice = 0;
@@ -37,7 +38,7 @@ void mod1(tessera* std, int numberOfcards)
         style();
         mossa1 = 0;
         numberOfcards -= 1;
-        canFollow = canGoNext(table, playerCards1, &indexTable, numberOfcards);
+        canFollow = canGoNext(table, playerCards1, &indexTable, numberOfcards, playerMode);
         if (!canFollow)
         {
             break;
