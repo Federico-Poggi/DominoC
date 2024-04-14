@@ -23,7 +23,7 @@ void mod1(tessera* std, int numberOfcards)
     // printf(" indirizzo di partenza: %p\n\n", playerCards1);
 
     // INTRODUZIONE GIOCO (COMPARE SOLO ALLA PRIMA PARTITA)
-    printf("\nAl giocatore verranno assegnate %d tessere.\nL'obiettivo è quello di disporre le tessere sul tavolo scondo la regola:\nI numeri dei lati adiacenti tra due tessere devono essere identici.\n\n", numberOfcards);
+    printf("\033[1;34m\nAl giocatore verranno assegnate %d tessere.\nL'obiettivo è quello di disporre le tessere sul tavolo scondo la regola:\nI numeri dei lati adiacenti tra due tessere devono essere identici.\n\n\033[0m", numberOfcards);
     style();
 
     //int k = 3; variabile controllo iterazione caso verifica 

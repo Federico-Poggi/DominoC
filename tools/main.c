@@ -54,15 +54,17 @@ int main()
             break;
         case 2:
             int tableSize;
-            printf("\nModalità: %d\n", modalita);
-            printf("Inserisci il numero di tessere da creare \n");
+            printf("\033[1;33m\nModalità: %d\n\033[0m", modalita);
+            printf("Inserisci il numero di tessere da creare: ");
             scanf("%d", &tableSize);
             printf("Il numero di tessere è %d \n", tableSize);
             modAI(std, tableSize);
             break;
+        /*
         case 3:
             printf("\nModalità: %d\n", modalita);
             break;
+        */
         default:
             error("Modalità non valida\n");
         }
@@ -109,20 +111,20 @@ int main()
 int playMode()
 {
     int mod = 0;
-    printf("Inserisci la modalita di gioco:"); 
+    printf("Inserisci la modalita di gioco:");
     puts("\n");
-    printf("\033[1;34m1: Modalità classica interattiva\033[0m\n2: Modalità AI\n3:"); 
+    printf("\033[1;34m1: Modalità classica interattiva\033[0m\n\033[1;33m2: Modalità AI\033[0m"); 
     puts("\n");
-    printf("Inserisci il numero della modalità desiderata [1, 2, 3]: ");
+    printf("Inserisci il numero della modalità desiderata [1, 2]: ");
     do
     {
         scanf("%d", &mod);
         // ERRORE MODALITA';
-        if (mod > 3 || mod < 0)
+        if (mod > 2 || mod < 0)
         {
             puts(" ");
             error("Modalità inserita non valida! \n");
-            printf("Inserisci una modalità valida [1, 2, 3]: ");
+            printf("Inserisci una modalità valida [1, 2]: ");
         };
 
     } while (mod > 3 || mod < 0);

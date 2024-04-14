@@ -24,7 +24,7 @@ void modAI(tessera* std, int numberOfcards) {
     // printf(" indirizzo di partenza: %p\n\n", playerCards1);
 
     // INTRODUZIONE GIOCO (COMPARE SOLO ALLA PRIMA PARTITA)
-    printf("\nAll' AI verranno assegnate %d tessere.\nL'obiettivo del computer è quello di disporre le tessere sul tavolo scondo la regola:\nI numeri dei lati adiacenti tra due tessere devono essere identici.\n\n", numberOfcards);
+    printf("\033[1;33m\nAll'AI verranno assegnate %d tessere.\nLa partita sarà automatica e seguira le calssiche regole del domino:\nI numeri dei lati adiacenti tra due tessere devono essere identici.\n\n\033[0m", numberOfcards);
     style();
 
     //int end = 5;
