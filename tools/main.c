@@ -27,6 +27,7 @@ int main()
     tessera* std = stdTessere();
     int risposta = 0;
     int numberOfcards = 28;
+    int tableSize;
 
     // INTRODUZIONE
     style();
@@ -45,6 +46,11 @@ int main()
     {
         puts("");
         int modalita = playMode();
+        if (modalita == 2) {
+            printf("Inserisci il numero di tessere da creare: ");
+            scanf("%d", &tableSize);
+        }
+        puts(" ");
         style();
         switch (modalita)
         {
@@ -53,11 +59,7 @@ int main()
             mod1(std, numberOfcards);
             break;
         case 2:
-            int tableSize;
             printf("\033[1;33m\nModalità: %d\n\033[0m", modalita);
-            printf("Inserisci il numero di tessere da creare: ");
-            scanf("%d", &tableSize);
-            printf("Il numero di tessere è %d \n", tableSize);
             modAI(std, tableSize);
             break;
         /*
@@ -128,7 +130,7 @@ int playMode()
         };
 
     } while (mod > 3 || mod < 0);
-    puts(" ");
+    //puts(" ");
     // printf("Sono uscito");
     return mod;
 };
