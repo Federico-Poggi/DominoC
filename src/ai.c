@@ -183,6 +183,12 @@ int findDX_SX(tessera* aiCards1, int freq[], int tableSize, int dx_sx) {
     int max = 0;
     for (int i = 0; i < tableSize; ++i) {
         if (aiCards1[i].num1 == dx_sx || aiCards1[i].num2 == dx_sx) {
+            // CARTA VALORI UGUALI
+            if (aiCards1[i].num1 == aiCards1[i].num2) {
+                max = freq[i];
+                out = i;
+                return out;
+            }
             if (freq[i] > max) {
                 max = freq[i];
                 out = i;
