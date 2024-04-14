@@ -107,8 +107,10 @@ Include dependency graph for modAI.c:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a9310766717982c26ccba8ab8475a8fee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="modAI_8c.html#a9310766717982c26ccba8ab8475a8fee">modAI</a> (tessera *std, int numberOfcards)</td></tr>
+<tr class="memdesc:a9310766717982c26ccba8ab8475a8fee"><td class="mdescLeft">&#160;</td><td class="mdescRight"><b>Function that manages the execution of the whole game</b>  <a href="modAI_8c.html#a9310766717982c26ccba8ab8475a8fee">More...</a><br /></td></tr>
 <tr class="separator:a9310766717982c26ccba8ab8475a8fee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a163a7177daeb082add2c34015759c413"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="modAI_8c.html#a163a7177daeb082add2c34015759c413">aiGame</a> (tessera *table, tessera *aiCards1, int *indexTable, int *numberOfcards, int tableSize, int *mossa1)</td></tr>
+<tr class="memdesc:a163a7177daeb082add2c34015759c413"><td class="mdescLeft">&#160;</td><td class="mdescRight"><b>Function that manages one move of the AI</b>  <a href="modAI_8c.html#a163a7177daeb082add2c34015759c413">More...</a><br /></td></tr>
 <tr class="separator:a163a7177daeb082add2c34015759c413"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
@@ -162,6 +164,160 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p><b>Function that manages one move of the AI</b> </p>
+<div class="fragment"><div class="line"> <span class="keywordtype">void</span> <a class="code" href="modAI_8c.html#a163a7177daeb082add2c34015759c413">aiGame</a>(tessera* table, tessera* aiCards1, <span class="keywordtype">int</span>* indexTable, <span class="keywordtype">int</span>* numberOfcards, <span class="keywordtype">int</span> tableSize, <span class="keywordtype">int</span>* mossa1) {</div>
+<div class="line">    <span class="comment">//crea array ferquenze locale</span></div>
+<div class="line">    <span class="keywordtype">int</span> freq[tableSize];</div>
+<div class="line">    <a class="code" href="ai_8c.html#ab8f938d130cdd3224bf6641032a8919a">inizializza</a>(aiCards1, freq, tableSize);</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// MOSSA 1</span></div>
+<div class="line">    <span class="keywordflow">if</span> (*mossa1 == 1) {</div>
+<div class="line">        <span class="comment">//code for mossa 1</span></div>
+<div class="line">        <span class="keywordtype">int</span> index = <a class="code" href="ai_8c.html#a653c53c37109db27a09b22f2d1d6e1d6">findfirst</a>(aiCards1, freq, tableSize);</div>
+<div class="line">        printf(<span class="stringliteral">&quot;\033[1;32mCarta scelta: [%d|%d]\nNel mazzo compare: %d volte\n\n\033[0m&quot;</span>, aiCards1[index].num1, aiCards1[index].num2, freq[index]);</div>
+<div class="line">        <span class="keywordtype">int</span> num = freq[index];</div>
+<div class="line">        <span class="keywordflow">if</span> (aiCards1[index].num1 == aiCards1[index].num2) {</div>
+<div class="line">            <span class="keywordflow">while</span> (num) {</div>
+<div class="line">                <a class="code" href="domino_8c.html#a2f5313e6f51e8697002fccf09cff2726">pushHead</a>(table, aiCards1, index, indexTable);</div>
+<div class="line">                *numberOfcards -= 1;</div>
+<div class="line">                aiCards1[index].num1 = 0;</div>
+<div class="line">                aiCards1[index].num2 = 0;</div>
+<div class="line">                freq[index] = 0;</div>
+<div class="line">                <a class="code" href="ai_8c.html#aab8b2a61a875c025e0f231436d4ae277">pop_back</a>(aiCards1, index, tableSize);</div>
+<div class="line">                <span class="comment">//++index;</span></div>
+<div class="line">                --num;</div>
+<div class="line">            }</div>
+<div class="line">        }</div>
+<div class="line">        <span class="keywordflow">else</span> {</div>
+<div class="line">            <span class="keywordtype">bool</span> change = <span class="keyword">false</span>;</div>
+<div class="line">            <span class="keywordflow">while</span> (num) {</div>
+<div class="line">                <span class="keywordflow">if</span> (change == <span class="keyword">false</span>) {</div>
+<div class="line">                    <a class="code" href="domino_8c.html#a2f5313e6f51e8697002fccf09cff2726">pushHead</a>(table, aiCards1, index, indexTable);</div>
+<div class="line">                    *numberOfcards -= 1;</div>
+<div class="line">                    change = <span class="keyword">true</span>;</div>
+<div class="line">                }</div>
+<div class="line">                <span class="keywordflow">else</span> {</div>
+<div class="line">                    <a class="code" href="domino_8c.html#a61c56b26a8565187212038912e10fef9">rotate</a>(aiCards1, index);</div>
+<div class="line">                    <a class="code" href="domino_8c.html#a2f5313e6f51e8697002fccf09cff2726">pushHead</a>(table, aiCards1, index, indexTable);</div>
+<div class="line">                    *numberOfcards -= 1;</div>
+<div class="line">                    change = <span class="keyword">false</span>;</div>
+<div class="line">                }</div>
+<div class="line">                aiCards1[index].num1 = 0;</div>
+<div class="line">                aiCards1[index].num2 = 0;</div>
+<div class="line">                freq[index] = 0;</div>
+<div class="line">                <a class="code" href="ai_8c.html#aab8b2a61a875c025e0f231436d4ae277">pop_back</a>(aiCards1, index, tableSize);</div>
+<div class="line">                <span class="comment">//++index;</span></div>
+<div class="line">                --num;</div>
+<div class="line">            }</div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordflow">else</span> {</div>
+<div class="line">        <span class="comment">// MOSSE SUCESSIVE</span></div>
+<div class="line">        <span class="keywordtype">int</span> dx = table[(*indexTable) - 1].num2;</div>
+<div class="line">        <span class="keywordtype">int</span> indexDX = <a class="code" href="ai_8c.html#a3ae1a587acf8382b651cf502cc97280d">findDX_SX</a>(aiCards1, freq, tableSize, dx);</div>
+<div class="line">        <span class="keywordtype">bool</span> couldEnter = <a class="code" href="ai_8c.html#a9a4891f76a5e0695139d493a3698d9d9">sohuldEnter</a>(aiCards1, indexDX, dx);</div>
+<div class="line">        <span class="keywordflow">if</span> (couldEnter == <span class="keyword">true</span>) {</div>
+<div class="line">            <span class="comment">//RAMO DX</span></div>
+<div class="line">            printf(<span class="stringliteral">&quot;\033[1;32mCarta scelta: [%d|%d]\nNel mazzo compare: %d volte\n\n\033[0m&quot;</span>, aiCards1[indexDX].num1, aiCards1[indexDX].num2, freq[indexDX]);</div>
+<div class="line">            <span class="keywordtype">int</span> num = freq[indexDX];</div>
+<div class="line"> </div>
+<div class="line">            <span class="keywordtype">bool</span> isRotated = <span class="keyword">false</span>;</div>
+<div class="line">            <span class="keywordflow">if</span> (aiCards1[indexDX].num1 != table[(*indexTable) - 1].num2) {</div>
+<div class="line">                isRotated = <span class="keyword">true</span>;</div>
+<div class="line">            }</div>
+<div class="line"> </div>
+<div class="line">            <span class="keywordtype">bool</span> change = <span class="keyword">false</span>;</div>
+<div class="line">            <span class="keywordflow">while</span> (num) {</div>
+<div class="line">                <span class="keywordflow">if</span> (change == <span class="keyword">false</span>) {</div>
+<div class="line">                    <span class="keywordflow">if</span> (isRotated == <span class="keyword">true</span>) {</div>
+<div class="line">                        <a class="code" href="domino_8c.html#a61c56b26a8565187212038912e10fef9">rotate</a>(aiCards1, indexDX);</div>
+<div class="line">                    }</div>
+<div class="line">                    <a class="code" href="domino_8c.html#a2f5313e6f51e8697002fccf09cff2726">pushHead</a>(table, aiCards1, indexDX, indexTable);</div>
+<div class="line">                    *numberOfcards -= 1;</div>
+<div class="line">                    change = <span class="keyword">true</span>;</div>
+<div class="line">                }</div>
+<div class="line">                <span class="keywordflow">else</span> {</div>
+<div class="line">                    <span class="keywordflow">if</span> (isRotated == <span class="keyword">true</span>) {</div>
+<div class="line">                        <a class="code" href="domino_8c.html#a61c56b26a8565187212038912e10fef9">rotate</a>(aiCards1, indexDX);</div>
+<div class="line">                    }</div>
+<div class="line">                    <a class="code" href="domino_8c.html#a61c56b26a8565187212038912e10fef9">rotate</a>(aiCards1, indexDX);</div>
+<div class="line">                    <a class="code" href="domino_8c.html#a2f5313e6f51e8697002fccf09cff2726">pushHead</a>(table, aiCards1, indexDX, indexTable);</div>
+<div class="line">                    *numberOfcards -= 1;</div>
+<div class="line">                    change = <span class="keyword">false</span>;</div>
+<div class="line">                }</div>
+<div class="line">                aiCards1[indexDX].num1 = 0;</div>
+<div class="line">                aiCards1[indexDX].num2 = 0;</div>
+<div class="line">                freq[indexDX] = 0;</div>
+<div class="line">                <a class="code" href="ai_8c.html#aab8b2a61a875c025e0f231436d4ae277">pop_back</a>(aiCards1, indexDX, tableSize);</div>
+<div class="line">                <span class="comment">//++indexDX;</span></div>
+<div class="line">                --num;</div>
+<div class="line">            }</div>
+<div class="line">        }</div>
+<div class="line">        <span class="keywordflow">else</span> {</div>
+<div class="line">            <span class="comment">//RAMO SX</span></div>
+<div class="line">            <span class="keywordtype">int</span> sx = table[0].num1;</div>
+<div class="line">            <span class="keywordtype">int</span> indexSX = <a class="code" href="ai_8c.html#a3ae1a587acf8382b651cf502cc97280d">findDX_SX</a>(aiCards1, freq, tableSize, sx);</div>
+<div class="line">            <span class="keywordtype">bool</span> canEnter = <a class="code" href="ai_8c.html#a9a4891f76a5e0695139d493a3698d9d9">sohuldEnter</a>(aiCards1, indexSX, sx);</div>
+<div class="line">            <span class="keywordflow">if</span> (canEnter == <span class="keyword">false</span>) {</div>
+<div class="line">                <span class="keywordtype">bool</span> ass = <span class="keyword">true</span>;</div>
+<div class="line">                <span class="keywordflow">if</span> (ass == <span class="keyword">true</span>) {</div>
+<div class="line">                    printf(<span class="stringliteral">&quot;\n\nDevo fare la first match\n\n&quot;</span>);</div>
+<div class="line">                    exit(EXIT_FAILURE);</div>
+<div class="line">                }</div>
+<div class="line">            }</div>
+<div class="line">            <span class="keywordflow">else</span> {</div>
+<div class="line">                <span class="comment">//printf(&quot;L&#39;indice uscito è %d\n&quot;, indexSX);</span></div>
+<div class="line">                <span class="keywordtype">int</span> num = freq[indexSX];</div>
+<div class="line">                printf(<span class="stringliteral">&quot;\033[1;32mCarta scelta: [%d|%d]\nNel mazzo compare: %d volte\n\n\033[0m&quot;</span>, aiCards1[indexSX].num1, aiCards1[indexSX].num2, freq[indexSX]);</div>
+<div class="line"> </div>
+<div class="line">                <span class="keywordtype">bool</span> isRotated = <span class="keyword">false</span>;</div>
+<div class="line">                <span class="keywordflow">if</span> (aiCards1[indexSX].num2 != table[0].num1) {</div>
+<div class="line">                    isRotated = <span class="keyword">true</span>;</div>
+<div class="line">                }</div>
+<div class="line"> </div>
+<div class="line">                <span class="keywordtype">bool</span> change = <span class="keyword">false</span>;</div>
+<div class="line">                <span class="keywordflow">while</span> (num) {</div>
+<div class="line">                    <span class="keywordflow">if</span> (change == <span class="keyword">false</span>) {</div>
+<div class="line">                        <span class="keywordflow">if</span> (isRotated == <span class="keyword">true</span>) {</div>
+<div class="line">                            <a class="code" href="domino_8c.html#a61c56b26a8565187212038912e10fef9">rotate</a>(aiCards1, indexSX);</div>
+<div class="line">                        }</div>
+<div class="line">                        <a class="code" href="domino_8c.html#af6fdf3897773f0005f0c07e81c7c7a02">pushFooter</a>(table, tableSize, aiCards1, indexSX, indexTable);</div>
+<div class="line">                        *numberOfcards -= 1;</div>
+<div class="line">                        change = <span class="keyword">true</span>;</div>
+<div class="line">                    }</div>
+<div class="line">                    <span class="keywordflow">else</span> {</div>
+<div class="line">                        <span class="keywordflow">if</span> (isRotated == <span class="keyword">true</span>) {</div>
+<div class="line">                            <a class="code" href="domino_8c.html#a61c56b26a8565187212038912e10fef9">rotate</a>(aiCards1, indexSX);</div>
+<div class="line">                        }</div>
+<div class="line">                        <a class="code" href="domino_8c.html#a61c56b26a8565187212038912e10fef9">rotate</a>(aiCards1, indexSX);</div>
+<div class="line">                        <a class="code" href="domino_8c.html#af6fdf3897773f0005f0c07e81c7c7a02">pushFooter</a>(table, tableSize, aiCards1, indexSX, indexTable);</div>
+<div class="line">                        *numberOfcards -= 1;</div>
+<div class="line">                        change = <span class="keyword">false</span>;</div>
+<div class="line">                    }</div>
+<div class="line">                    aiCards1[indexSX].num1 = 0;</div>
+<div class="line">                    aiCards1[indexSX].num2 = 0;</div>
+<div class="line">                    freq[indexSX] = 0;</div>
+<div class="line">                    <a class="code" href="ai_8c.html#aab8b2a61a875c025e0f231436d4ae277">pop_back</a>(aiCards1, indexSX, tableSize);</div>
+<div class="line">                    <span class="comment">//++indexDX;</span></div>
+<div class="line">                    --num;</div>
+<div class="line">                }</div>
+<div class="line">            }</div>
+<div class="line"> </div>
+<div class="line">        };</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="ttc" id="aai_8c_html_a3ae1a587acf8382b651cf502cc97280d"><div class="ttname"><a href="ai_8c.html#a3ae1a587acf8382b651cf502cc97280d">findDX_SX</a></div><div class="ttdeci">int findDX_SX(tessera *aiCards1, int freq[], int tableSize, int dx_sx)</div><div class="ttdoc">Given a number, that rappresent the number most right or most left of the current table,...</div><div class="ttdef"><b>Definition:</b> ai.c:181</div></div>
+<div class="ttc" id="aai_8c_html_a653c53c37109db27a09b22f2d1d6e1d6"><div class="ttname"><a href="ai_8c.html#a653c53c37109db27a09b22f2d1d6e1d6">findfirst</a></div><div class="ttdeci">int findfirst(tessera *aiCards1, int freq[], int numberOfcards)</div><div class="ttdoc">Search the most frequent tiles and return the index of the tile into Ai-Hand</div><div class="ttdef"><b>Definition:</b> ai.c:132</div></div>
+<div class="ttc" id="aai_8c_html_a9a4891f76a5e0695139d493a3698d9d9"><div class="ttname"><a href="ai_8c.html#a9a4891f76a5e0695139d493a3698d9d9">sohuldEnter</a></div><div class="ttdeci">bool sohuldEnter(tessera *AiCards, int indexAi, int numTable)</div><div class="ttdoc">This is a CHECK for control if have to pass to the left side of the table</div><div class="ttdef"><b>Definition:</b> ai.c:246</div></div>
+<div class="ttc" id="aai_8c_html_aab8b2a61a875c025e0f231436d4ae277"><div class="ttname"><a href="ai_8c.html#aab8b2a61a875c025e0f231436d4ae277">pop_back</a></div><div class="ttdeci">void pop_back(tessera *aiCards1, int index, int tablesize)</div><div class="ttdoc">Remove the chosen tiles and set it at [0|0], and put them at the end of the array</div><div class="ttdef"><b>Definition:</b> ai.c:221</div></div>
+<div class="ttc" id="aai_8c_html_ab8f938d130cdd3224bf6641032a8919a"><div class="ttname"><a href="ai_8c.html#ab8f938d130cdd3224bf6641032a8919a">inizializza</a></div><div class="ttdeci">void inizializza(tessera *aiCards1, int freq[], int numberOfCards)</div><div class="ttdoc">Keep tracks of the frequencies of the hand tiles</div><div class="ttdef"><b>Definition:</b> ai.c:89</div></div>
+<div class="ttc" id="adomino_8c_html_a2f5313e6f51e8697002fccf09cff2726"><div class="ttname"><a href="domino_8c.html#a2f5313e6f51e8697002fccf09cff2726">pushHead</a></div><div class="ttdeci">void pushHead(tessera *table, tessera *playerCards1, int choice, int *pointer)</div><div class="ttdoc">Insert the tile at the end of game board</div><div class="ttdef"><b>Definition:</b> domino.c:313</div></div>
+<div class="ttc" id="adomino_8c_html_a61c56b26a8565187212038912e10fef9"><div class="ttname"><a href="domino_8c.html#a61c56b26a8565187212038912e10fef9">rotate</a></div><div class="ttdeci">void rotate(tessera *playerCards1, int i)</div><div class="ttdoc">Rotate the tile when we need Ex: [5|1]--&gt; [1|5]</div><div class="ttdef"><b>Definition:</b> domino.c:288</div></div>
+<div class="ttc" id="adomino_8c_html_af6fdf3897773f0005f0c07e81c7c7a02"><div class="ttname"><a href="domino_8c.html#af6fdf3897773f0005f0c07e81c7c7a02">pushFooter</a></div><div class="ttdeci">void pushFooter(tessera *table, int size, tessera *playerCards1, int choice, int *pointer)</div><div class="ttdoc">Insert the tile at start of game board</div><div class="ttdef"><b>Definition:</b> domino.c:341</div></div>
+<div class="ttc" id="amodAI_8c_html_a163a7177daeb082add2c34015759c413"><div class="ttname"><a href="modAI_8c.html#a163a7177daeb082add2c34015759c413">aiGame</a></div><div class="ttdeci">void aiGame(tessera *table, tessera *aiCards1, int *indexTable, int *numberOfcards, int tableSize, int *mossa1)</div><div class="ttdoc">Function that manages one move of the AI</div><div class="ttdef"><b>Definition:</b> modAI.c:276</div></div>
+</div><!-- fragment --><dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
+
 </div>
 </div>
 <a id="a9310766717982c26ccba8ab8475a8fee"></a>
@@ -189,6 +345,69 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p><b>Function that manages the execution of the whole game</b> </p>
+<div class="fragment"><div class="line">*<span class="keywordtype">void</span> <a class="code" href="modAI_8c.html#a9310766717982c26ccba8ab8475a8fee">modAI</a>(tessera* std, <span class="keywordtype">int</span> numberOfcards) {</div>
+<div class="line">    <span class="comment">// VARIABILI GENERALI MDOALITA&#39; 1</span></div>
+<div class="line">    <span class="keywordtype">bool</span> playerMode = <span class="keyword">false</span>;</div>
+<div class="line">    <span class="keywordtype">int</span> playerPoints = 0;</div>
+<div class="line">    <span class="keywordtype">int</span> indexTable = 0;</div>
+<div class="line">    <span class="comment">//int choice = 0;</span></div>
+<div class="line">    <span class="keywordtype">int</span>  mossa1Ai = 1;</div>
+<div class="line">    <span class="keywordtype">int</span> tableSize = numberOfcards;</div>
+<div class="line">    <span class="keywordtype">bool</span> canFollow = <span class="keyword">true</span>;</div>
+<div class="line">    tessera* table = <a class="code" href="domino_8c.html#af871bbeb43aa498b8ba1d37fa8c6e0f3">creaTable</a>(numberOfcards); <span class="comment">// ARRAY TAVOLO</span></div>
+<div class="line">    tessera* aiCards1 = <a class="code" href="domino_8c.html#a879ad781c7566fe69751dd9800bdeeeb">giveTessereToPlayer</a>(std, numberOfcards);</div>
+<div class="line">    <a class="code" href="ai_8c.html#acdbb4394087c44dd40afa74a1fca149e">sortCards</a>(aiCards1, tableSize);</div>
+<div class="line">    <span class="comment">// printf(&quot; indirizzo di partenza: %p\n\n&quot;, playerCards1);</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// INTRODUZIONE GIOCO (COMPARE SOLO ALLA PRIMA PARTITA)</span></div>
+<div class="line">    printf(<span class="stringliteral">&quot;\033[1;33m\nAll&#39;AI verranno assegnate %d tessere.\nLa partita sarà automatica e seguira le calssiche regole del domino:\nI numeri dei lati adiacenti tra due tessere devono essere identici.\n\n\033[0m&quot;</span>, numberOfcards);</div>
+<div class="line">    <a class="code" href="domino_8c.html#a47921a79fe270d71c41322ac7a53344c">style</a>();</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">//int end = 5;</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">//int k = 3; variabile controllo iterazione caso verifica</span></div>
+<div class="line">    <span class="keywordflow">do</span></div>
+<div class="line">    {</div>
+<div class="line">        printf(<span class="stringliteral">&quot;\033[1;32m\nLe tessere in mano all&#39;AI al momento sono:\n\n\033[0m&quot;</span>);</div>
+<div class="line">        <a class="code" href="domino_8c.html#ac496e3a710e0d401f02fc9d4b15ee895">printTessere</a>(aiCards1, numberOfcards);</div>
+<div class="line">        puts(<span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line">        <a class="code" href="modAI_8c.html#a163a7177daeb082add2c34015759c413">aiGame</a>(table, aiCards1, &amp;indexTable, &amp;numberOfcards, tableSize, &amp;mossa1Ai);</div>
+<div class="line">        <span class="comment">//end--;</span></div>
+<div class="line">        mossa1Ai = 0;</div>
+<div class="line">        <span class="comment">// LA SVOLGIAMO QUI PER NON PERDERCI INDIRIZZZI DI MEMORIA PER LE FREE</span></div>
+<div class="line">        printf(<span class="stringliteral">&quot;\033[1;32mIl tavolo al momento presenta le tessere:\n\n\033[0m&quot;</span>);</div>
+<div class="line">        <a class="code" href="domino_8c.html#ac496e3a710e0d401f02fc9d4b15ee895">printTessere</a>(table, tableSize);</div>
+<div class="line">        puts(<span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line">        <a class="code" href="domino_8c.html#a47921a79fe270d71c41322ac7a53344c">style</a>();</div>
+<div class="line">        canFollow = <a class="code" href="check_8c.html#ac6be42cc7b411a16d550ffe18e34c6b0">canGoNext</a>(table, aiCards1, &amp;indexTable, numberOfcards, playerMode);</div>
+<div class="line">        <span class="keywordflow">if</span> (!canFollow)</div>
+<div class="line">        {</div>
+<div class="line">            <span class="keywordflow">break</span>;</div>
+<div class="line">        }</div>
+<div class="line"> </div>
+<div class="line">    } <span class="keywordflow">while</span> (numberOfcards);</div>
+<div class="line"> </div>
+<div class="line">    playerPoints = <a class="code" href="domino_8c.html#ab99565ae40f28c318b7620aea6832292">endPoints</a>(table, tableSize);</div>
+<div class="line"> </div>
+<div class="line">    printf(<span class="stringliteral">&quot;\n\033[1;35mCompletato!\033[0m Sono stati totalizzati: \033[1;32m%d punti\033[0m&quot;</span>, playerPoints);</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// FREE ALL MALLOC CREATED!!!</span></div>
+<div class="line">    <span class="comment">// I WANT TO BREAK FREE!!!</span></div>
+<div class="line">    mossa1Ai = 1;</div>
+<div class="line">    free(table);</div>
+<div class="line">    free(aiCards1);</div>
+<div class="line"> }</div>
+<div class="ttc" id="aai_8c_html_acdbb4394087c44dd40afa74a1fca149e"><div class="ttname"><a href="ai_8c.html#acdbb4394087c44dd40afa74a1fca149e">sortCards</a></div><div class="ttdeci">void sortCards(tessera *AiCards, int Size)</div><div class="ttdoc">Reorder of Ai-Hand using Buble Sort algorthim</div><div class="ttdef"><b>Definition:</b> ai.c:61</div></div>
+<div class="ttc" id="acheck_8c_html_ac6be42cc7b411a16d550ffe18e34c6b0"><div class="ttname"><a href="check_8c.html#ac6be42cc7b411a16d550ffe18e34c6b0">canGoNext</a></div><div class="ttdeci">bool canGoNext(tessera *table, tessera *playCards, int *indexTable, int numberOfCards, bool playerMode)</div><div class="ttdoc">Check if in the Player hand there are one or more tiles that can be inserted</div><div class="ttdef"><b>Definition:</b> check.c:153</div></div>
+<div class="ttc" id="adomino_8c_html_a47921a79fe270d71c41322ac7a53344c"><div class="ttname"><a href="domino_8c.html#a47921a79fe270d71c41322ac7a53344c">style</a></div><div class="ttdeci">void style()</div><div class="ttdef"><b>Definition:</b> domino.c:13</div></div>
+<div class="ttc" id="adomino_8c_html_a879ad781c7566fe69751dd9800bdeeeb"><div class="ttname"><a href="domino_8c.html#a879ad781c7566fe69751dd9800bdeeeb">giveTessereToPlayer</a></div><div class="ttdeci">tessera * giveTessereToPlayer(tessera *tessere, int nTessere)</div><div class="ttdoc">This will give n. tiles to player</div><div class="ttdef"><b>Definition:</b> domino.c:201</div></div>
+<div class="ttc" id="adomino_8c_html_ab99565ae40f28c318b7620aea6832292"><div class="ttname"><a href="domino_8c.html#ab99565ae40f28c318b7620aea6832292">endPoints</a></div><div class="ttdeci">int endPoints(tessera *table, int sizeTab)</div><div class="ttdoc">Print of final point</div><div class="ttdef"><b>Definition:</b> domino.c:451</div></div>
+<div class="ttc" id="adomino_8c_html_ac496e3a710e0d401f02fc9d4b15ee895"><div class="ttname"><a href="domino_8c.html#ac496e3a710e0d401f02fc9d4b15ee895">printTessere</a></div><div class="ttdeci">void printTessere(tessera *a, int size)</div><div class="ttdoc">Generate the game board with n. tiles</div><div class="ttdef"><b>Definition:</b> domino.c:161</div></div>
+<div class="ttc" id="adomino_8c_html_af871bbeb43aa498b8ba1d37fa8c6e0f3"><div class="ttname"><a href="domino_8c.html#af871bbeb43aa498b8ba1d37fa8c6e0f3">creaTable</a></div><div class="ttdeci">tessera * creaTable(int numberOfTesser)</div><div class="ttdoc">Generate the game board with n. tiles</div><div class="ttdef"><b>Definition:</b> domino.c:125</div></div>
+<div class="ttc" id="amodAI_8c_html_a9310766717982c26ccba8ab8475a8fee"><div class="ttname"><a href="modAI_8c.html#a9310766717982c26ccba8ab8475a8fee">modAI</a></div><div class="ttdeci">void modAI(tessera *std, int numberOfcards)</div><div class="ttdoc">Function that manages the execution of the whole game</div><div class="ttdef"><b>Definition:</b> modAI.c:72</div></div>
+</div><!-- fragment --><dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
 
 </div>
 </div>
