@@ -105,16 +105,17 @@ Include dependency graph for check.c:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a495cc05158879368d9cc46497796aae6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="check_8c.html#a495cc05158879368d9cc46497796aae6">insertCheck</a> (tessera *table, tessera *playercards, int *indexTable, int *choice)</td></tr>
-<tr class="memdesc:a495cc05158879368d9cc46497796aae6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Controlla se è possibile inserire una tessera sulla tavola di gioco.  <a href="check_8c.html#a495cc05158879368d9cc46497796aae6">More...</a><br /></td></tr>
+<tr class="memdesc:a495cc05158879368d9cc46497796aae6"><td class="mdescLeft">&#160;</td><td class="mdescRight"><b>Check if a tile can be inserted into table</b>  <a href="check_8c.html#a495cc05158879368d9cc46497796aae6">More...</a><br /></td></tr>
 <tr class="separator:a495cc05158879368d9cc46497796aae6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2445751d2606d29da734e833ddb329fa"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="check_8c.html#a2445751d2606d29da734e833ddb329fa">checkInsertable</a> (tessera *table, tessera *playercards, int *indexTable, int *choice, int dxOrSx, int mossa1)</td></tr>
 <tr class="separator:a2445751d2606d29da734e833ddb329fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a737a2786845d7f3e2743167da892d525"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="check_8c.html#a737a2786845d7f3e2743167da892d525">canGoNext</a> (tessera *table, tessera *playCards, int *indexTable, int numberOfCards)</td></tr>
-<tr class="separator:a737a2786845d7f3e2743167da892d525"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6be42cc7b411a16d550ffe18e34c6b0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="check_8c.html#ac6be42cc7b411a16d550ffe18e34c6b0">canGoNext</a> (tessera *table, tessera *playCards, int *indexTable, int numberOfCards, bool playerMode)</td></tr>
+<tr class="memdesc:ac6be42cc7b411a16d550ffe18e34c6b0"><td class="mdescLeft">&#160;</td><td class="mdescRight"><b>Check if in the Player hand there are one or more tiles that can be inserted</b>  <a href="check_8c.html#ac6be42cc7b411a16d550ffe18e34c6b0">More...</a><br /></td></tr>
+<tr class="separator:ac6be42cc7b411a16d550ffe18e34c6b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a737a2786845d7f3e2743167da892d525"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a737a2786845d7f3e2743167da892d525">&#9670;&nbsp;</a></span>canGoNext()</h2>
+<a id="ac6be42cc7b411a16d550ffe18e34c6b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6be42cc7b411a16d550ffe18e34c6b0">&#9670;&nbsp;</a></span>canGoNext()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -141,7 +142,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>numberOfCards</em>&#160;</td>
+          <td class="paramname"><em>numberOfCards</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>playerMode</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -151,6 +158,41 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p><b>Check if in the Player hand there are one or more tiles that can be inserted</b> </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">table</td><td><em>Game Board</em> </td></tr>
+    <tr><td class="paramname">playCards</td><td><em>Player hand</em> </td></tr>
+    <tr><td class="paramname">indexTable</td><td><em>Index of the last tile inserted</em> </td></tr>
+    <tr><td class="paramname">numberOfCards</td><td></td></tr>
+    <tr><td class="paramname">playerMode</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><b>TRUE</b> <em>If there is at least one tile that can be inserted</em> </dd>
+<dd>
+<b>FALSE</b> <em>If there's no more tiles insertable</em></dd></dl>
+<div class="fragment"><div class="line">   <span class="keywordtype">bool</span> <a class="code" href="check_8c.html#ac6be42cc7b411a16d550ffe18e34c6b0">canGoNext</a>(tessera* table, tessera* playCards, <span class="keywordtype">int</span>* indexTable, <span class="keywordtype">int</span> numberOfCards, <span class="keywordtype">bool</span> playerMode)</div>
+<div class="line">{</div>
+<div class="line">    <span class="keywordtype">int</span> mostLeft = table[0].num1;</div>
+<div class="line">    <span class="keywordtype">int</span> mostRight = table[*indexTable - 1].num2;</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> j = 0; j &lt; numberOfCards; j++)</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">if</span> ((mostLeft == playCards[j].num2) || (mostLeft == playCards[j].num1) || (mostRight == playCards[j].num1) || (mostRight == playCards[j].num2))</div>
+<div class="line">        {</div>
+<div class="line">            <span class="keywordflow">if</span> (playerMode == <span class="keyword">true</span>) {</div>
+<div class="line">                <span class="comment">// Can follow</span></div>
+<div class="line">                printf(<span class="stringliteral">&quot;\033[1;32m\nSi puo proseguire: inserire una tessera valida \n\033[0m&quot;</span>);</div>
+<div class="line">            }</div>
+<div class="line">            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+<div class="line">    printf(<span class="stringliteral">&quot;\033[1;31m\nMosse possibili terminate\n\033[0m&quot;</span>);</div>
+<div class="line">    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="acheck_8c_html_ac6be42cc7b411a16d550ffe18e34c6b0"><div class="ttname"><a href="check_8c.html#ac6be42cc7b411a16d550ffe18e34c6b0">canGoNext</a></div><div class="ttdeci">bool canGoNext(tessera *table, tessera *playCards, int *indexTable, int numberOfCards, bool playerMode)</div><div class="ttdoc">Check if in the Player hand there are one or more tiles that can be inserted</div><div class="ttdef"><b>Definition:</b> check.c:153</div></div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a id="a2445751d2606d29da734e833ddb329fa"></a>
@@ -243,21 +285,43 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Controlla se è possibile inserire una tessera sulla tavola di gioco. </p>
-<p>Questa funzione controlla se la tessera scelta dal giocatore può essere inserita sulla tavola di gioco. Per farlo, confronta i valori delle estremità sinistra e destra della tavola con i valori delle estremità della tessera scelta.</p>
+<p><b>Check if a tile can be inserted into table</b> </p>
+<p>This function checks whether the tile chosen by the player can be placed on the game board. It does this by comparing the values of the left and right ends of the board with the values of the ends of the chosen tile.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">table</td><td>Array rappresentante la tavola di gioco. </td></tr>
-    <tr><td class="paramname">playercards</td><td>Array delle tessere del giocatore. </td></tr>
-    <tr><td class="paramname">indexTable</td><td>Puntatore all'indice dell'ultima tessera inserita sulla tavola di gioco. </td></tr>
-    <tr><td class="paramname">choice</td><td>Puntatore all'indice della tessera scelta dal giocatore. </td></tr>
+    <tr><td class="paramname">table</td><td><em>Game board array</em> </td></tr>
+    <tr><td class="paramname">playercards</td><td><em>Player's hand</em> </td></tr>
+    <tr><td class="paramname">indexTable</td><td><em>Last inserted tile pointer in the game board</em> </td></tr>
+    <tr><td class="paramname">choice</td><td><em>Pointer to the chosen tile from the player</em> </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true Se la tessera può essere inserita sulla tavola di gioco. </dd>
+<dl class="section return"><dt>Returns</dt><dd><b>TRUE</b> <em>If the tile can be inserted into the game board</em> </dd>
 <dd>
-false Se la tessera non può essere inserita sulla tavola di gioco. </dd></dl>
-
+<b>FALSE</b> <em>If the tile can't be inserted into the game board</em></dd></dl>
+<div class="fragment"><div class="line">    <span class="keywordtype">bool</span> <a class="code" href="check_8c.html#a495cc05158879368d9cc46497796aae6">insertCheck</a>(tessera* table, tessera* playercards, <span class="keywordtype">int</span>* indexTable, <span class="keywordtype">int</span>* choice)</div>
+<div class="line">{</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordtype">int</span> left = table[0].num1;                <span class="comment">// Most left number</span></div>
+<div class="line">    <span class="keywordtype">int</span> right = table[*indexTable - 1].num2; <span class="comment">// Most right number</span></div>
+<div class="line">    <span class="keywordflow">if</span> ((left == playercards[*choice].num2) || (left == playercards[*choice].num1) || (right == playercards[*choice].num1) || (right == playercards[*choice].num2))</div>
+<div class="line">    {</div>
+<div class="line">        printf(<span class="stringliteral">&quot;\033[1;32mLa tessere [%d|%d] può essere inserita\n\033[0m&quot;</span>, playercards[*choice].num1, playercards[*choice].num2);</div>
+<div class="line">        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (left == 0 &amp;&amp; right == 0)</div>
+<div class="line">    {</div>
+<div class="line">        printf(<span class="stringliteral">&quot;\033[1;32mLa tessere [%d|%d] può essere inserita\n\033[0m&quot;</span>, playercards[*choice].num1, playercards[*choice].num2);</div>
+<div class="line">        <span class="comment">//printf(&quot;Prima mossa&quot;);</span></div>
+<div class="line">        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordflow">else</span></div>
+<div class="line">    {</div>
+<div class="line">        printf(<span class="stringliteral">&quot;\033[1;31mLa tessere [%d|%d] non può essere inserita: inserire una tessera valida\n\033[0m&quot;</span>, playercards[*choice].num1, playercards[*choice].num2);</div>
+<div class="line">        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line">    };</div>
+<div class="ttc" id="acheck_8c_html_a495cc05158879368d9cc46497796aae6"><div class="ttname"><a href="check_8c.html#a495cc05158879368d9cc46497796aae6">insertCheck</a></div><div class="ttdeci">bool insertCheck(tessera *table, tessera *playercards, int *indexTable, int *choice)</div><div class="ttdoc">Check if a tile can be inserted into table</div><div class="ttdef"><b>Definition:</b> check.c:49</div></div>
+</div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

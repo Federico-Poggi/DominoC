@@ -6,6 +6,7 @@
 #include "domino.h"
 #include "check.h"
 
+
 void mod1(tessera* std, int numberOfcards);
 
 /**
@@ -29,7 +30,7 @@ int main()
     int numberOfcards = 28;
 
     // INTRODUZIONE
-    style();
+    // style();
     // printf("\033[1;31m\033[0m ");        // rosso
     // printf("\033[1;32mVerde\033[0m ");   // verde
     // printf("\033[1;33mGiallo\033[0m ");  // giallo
@@ -43,6 +44,7 @@ int main()
     style();
     while (playAgain)
     {
+
         puts("");
         int modalita = playMode();
         style();
@@ -60,11 +62,11 @@ int main()
             printf("Il numero di tessere è %d \n", tableSize);
             modAI(std, tableSize);
             break;
-        /*
-        case 3:
-            printf("\nModalità: %d\n", modalita);
-            break;
-        */
+            /*
+            case 3:
+                printf("\nModalità: %d\n", modalita);
+                break;
+            */
         default:
             error("Modalità non valida\n");
         }
@@ -113,7 +115,7 @@ int playMode()
     int mod = 0;
     printf("Inserisci la modalita di gioco:");
     puts("\n");
-    printf("\033[1;34m1: Modalità classica interattiva\033[0m\n\033[1;33m2: Modalità AI\033[0m"); 
+    printf("\033[1;34m1: Modalità classica interattiva\033[0m\n\033[1;33m2: Modalità AI\033[0m");
     puts("\n");
     printf("Inserisci il numero della modalità desiderata [1, 2]: ");
     do

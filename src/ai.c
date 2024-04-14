@@ -4,10 +4,10 @@
 
 /**
  *
- * @brief
+ * @brief **The Swap function, swap tile in AI-Hand inside Sort Function**
  *
- * @param AiCards1
- * @param AiCards2
+ * @param AiCards1 *Tile 1 to swap*
+ * @param AiCards2 *Tile 2 to swap*
  *
  * <center>
  * \code{c}
@@ -25,6 +25,7 @@ void swap(tessera* AiCards1, tessera* AiCards2) {
     *AiCards1 = *AiCards2;
     *AiCards2 = temp1;
 }
+
 /**
  * @brief
  *  **Reorder of Ai-Hand** using **Buble Sort algorthim**
@@ -32,7 +33,7 @@ void swap(tessera* AiCards1, tessera* AiCards2) {
  * @param AiCards  *AiHand array plain of cards*
  * @param Size *AiHand array's size*
  * \n
- * <center>
+ *
  * \code{c}
  * //*Function code
  * void sortCards(tessera* AiCards, int Size) {
@@ -55,7 +56,7 @@ void swap(tessera* AiCards1, tessera* AiCards2) {
     }
 }
  * \endcode
- * </center>
+ *
  */
 void sortCards(tessera* AiCards, int Size) {
     // Sort num1
@@ -76,6 +77,7 @@ void sortCards(tessera* AiCards, int Size) {
         }
     }
 }
+
 /**
  * @brief
  *  **Keep tracks of the frequencies of the hand tiles**
@@ -106,7 +108,7 @@ void inizializza(tessera* aiCards1, int freq[], int numberOfCards) {
  * @return int (Index)
  *
  *
- * \code
+ * \code{c}
  *
  * int findfirst(tessera* aiCards1, int freq[], int numberOfcards) {
     int out = 0;
@@ -154,7 +156,7 @@ int findfirst(tessera* aiCards1, int freq[], int numberOfcards) {
  * @param dx_sx *The most right number or most left number*
  * @return int (Index)
  *
- * \code
+ * \code{c}
  * int findDX_SX(tessera* aiCards1, int freq[], int tableSize, int dx_sx) {
     int out = 0;
     int max = 0;
@@ -196,13 +198,25 @@ int findDX_SX(tessera* aiCards1, int freq[], int tableSize, int dx_sx) {
     return out;
 };
 
-// Mette tessera [0|0] alla fine dell'array aiCards (mano ai)
 /**
- * @brief **Remove the chosen tiles and set it at [0|0] **
+ * @brief **Remove the chosen tiles and set it at [0|0], and put them at the end of the array**
  *
- * @param aiCards1
- * @param index
+ * @param aiCards1 *Ai-hand with tiles*
+ * @param index *Index of the chosen tile*
  * @param tablesize
+ *
+ * \code{c}
+ *
+ * void pop_back(tessera* aiCards1, int index, int tablesize) {
+    tessera temp = aiCards1[index];
+    for (size_t i = index; i < tablesize - 1; i++)
+    {
+        aiCards1[i] = aiCards1[i + 1];
+    }
+    aiCards1[tablesize - 1] = temp;
+};
+ *
+ * \endcode
  */
 void pop_back(tessera* aiCards1, int index, int tablesize) {
     tessera temp = aiCards1[index];
@@ -213,6 +227,22 @@ void pop_back(tessera* aiCards1, int index, int tablesize) {
     aiCards1[tablesize - 1] = temp;
 };
 
+/**
+ * @brief **This is a CHECK for control if have to pass to the left side of the table**
+ *
+ * @param AiCards *Ai-hand with tiles*
+ * @param indexAi *Index of the chosen tile*
+ * @param numTable *Most right or most left number of the current table*
+ * @return **TRUE** *If the tile can be inserted at the current position*
+ * @return **FALSE** *If the tile can't be inserted*
+ *
+ * \code{c}
+ *
+ * bool sohuldEnter(tessera* AiCards, int indexAi, int numTable) {
+    return(AiCards[indexAi].num1 == numTable || AiCards[indexAi].num2 == numTable);
+};
+ * \endcode
+ */
 bool sohuldEnter(tessera* AiCards, int indexAi, int numTable) {
     return(AiCards[indexAi].num1 == numTable || AiCards[indexAi].num2 == numTable);
 };

@@ -101,6 +101,7 @@ Include dependency graph for ai.c:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a168db3a12449506ee8743261513c7ba5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ai_8c.html#a168db3a12449506ee8743261513c7ba5">swap</a> (tessera *AiCards1, tessera *AiCards2)</td></tr>
+<tr class="memdesc:a168db3a12449506ee8743261513c7ba5"><td class="mdescLeft">&#160;</td><td class="mdescRight"><b>The Swap function, swap tile in AI-Hand inside Sort Function</b>  <a href="ai_8c.html#a168db3a12449506ee8743261513c7ba5">More...</a><br /></td></tr>
 <tr class="separator:a168db3a12449506ee8743261513c7ba5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acdbb4394087c44dd40afa74a1fca149e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ai_8c.html#acdbb4394087c44dd40afa74a1fca149e">sortCards</a> (tessera *AiCards, int Size)</td></tr>
 <tr class="memdesc:acdbb4394087c44dd40afa74a1fca149e"><td class="mdescLeft">&#160;</td><td class="mdescRight"><b>Reorder of Ai-Hand</b> using <b>Buble Sort algorthim</b>  <a href="ai_8c.html#acdbb4394087c44dd40afa74a1fca149e">More...</a><br /></td></tr>
@@ -115,9 +116,10 @@ Functions</h2></td></tr>
 <tr class="memdesc:a3ae1a587acf8382b651cf502cc97280d"><td class="mdescLeft">&#160;</td><td class="mdescRight"><b>Given a number, that rappresent the number most right or most left of the current table, it will return the index of the tiles that can be insert at next move</b>  <a href="ai_8c.html#a3ae1a587acf8382b651cf502cc97280d">More...</a><br /></td></tr>
 <tr class="separator:a3ae1a587acf8382b651cf502cc97280d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aab8b2a61a875c025e0f231436d4ae277"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ai_8c.html#aab8b2a61a875c025e0f231436d4ae277">pop_back</a> (tessera *aiCards1, int index, int tablesize)</td></tr>
-<tr class="memdesc:aab8b2a61a875c025e0f231436d4ae277"><td class="mdescLeft">&#160;</td><td class="mdescRight">**Remove the chosen tiles and set it at [0|0] **  <a href="ai_8c.html#aab8b2a61a875c025e0f231436d4ae277">More...</a><br /></td></tr>
+<tr class="memdesc:aab8b2a61a875c025e0f231436d4ae277"><td class="mdescLeft">&#160;</td><td class="mdescRight"><b>Remove the chosen tiles and set it at [0|0], and put them at the end of the array</b>  <a href="ai_8c.html#aab8b2a61a875c025e0f231436d4ae277">More...</a><br /></td></tr>
 <tr class="separator:aab8b2a61a875c025e0f231436d4ae277"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9a4891f76a5e0695139d493a3698d9d9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ai_8c.html#a9a4891f76a5e0695139d493a3698d9d9">sohuldEnter</a> (tessera *AiCards, int indexAi, int numTable)</td></tr>
+<tr class="memdesc:a9a4891f76a5e0695139d493a3698d9d9"><td class="mdescLeft">&#160;</td><td class="mdescRight"><b>This is a CHECK for control if have to pass to the left side of the table</b>  <a href="ai_8c.html#a9a4891f76a5e0695139d493a3698d9d9">More...</a><br /></td></tr>
 <tr class="separator:a9a4891f76a5e0695139d493a3698d9d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
@@ -188,7 +190,7 @@ Functions</h2></td></tr>
 <div class="line">    }</div>
 <div class="line">    <span class="keywordflow">return</span> out;</div>
 <div class="line">};</div>
-<div class="ttc" id="aai_8c_html_a3ae1a587acf8382b651cf502cc97280d"><div class="ttname"><a href="ai_8c.html#a3ae1a587acf8382b651cf502cc97280d">findDX_SX</a></div><div class="ttdeci">int findDX_SX(tessera *aiCards1, int freq[], int tableSize, int dx_sx)</div><div class="ttdoc">Given a number, that rappresent the number most right or most left of the current table,...</div><div class="ttdef"><b>Definition:</b> ai.c:179</div></div>
+<div class="ttc" id="aai_8c_html_a3ae1a587acf8382b651cf502cc97280d"><div class="ttname"><a href="ai_8c.html#a3ae1a587acf8382b651cf502cc97280d">findDX_SX</a></div><div class="ttdeci">int findDX_SX(tessera *aiCards1, int freq[], int tableSize, int dx_sx)</div><div class="ttdoc">Given a number, that rappresent the number most right or most left of the current table,...</div><div class="ttdef"><b>Definition:</b> ai.c:181</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -251,7 +253,7 @@ Functions</h2></td></tr>
 <div class="line">    printf(<span class="stringliteral">&quot;\ncard -&gt; [%d|%d] _ freq -&gt; %d\n&quot;</span>, aiCards1[out].num1, aiCards1[out].num2, freq[out]);</div>
 <div class="line">    <span class="keywordflow">return</span> out;</div>
 <div class="line">}</div>
-<div class="ttc" id="aai_8c_html_a653c53c37109db27a09b22f2d1d6e1d6"><div class="ttname"><a href="ai_8c.html#a653c53c37109db27a09b22f2d1d6e1d6">findfirst</a></div><div class="ttdeci">int findfirst(tessera *aiCards1, int freq[], int numberOfcards)</div><div class="ttdoc">Search the most frequent tiles and return the index of the tile into Ai-Hand</div><div class="ttdef"><b>Definition:</b> ai.c:130</div></div>
+<div class="ttc" id="aai_8c_html_a653c53c37109db27a09b22f2d1d6e1d6"><div class="ttname"><a href="ai_8c.html#a653c53c37109db27a09b22f2d1d6e1d6">findfirst</a></div><div class="ttdeci">int findfirst(tessera *aiCards1, int freq[], int numberOfcards)</div><div class="ttdoc">Search the most frequent tiles and return the index of the tile into Ai-Hand</div><div class="ttdef"><b>Definition:</b> ai.c:132</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -331,12 +333,21 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>**Remove the chosen tiles and set it at [0|0] ** </p>
+<p><b>Remove the chosen tiles and set it at [0|0], and put them at the end of the array</b> </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">aiCards1</td><td></td></tr>
-    <tr><td class="paramname">index</td><td></td></tr>
-    <tr><td class="paramname">tablesize</td><td></td></tr>
+    <tr><td class="paramname">aiCards1</td><td><em>Ai-hand with tiles</em> </td></tr>
+    <tr><td class="paramname">index</td><td><em>Index of the chosen tile</em> </td></tr>
+    <tr><td class="paramname">tablesize</td><td><div class="fragment"><div class="line">   <span class="keywordtype">void</span> <a class="code" href="ai_8c.html#aab8b2a61a875c025e0f231436d4ae277">pop_back</a>(tessera* aiCards1, <span class="keywordtype">int</span> index, <span class="keywordtype">int</span> tablesize) {</div>
+<div class="line">    tessera temp = aiCards1[index];</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = index; i &lt; tablesize - 1; i++)</div>
+<div class="line">    {</div>
+<div class="line">        aiCards1[i] = aiCards1[i + 1];</div>
+<div class="line">    }</div>
+<div class="line">    aiCards1[tablesize - 1] = temp;</div>
+<div class="line">};</div>
+<div class="ttc" id="aai_8c_html_aab8b2a61a875c025e0f231436d4ae277"><div class="ttname"><a href="ai_8c.html#aab8b2a61a875c025e0f231436d4ae277">pop_back</a></div><div class="ttdeci">void pop_back(tessera *aiCards1, int index, int tablesize)</div><div class="ttdoc">Remove the chosen tiles and set it at [0|0], and put them at the end of the array</div><div class="ttdef"><b>Definition:</b> ai.c:221</div></div>
+</div><!-- fragment --> </td></tr>
   </table>
   </dd>
 </dl>
@@ -375,6 +386,23 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p><b>This is a CHECK for control if have to pass to the left side of the table</b> </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">AiCards</td><td><em>Ai-hand with tiles</em> </td></tr>
+    <tr><td class="paramname">indexAi</td><td><em>Index of the chosen tile</em> </td></tr>
+    <tr><td class="paramname">numTable</td><td><em>Most right or most left number of the current table</em> </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><b>TRUE</b> <em>If the tile can be inserted at the current position</em> </dd>
+<dd>
+<b>FALSE</b> <em>If the tile can't be inserted</em></dd></dl>
+<div class="fragment"><div class="line">   <span class="keywordtype">bool</span> <a class="code" href="ai_8c.html#a9a4891f76a5e0695139d493a3698d9d9">sohuldEnter</a>(tessera* AiCards, <span class="keywordtype">int</span> indexAi, <span class="keywordtype">int</span> numTable) {</div>
+<div class="line">    <span class="keywordflow">return</span>(AiCards[indexAi].num1 == numTable || AiCards[indexAi].num2 == numTable);</div>
+<div class="line">};</div>
+<div class="ttc" id="aai_8c_html_a9a4891f76a5e0695139d493a3698d9d9"><div class="ttname"><a href="ai_8c.html#a9a4891f76a5e0695139d493a3698d9d9">sohuldEnter</a></div><div class="ttdeci">bool sohuldEnter(tessera *AiCards, int indexAi, int numTable)</div><div class="ttdoc">This is a CHECK for control if have to pass to the left side of the table</div><div class="ttdef"><b>Definition:</b> ai.c:246</div></div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a id="acdbb4394087c44dd40afa74a1fca149e"></a>
@@ -408,7 +436,7 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">AiCards</td><td><em>AiHand array plain of cards</em> </td></tr>
     <tr><td class="paramname">Size</td><td><em>AiHand array's size</em> <br  />
- <center> <div class="fragment"><div class="line">   <span class="comment">//*Function code</span></div>
+ <div class="fragment"><div class="line">   <span class="comment">//*Function code</span></div>
 <div class="line">   <span class="keywordtype">void</span> <a class="code" href="ai_8c.html#acdbb4394087c44dd40afa74a1fca149e">sortCards</a>(tessera* AiCards, <span class="keywordtype">int</span> Size) {</div>
 <div class="line">    <span class="comment">// Sort num1</span></div>
 <div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; Size - 1; i++) {</div>
@@ -428,9 +456,9 @@ Functions</h2></td></tr>
 <div class="line">        }</div>
 <div class="line">    }</div>
 <div class="line">}</div>
-<div class="ttc" id="aai_8c_html_a168db3a12449506ee8743261513c7ba5"><div class="ttname"><a href="ai_8c.html#a168db3a12449506ee8743261513c7ba5">swap</a></div><div class="ttdeci">void swap(tessera *AiCards1, tessera *AiCards2)</div><div class="ttdef"><b>Definition:</b> ai.c:23</div></div>
-<div class="ttc" id="aai_8c_html_acdbb4394087c44dd40afa74a1fca149e"><div class="ttname"><a href="ai_8c.html#acdbb4394087c44dd40afa74a1fca149e">sortCards</a></div><div class="ttdeci">void sortCards(tessera *AiCards, int Size)</div><div class="ttdoc">Reorder of Ai-Hand using Buble Sort algorthim</div><div class="ttdef"><b>Definition:</b> ai.c:60</div></div>
-</div><!-- fragment --> </center> </td></tr>
+<div class="ttc" id="aai_8c_html_a168db3a12449506ee8743261513c7ba5"><div class="ttname"><a href="ai_8c.html#a168db3a12449506ee8743261513c7ba5">swap</a></div><div class="ttdeci">void swap(tessera *AiCards1, tessera *AiCards2)</div><div class="ttdoc">The Swap function, swap tile in AI-Hand inside Sort Function</div><div class="ttdef"><b>Definition:</b> ai.c:23</div></div>
+<div class="ttc" id="aai_8c_html_acdbb4394087c44dd40afa74a1fca149e"><div class="ttname"><a href="ai_8c.html#acdbb4394087c44dd40afa74a1fca149e">sortCards</a></div><div class="ttdeci">void sortCards(tessera *AiCards, int Size)</div><div class="ttdoc">Reorder of Ai-Hand using Buble Sort algorthim</div><div class="ttdef"><b>Definition:</b> ai.c:61</div></div>
+</div><!-- fragment --> </td></tr>
   </table>
   </dd>
 </dl>
@@ -462,20 +490,22 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p><b>The Swap function, swap tile in AI-Hand inside Sort Function</b> </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">AiCards1</td><td></td></tr>
-    <tr><td class="paramname">AiCards2</td><td><center> <div class="fragment"><div class="line">   <span class="comment">//*Function code</span></div>
+    <tr><td class="paramname">AiCards1</td><td><em>Tile 1 to swap</em> </td></tr>
+    <tr><td class="paramname">AiCards2</td><td><em>Tile 2 to swap</em></td></tr>
+  </table>
+  </dd>
+</dl>
+<center> <div class="fragment"><div class="line">   <span class="comment">//*Function code</span></div>
 <div class="line">   <span class="keywordtype">void</span> <a class="code" href="ai_8c.html#a168db3a12449506ee8743261513c7ba5">swap</a>(tessera* AiCards1, tessera* AiCards2) {</div>
 <div class="line">    tessera temp1 = *AiCards1;</div>
 <div class="line">    *AiCards1 = *AiCards2;</div>
 <div class="line">    *AiCards2 = temp1;</div>
 <div class="line">}</div>
-</div><!-- fragment --> </center> </td></tr>
-  </table>
-  </dd>
-</dl>
-
+</div><!-- fragment --> </center> 
 </div>
 </div>
 </div><!-- contents -->

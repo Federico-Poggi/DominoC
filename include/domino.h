@@ -2,6 +2,8 @@
 #ifndef DOMINO_H
 #define DOMINO_H
 
+
+
 typedef struct
 {
     int num1;
@@ -27,5 +29,4 @@ void mod1(tessera* std, int numberOfcards);
 void mossa(tessera* table, tessera* playerCards1, int* indexTable, int* numberOfcards, int* choiceptr, int mossa1, int tableSize);
 
 int endPoints(tessera* table, int sizeTab);
-void printDebug(char* message);
 #endif // !DOMINO_H

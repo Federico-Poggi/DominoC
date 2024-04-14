@@ -6,7 +6,6 @@ var domino_8c =
     [ "error", "domino_8c.html#ad384c8432c61d7397cc69aa201a14541", null ],
     [ "giveTessereToPlayer", "domino_8c.html#a879ad781c7566fe69751dd9800bdeeeb", null ],
     [ "newPlayercards", "domino_8c.html#a26c7fd994c1d423cad2cbd4693cf209f", null ],
-    [ "printDebug", "domino_8c.html#a5f422e77c83cc0ede6e968d47017ae89", null ],
     [ "printTessere", "domino_8c.html#ac496e3a710e0d401f02fc9d4b15ee895", null ],
     [ "pushFooter", "domino_8c.html#af6fdf3897773f0005f0c07e81c7c7a02", null ],
     [ "pushHead", "domino_8c.html#a2f5313e6f51e8697002fccf09cff2726", null ],

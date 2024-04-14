@@ -8,22 +8,44 @@
 #include "domino.h"
 #include "check.h"
 /**
- * @brief Controlla se è possibile inserire una tessera sulla tavola di gioco.
+ * @brief **Check if a tile can be inserted into table**
  *
- * Questa funzione controlla se la tessera scelta dal giocatore può essere inserita sulla tavola di gioco.
- * Per farlo, confronta i valori delle estremità sinistra e destra della tavola con i valori delle estremità
- * della tessera scelta.
  *
- * @param table Array rappresentante la tavola di gioco.
- * @param playercards Array delle tessere del giocatore.
- * @param indexTable Puntatore all'indice dell'ultima tessera inserita sulla tavola di gioco.
- * @param choice Puntatore all'indice della tessera scelta dal giocatore.
- * @return true Se la tessera può essere inserita sulla tavola di gioco.
- * @return false Se la tessera non può essere inserita sulla tavola di gioco.
+ *  This function checks whether the tile chosen by the player can be placed on the game board.
+ *  It does this by comparing the values of the left and right ends of the board with the values of the ends
+ *  of the chosen tile.
+ *
+ * @param table *Game board array*
+ * @param playercards *Player's hand*
+ * @param indexTable *Last inserted tile pointer in the game board*
+ * @param choice *Pointer to the chosen tile from the player*
+ * @return **TRUE** *If the tile can be inserted into the game board*
+ * @return **FALSE** *If the tile can't be inserted into the game board*
+ *
+ * \code
+ *  bool insertCheck(tessera* table, tessera* playercards, int* indexTable, int* choice)
+{
+
+    int left = table[0].num1;                // Most left number
+    int right = table[*indexTable - 1].num2; // Most right number
+    if ((left == playercards[*choice].num2) || (left == playercards[*choice].num1) || (right == playercards[*choice].num1) || (right == playercards[*choice].num2))
+    {
+        printf("\033[1;32mLa tessere [%d|%d] può essere inserita\n\033[0m", playercards[*choice].num1, playercards[*choice].num2);
+        return true;
+    }
+    else if (left == 0 && right == 0)
+    {
+        printf("\033[1;32mLa tessere [%d|%d] può essere inserita\n\033[0m", playercards[*choice].num1, playercards[*choice].num2);
+        //printf("Prima mossa");
+        return true;
+    }
+    else
+    {
+        printf("\033[1;31mLa tessere [%d|%d] non può essere inserita: inserire una tessera valida\n\033[0m", playercards[*choice].num1, playercards[*choice].num2);
+        return false;
+    };
+ * \endcode
  */
-
- // Funzioni controllo Interattiva
-
 bool insertCheck(tessera* table, tessera* playercards, int* indexTable, int* choice)
 {
 
@@ -95,6 +117,39 @@ bool checkInsertable(tessera* table, tessera* playercards, int* indexTable, int*
     return insertable;
 }
 
+/**
+ * @brief **Check if in the Player hand there are one or more tiles that can be inserted**
+ *
+ * @param table *Game Board*
+ * @param playCards *Player hand*
+ * @param indexTable *Index of the last tile inserted*
+ * @param numberOfCards
+ * @param playerMode
+ * @return **TRUE** *If there is at least one tile that can be inserted*
+ * @return **FALSE** *If there's no more tiles insertable*
+ *
+ * \code{c}
+ * bool canGoNext(tessera* table, tessera* playCards, int* indexTable, int numberOfCards, bool playerMode)
+{
+    int mostLeft = table[0].num1;
+    int mostRight = table[*indexTable - 1].num2;
+
+    for (unsigned int j = 0; j < numberOfCards; j++)
+    {
+        if ((mostLeft == playCards[j].num2) || (mostLeft == playCards[j].num1) || (mostRight == playCards[j].num1) || (mostRight == playCards[j].num2))
+        {
+            if (playerMode == true) {
+                // Can follow
+                printf("\033[1;32m\nSi puo proseguire: inserire una tessera valida \n\033[0m");
+            }
+            return true;
+        }
+    }
+    printf("\033[1;31m\nMosse possibili terminate\n\033[0m");
+    return false;
+}
+ * \endcode
+ */
 bool canGoNext(tessera* table, tessera* playCards, int* indexTable, int numberOfCards, bool playerMode)
 {
     int mostLeft = table[0].num1;
@@ -105,8 +160,8 @@ bool canGoNext(tessera* table, tessera* playCards, int* indexTable, int numberOf
         if ((mostLeft == playCards[j].num2) || (mostLeft == playCards[j].num1) || (mostRight == playCards[j].num1) || (mostRight == playCards[j].num2))
         {
             if (playerMode == true) {
-            // E' possibile proseguire il gioco
-            printf("\033[1;32m\nSi puo proseguire: inserire una tessera valida \n\033[0m");
+                // E' possibile proseguire il gioco
+                printf("\033[1;32m\nSi puo proseguire: inserire una tessera valida \n\033[0m");
             }
             return true;
         }

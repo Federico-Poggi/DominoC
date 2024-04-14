@@ -199,3 +199,5 @@ int endPoints(tessera* table, int sizeTab) {
     }
     return sumPoint;
 }
+
+
