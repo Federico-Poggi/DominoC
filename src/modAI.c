@@ -72,8 +72,15 @@ void aiGame(tessera* table, tessera* aiCards1, int* indexTable, int* numberOfcar
     if (*mossa1 == 1) {
         //code for mossa 1
         int index = findfirst(aiCards1, freq, tableSize);
-        printf("\033[1;32mCarta scelta: [%d|%d]\nNel mazzo compare: %d volte\n\n\033[0m", aiCards1[index].num1, aiCards1[index].num2, freq[index]);
         int num = freq[index];
+
+        // PER INSERIZIONI DISPARI MOSSA 1
+        if (num % 2 == 0) {
+            --num;
+        }
+        printf("\033[1;32mCarta scelta: [%d|%d]\nVerra inserita: %d volte\n\n\033[0m", aiCards1[index].num1, aiCards1[index].num2, num);
+
+        // INSERIMENTO TESSERA
         if (aiCards1[index].num1 == aiCards1[index].num2) {
             while (num) {
                 pushHead(table, aiCards1, index, indexTable);
@@ -116,14 +123,20 @@ void aiGame(tessera* table, tessera* aiCards1, int* indexTable, int* numberOfcar
         bool couldEnter = sohuldEnter(aiCards1, indexDX, dx);
         if (couldEnter == true) {
             //RAMO DX
-            printf("\033[1;32mCarta scelta: [%d|%d]\nNel mazzo compare: %d volte\n\n\033[0m", aiCards1[indexDX].num1, aiCards1[indexDX].num2, freq[indexDX]);
             int num = freq[indexDX];
+
+            // PER INSERIZIONI DISPARI MOSSA DX
+            if (num % 2 == 0) {
+                --num;
+            }
+            printf("\033[1;32mCarta scelta: [%d|%d]\nVerra inserita: %d volte\n\n\033[0m", aiCards1[indexDX].num1, aiCards1[indexDX].num2, num);
 
             bool isRotated = false;
             if (aiCards1[indexDX].num1 != table[(*indexTable) - 1].num2) {
                 isRotated = true;
             }
 
+            // INSERIMENTO TESSERA
             bool change = false;
             while (num) {
                 if (change == false) {
@@ -156,23 +169,33 @@ void aiGame(tessera* table, tessera* aiCards1, int* indexTable, int* numberOfcar
             int sx = table[0].num1;
             int indexSX = findDX_SX(aiCards1, freq, tableSize, sx);
             bool canEnter = sohuldEnter(aiCards1, indexSX, sx);
+
+            // ASSERT CASO PROBLEMI
             if (canEnter == false) {
                 bool ass = true;
                 if (ass == true) {
-                    printf("\n\nDevo fare la first match\n\n");
+                    printf("\n\n??ERRORE??\n\n");
                     exit(EXIT_FAILURE);
                 }
             }
             else {
+
                 //printf("L'indice uscito è %d\n", indexSX);
                 int num = freq[indexSX];
-                printf("\033[1;32mCarta scelta: [%d|%d]\nNel mazzo compare: %d volte\n\n\033[0m", aiCards1[indexSX].num1, aiCards1[indexSX].num2, freq[indexSX]);
 
+                // PER INSERZIONI DISPARI MOSSA SX
+                if (num % 2 == 0) {
+                    --num;
+                }
+                printf("\033[1;32mCarta scelta: [%d|%d]\nVerra inserita: %d volte\n\n\033[0m", aiCards1[indexSX].num1, aiCards1[indexSX].num2, num);
+
+                // FIX TESSERA
                 bool isRotated = false;
                 if (aiCards1[indexSX].num2 != table[0].num1) {
                     isRotated = true;
                 }
 
+                // INSERIMENTO TESSERA
                 bool change = false;
                 while (num) {
                     if (change == false) {
@@ -201,7 +224,7 @@ void aiGame(tessera* table, tessera* aiCards1, int* indexTable, int* numberOfcar
                 }
             }
 
-        };
+        }
     }
 }
 
