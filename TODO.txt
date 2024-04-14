@@ -1,0 +1,4 @@
+#1 Creazione funzione alla fine vada a controllare se sono inseribile ed inserirle
+    - Nel momento dell'inserimento di una tessera inserire sempre n % 2 + 1 tessere
+    - Tessere rimanenti first match;
+  
