@@ -78,13 +78,13 @@ void mod1(tessera* std, int numberOfcards)
     bool canFollow = true;
     tessera* table = creaTable(numberOfcards); // ARRAY TAVOLO
     tessera* playerCards1 = giveTessereToPlayer(std, numberOfcards);
-    // printf(" indirizzo di partenza: %p\n\n", playerCards1);
+
 
     // INTRODUZIONE GIOCO (COMPARE SOLO ALLA PRIMA PARTITA)
     printf("\033[1;34m\nAl giocatore verranno assegnate %d tessere.\nL'obiettivo è quello di disporre le tessere sul tavolo scondo la regola:\nI numeri dei lati adiacenti tra due tessere devono essere identici.\n\n\033[0m", numberOfcards);
     style();
 
-    //int k = 3; variabile controllo iterazione caso verifica 
+
     do
     {
         mossa(table, playerCards1, &indexTable, &numberOfcards, &choice, mossa1, tableSize);
@@ -108,8 +108,6 @@ void mod1(tessera* std, int numberOfcards)
 
     printf("\n\033[1;35mComplimenti!\033[0m Hai totalizzato: \033[1;32m%d punti\033[0m", playerPoints);
 
-    // FREE ALL MALLOC CREATED!!!
-    // I WANT TO BREAK FREE!!!
     mossa1 = 1;
     free(table);
     free(playerCards1);
@@ -269,14 +267,13 @@ void mossa(tessera* table, tessera* playerCards1, int* indexTable, int* numberOf
 
         // MOSSA 1
         // STAMPA TESSERE MANO GIOCATORE
-        //puts("");
         printf("\033[1;32m\nLe tessere a tua disposizione sono:\n\n\033[0m");
         printTessere(playerCards1, *numberOfcards);
         puts("");
 
         // RICHIESTA TESSERA DA SCEGLIERE
         *choiceptr = chooseCard(playerCards1, numberOfcards);
-        //printf("\n[%d|%d]", playerCards1[*choiceptr].num1, playerCards1[*choiceptr].num2);
+
         puts("");
 
         // Questa ritorna True se è possibile inserire la tessara dentro al tavolo al contrario TORNA FALSE;
@@ -331,8 +328,7 @@ void mossa(tessera* table, tessera* playerCards1, int* indexTable, int* numberOf
                 printf("\033[1;31mI valori non sono uguali, non può essere inserita\n\033[0m");
                 // Se è stata ruotata resettarla allo stato precedente
                 rotate(playerCards1, *choiceptr);
-                // printf("Tessera [%d|%d]", playerCards1[*choiceptr].num1, playerCards1[*choiceptr].num2);
-                // puts(" ");
+
             }
 
         } while (!isIsertable);

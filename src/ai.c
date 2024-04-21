@@ -143,7 +143,6 @@ int findfirst(tessera* aiCards1, int freq[], int numberOfcards) {
             }
         }
     }
-    //printf("\ncard -> [%d|%d] _ freq -> %d\n", aiCards1[out].num1, aiCards1[out].num2, freq[out]);
     return out;
 }
 
@@ -200,7 +199,7 @@ int findDX_SX(tessera* aiCards1, int freq[], int tableSize, int dx_sx) {
             }
         }
     }
-    //printf("\ncard -> [%d|%d] _ freq -> %d\n", aiCards1[out].num1, aiCards1[out].num2, freq[out]);
+
     return out;
 };
 

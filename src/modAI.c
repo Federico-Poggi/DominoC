@@ -81,15 +81,12 @@ void modAI(tessera* std, int numberOfcards) {
     tessera* table = creaTable(numberOfcards); // ARRAY TAVOLO
     tessera* aiCards1 = giveTessereToPlayer(std, numberOfcards);
     sortCards(aiCards1, tableSize);
-    // printf(" indirizzo di partenza: %p\n\n", playerCards1);
+
 
     // INTRODUZIONE GIOCO (COMPARE SOLO ALLA PRIMA PARTITA)
     printf("\033[1;33m\nAll'AI verranno assegnate %d tessere.\nLa partita sarà automatica e seguira le classiche regole del domino:\nI numeri dei lati adiacenti tra due tessere devono essere identici.\n\n\033[0m", numberOfcards);
     style();
 
-    //int end = 5;
-
-    //int k = 3; variabile controllo iterazione caso verifica 
     do
     {
         printf("\033[1;32m\nLe tessere in mano all'AI al momento sono:\n\n\033[0m");
@@ -115,8 +112,6 @@ void modAI(tessera* std, int numberOfcards) {
 
     printf("\n\033[1;35mCompletato!\033[0m Sono stati totalizzati: \033[1;32m%d punti\033[0m", playerPoints);
 
-    // FREE ALL MALLOC CREATED!!!
-    // I WANT TO BREAK FREE!!!
     mossa1Ai = 1;
     free(table);
     free(aiCards1);
@@ -281,7 +276,6 @@ void aiGame(tessera* table, tessera* aiCards1, int* indexTable, int* numberOfcar
 
     // MOSSA 1
     if (*mossa1 == 1) {
-        //code for mossa 1
         int index = findfirst(aiCards1, freq, tableSize);
         int num = freq[index];
 
@@ -300,7 +294,6 @@ void aiGame(tessera* table, tessera* aiCards1, int* indexTable, int* numberOfcar
                 aiCards1[index].num2 = 0;
                 freq[index] = 0;
                 pop_back(aiCards1, index, tableSize);
-                //++index;
                 --num;
             }
         }
@@ -322,7 +315,6 @@ void aiGame(tessera* table, tessera* aiCards1, int* indexTable, int* numberOfcar
                 aiCards1[index].num2 = 0;
                 freq[index] = 0;
                 pop_back(aiCards1, index, tableSize);
-                //++index;
                 --num;
             }
         }
@@ -371,7 +363,6 @@ void aiGame(tessera* table, tessera* aiCards1, int* indexTable, int* numberOfcar
                 aiCards1[indexDX].num2 = 0;
                 freq[indexDX] = 0;
                 pop_back(aiCards1, indexDX, tableSize);
-                //++indexDX;
                 --num;
             }
         }
@@ -390,8 +381,6 @@ void aiGame(tessera* table, tessera* aiCards1, int* indexTable, int* numberOfcar
                 }
             }
             else {
-
-                //printf("L'indice uscito è %d\n", indexSX);
                 int num = freq[indexSX];
 
                 // PER INSERZIONI DISPARI MOSSA SX
@@ -430,7 +419,6 @@ void aiGame(tessera* table, tessera* aiCards1, int* indexTable, int* numberOfcar
                     aiCards1[indexSX].num2 = 0;
                     freq[indexSX] = 0;
                     pop_back(aiCards1, indexSX, tableSize);
-                    //++indexDX;
                     --num;
                 }
             }

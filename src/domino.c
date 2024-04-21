@@ -455,7 +455,6 @@ int endPoints(tessera* table, int sizeTab) {
             continue;
         }
         sumPoint += table[k].num1 + table[k].num2;
-        //printf("sum = %d", sumPoint);
     }
     return sumPoint;
 }
