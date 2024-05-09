@@ -10,6 +10,5 @@ command: make
 
 ``` -->
 
-> [!NOTE] Compilation and Run program
-> ddd
-> dfdd
+> [!NOTE] > `Compilation and Run Program`
+> `path: $wprkspaceFolder` > `command: make`
