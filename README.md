@@ -2,16 +2,16 @@
 
 # Domino C
 
-<!-- ```c
+```markdown
 Compilazione sistemi UNIX:
-
 path: $workspaceFolde
 command: make
+```
 
-``` -->
-
-> [!NOTE] - `Compilation and Run Program`
-
+> [!NOTE]
+>
+> `Compilation and Run Program`
+>
 > `path: $wprkspaceFolder` _Working Space Folder_
-
+>
 > `command: make` _Compilation with makefile_
