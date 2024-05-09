@@ -27,8 +27,8 @@ int main()
     // VARIABILI GIOCO MAIN
     tessera* std = stdTessere();
     int risposta = 0;
-    int numberOfcards = 28;
-    int tableSize;
+    int numberOfcards = 0;
+    int tableSize = 0;
 
     // INTRODUZIONE
 
@@ -41,10 +41,42 @@ int main()
 
         puts("");
         int modalita = playMode();
+
         if (modalita == 2) {
-            printf("Inserisci il numero di tessere da creare: ");
-            scanf("%d", &tableSize);
+            bool con2 = true;
+            do {
+                printf("Inserisci il numero di tessere da creare (min 10): ");
+                scanf("%d", &tableSize);
+                if (tableSize < 10) {
+                    puts("");
+                    error("Numero di tessere non valido");
+                    puts("\n");
+                    con2 = false;
+                }
+                else {
+                    con2 = true;
+                }
+            } while (con2 == false);
         }
+
+        if (modalita == 1) {
+            bool con = true;
+            do {
+                printf("Inserisci il numero di tessere con cui giocare (min 10; max 100): ");
+                scanf("%d", &tableSize);
+                if (tableSize < 10 || tableSize > 100) {
+                    puts("");
+                    error("Numero di tessere non valido");
+                    puts("\n");
+                    con = false;
+                }
+                else {
+                    con = true;
+                }
+            } while (con == false);
+            numberOfcards = tableSize;
+        }
+
         puts(" ");
         style();
         switch (modalita)
