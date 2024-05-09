@@ -10,6 +10,6 @@ command: make
 
 ``` -->
 
-> [!NOTE]
+> [!NOTE] Compilation and Run program
 > ddd
 > dfdd
