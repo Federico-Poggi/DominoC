@@ -296,6 +296,7 @@ void mossa(tessera* table, tessera* playerCards1, int* indexTable, int* numberOf
                 if (rotateQuestion < 1 || rotateQuestion > 2) {
                     puts("");
                     error("Comando non valido. Scegli tra le opzioni disponibili.\n");
+
                 }
             } while (rotateQuestion < 1 || rotateQuestion > 2);
 
@@ -318,7 +319,7 @@ void mossa(tessera* table, tessera* playerCards1, int* indexTable, int* numberOf
             }
 
             bool check = checkInsertable(table, playerCards1, indexTable, choiceptr, pushQuestion, mossa1);
-            if (check)
+            if (check == true)
             {
                 printf("\033[1;32m\nI valori sono uguali, può essere inserita\n\033[0m");
                 isIsertable = check;
@@ -327,8 +328,9 @@ void mossa(tessera* table, tessera* playerCards1, int* indexTable, int* numberOf
             {
                 printf("\033[1;31mI valori non sono uguali, non può essere inserita\n\033[0m");
                 // Se è stata ruotata resettarla allo stato precedente
-                rotate(playerCards1, *choiceptr);
-
+                if (rotateQuestion == 1) {
+                    rotate(playerCards1, *choiceptr);
+                }
             }
 
         } while (!isIsertable);
