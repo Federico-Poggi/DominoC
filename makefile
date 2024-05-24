@@ -30,3 +30,6 @@ build/modAI.o:src/modAI.c build/domino.o build/check.o build/ai.o include/domino
  
 clean: 
 	rm -rf build/*.o build/dominoC
+
+clean-w:
+	powershell Remove-Item -Recurse -Force build\*.o, build\dominoC, build\dominoC.exe
