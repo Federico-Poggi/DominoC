@@ -49,7 +49,9 @@
 bool insertCheck(tessera* table, tessera* playercards, int* indexTable, int* choice)
 {
 
+
     int left = table[0].num1;                // Assegno l'estremo sinistro della  tessera del domino a sinistra
+
     int right = table[*indexTable - 1].num2; // Variabile per il salvataggio
     if ((left == playercards[*choice].num2) || (left == playercards[*choice].num1) || (right == playercards[*choice].num1) || (right == playercards[*choice].num2))
     {
