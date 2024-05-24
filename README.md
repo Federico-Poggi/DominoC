@@ -1,4 +1,4 @@
-#### Gruppo: | Rossato Gabriele - Poggi Federico - Praticò Federico - Pozzato Elia |
+#### Gruppo: | Rossato Gabriele - Poggi Federico - Pozzato Elia |
 
 # Domino C
 
@@ -57,7 +57,7 @@ Una volta che la tessera è stata scelta questa viene inserita n volte in base a
 ### DIFFICOLTA' :
 
 Essendo principianti nella programmazione con il linguaggio C, sono state riscontrate alcune difficoltà nell'ottimizzazione del codice.\
-Abbiamo incontrato ulteriori difficoltà nell'organizzazione del lavoro a causa di idee divergenti riguardo all'implementazione. Pertanto, abbiamo dovuto concordare su un'idea comune che unificasse le opinioni di tutto il gruppo.\
+Abbiamo incontrato ulteriori difficoltà nell'organizzazione del lavoro a causa di idee divergenti riguardo all'implementazione. Pertanto, abbiamo dovuto concordare su un'idea comune che unificasse le opinioni di tutto il gruppo.
 
 #### Strumenti utilizzati e suddivisione dei lavori:
 
@@ -68,7 +68,5 @@ Durante tutto lo sviluppo il team ha lavorato in presenza, ciò ha permesso uno 
 `Poggi Federico:` [Poggi Federico](https://github.com/Federico-Poggi)
 
 `Rossato Gabriele:` [Gabriele Rossato](https://github.com/GabriRoss)
-
-`Praticò Federico:` [Praticò Federico](#)
 
 `Pozzato Elia:` [Pozzato Elia](#)
