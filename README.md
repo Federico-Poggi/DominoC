@@ -69,4 +69,4 @@ Durante tutto lo sviluppo il team ha lavorato in presenza, ciò ha permesso uno 
 
 `Rossato Gabriele:` [Gabriele Rossato](https://github.com/GabriRoss)
 
-`Pozzato Elia:` [Pozzato Elia](#)
+`Pozzato Elia:` [Pozzato Elia](https://github.com/Eliapozz)
