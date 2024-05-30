@@ -69,13 +69,13 @@ void mod1(tessera* std, int numberOfcards)
 {
 
     // VARIABILI GENERALI MDOALITA' 1
-    bool playerMode = true;
+    bool playerMode = true; // true ==  gioca un umano altrimenti ai
     int playerPoints = 0;
-    int indexTable = 0;
+    int indexTable = 0; //Indice corrente del tevolo + 1 per inserimento a destra
     int choice = 0;
     int mossa1 = 1;
     int tableSize = numberOfcards;
-    bool canFollow = true;
+    bool canFollow = true; // Variabile per verificare se ci sono altre mosse possibili
     tessera* table = creaTable(numberOfcards); // ARRAY TAVOLO
     tessera* playerCards1 = giveTessereToPlayer(std, numberOfcards);
 
@@ -99,7 +99,7 @@ void mod1(tessera* std, int numberOfcards)
         canFollow = canGoNext(table, playerCards1, &indexTable, numberOfcards, playerMode);
         if (!canFollow)
         {
-            break;
+            break; // se non puoi proseguire esci
         }
 
     } while (numberOfcards); // per ora gioca finché hai carte
@@ -283,7 +283,6 @@ void mossa(tessera* table, tessera* playerCards1, int* indexTable, int* numberOf
             continue;
         }
 
-        // CONTROLLE SE LA TESSERA PUO ESSERE INSERITA ATTRAVERSO IL CONTROLLO DEI DUE NUMERI DELLA TESSERA SCELTA
         do
         {
             // RICHIESTA ROTAZIONE
