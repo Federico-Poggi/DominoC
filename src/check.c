@@ -57,7 +57,7 @@ bool insertCheck(tessera* table, tessera* playercards, int* indexTable, int* cho
     }
 
     int left = table[0].num1;                // Assegno l'estremo sinistro della  tessera del domino a sinistra
-    int right = table[rightIndex].num2; // Variabile per il salvataggio
+    int right = table[rightIndex].num2;     // Variabile per il salvataggio
     if ((left == playercards[*choice].num2) || (left == playercards[*choice].num1) || (right == playercards[*choice].num1) || (right == playercards[*choice].num2))
     {
         printf("\033[1;32mLa tessere [%d|%d] può essere inserita\n\033[0m", playercards[*choice].num1, playercards[*choice].num2);

@@ -1,14 +1,12 @@
 OPTIONS=-O3 -DNDEBUG -Wall -Wextra -w
-# 
+
 all:build/dominoC
-# all:build/dominoC.exe
-# 
+
+
 debug:OPTIONS=-O0 -DNDEBUG -Wall -Wextra -w
 debug:build/dominoC
-# debug:build/dominoC.exe
 
-# build/dominoC.exe: build/check.o build/domino.o build/ai.o build/mod1.o build/modAI.o tools/main.c
-# 		gcc ${OPTIONS} src/domino.c src/ai.c src/mod1.c src/modAI.c src/check.c tools/main.c -o build/dominoC -I include/ 
+
 
 build/dominoC: build/check.o build/domino.o build/ai.o build/mod1.o build/modAI.o tools/main.c
 		gcc ${OPTIONS} src/domino.c src/ai.c src/mod1.c src/modAI.c src/check.c tools/main.c -o build/dominoC -I include/ 

@@ -16,7 +16,7 @@
 >
 >   <code style="color:#24b54b">path:</code> <code>$wprkspaceFolder/build</code> _Build Folder_
 >
->   <code style="color:#1b8f9e"><b>command</b>:</code> <code>run</code> _Start program_
+>   <code style="color:#1b8f9e"><b>command</b>:</code> <code>./dominoC</code> _Start program_
 
 ### Descrizione:
 
