@@ -1,6 +1,6 @@
-#### Gruppo: | Rossato Gabriele - Poggi Federico |
+#### Gruppo: | Rossato Gabriele - Poggi Federico|
 
-#### Matricola: | 901271 - 903174 - 902524 |
+#### Matricola: | 901271 - 903174 |
 
 # Domino C
 
