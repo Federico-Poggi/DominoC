@@ -1,4 +1,6 @@
-#### Gruppo: | Rossato Gabriele - Poggi Federico - Pozzato Elia |
+#### Gruppo: | Rossato Gabriele - Poggi Federico |
+
+#### Matricola: | 901271 - 903174 - 902524 |
 
 # Domino C
 
@@ -68,5 +70,3 @@ Durante tutto lo sviluppo il team ha lavorato in presenza, ciò ha permesso uno 
 `Poggi Federico:` [Poggi Federico](https://github.com/Federico-Poggi)
 
 `Rossato Gabriele:` [Gabriele Rossato](https://github.com/GabriRoss)
-
-`Pozzato Elia:` [Pozzato Elia](https://github.com/Eliapozz)
